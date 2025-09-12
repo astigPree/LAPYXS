@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "teacher/dashboard.css" %}">
+<script src="{% static "teacher/dashboard.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+<nav class="navigation-bar">
+    <div class="navigation-icon">
+        <img src="{% static "assets/icon.png" %}" alt="logo" class="logo">
+        <span class="poppins-bold">LAPYXS</span>
+    </div>
+
+    <div class="navigation-shortcut-icon">
+        <div class="navigation-notification">
+            <img src="{% static "assets/account-icon.svg" %}" alt="shortcut-icon" class="shortcut-icon">
+        </div>
+        <div class="navigation-notification">
+            <span id="notification-red"></span>
+            <img src="{% static "assets/notification-icon.svg" %}" alt="notification-icon" class="notification-icon">
+        </div>
+    </div>
+</nav>
+
+<button class="shortcut-actions-opener">
+    <span class="poppins-light">Show Actions</span>
+    <img src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
+</button>
+
+<div class="shortcut-actions-container">
+    <h1 class="poppins-bold">Welcome back! </h1>
+    <h2 class="poppins-light ellipsis">Teacher Makie</h2>
+    <div class="shortcut-actions-buttons">
+        <button>
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-medium">Classroom</span>
+        </button>
+        <button>
+            <img src="{% static "assets/material-icon.svg" %}" alt="material-icon" class="material-icon">
+            <span class="poppins-medium">Materials</span>
+        </button>
+        <button>
+            <img src="{% static "assets/assessment-icon.svg" %}" alt="assessment-icon" class="assessment-icon">
+            <span class="poppins-medium">Assessment</span>
+        </button>
+        <button>
+            <img src="{% static "assets/post-icon.svg" %}" alt="post-icon" class="post-icon">
+            <span class="poppins-medium">Post</span>
+        </button>
+        <button>
+            <img src="{% static "assets/report-icon.svg" %}" alt="report-icon" class="report-icon">
+            <span class="poppins-medium">Reports</span>
+        </button>
+        <button>
+            <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
+            <span class="poppins-medium">Message</span>
+        </button>
+    </div>
+    <div class="shortcut-actions-container-divider"></div>
+</div>
+
+
+
+{% endblock basebodyblock %}

@@ -1,0 +1,188 @@
+
+.navigation-bar{
+    width: 100%;
+    height: 50px; 
+    position: fixed; 
+    left: 0px;
+    top: 0px; 
+    background: #A3E3FF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 0px 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; 
+}
+
+
+
+.navigation-icon{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 12px;
+}
+
+.navigation-icon img{
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+.navigation-icon span{ 
+    font-size: 15px;
+    line-height: 18px; 
+    text-align: center; 
+    color: #1A8FE3; 
+}
+
+.navigation-shortcut-icon{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 12px; 
+    margin-right: 15px;
+}
+.navigation-notification{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.navigation-notification img{
+    height: 24px;
+    width: auto;
+}
+
+#notification-red{
+    position: absolute;
+    top: -3px;
+    right: 0px;
+    width: 10px;
+    height: 10px;
+    background: #FF0000;
+    border-radius: 50%;
+}
+
+
+.shortcut-actions-opener{  
+    background: #1A8FE3;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 4px 4px; 
+    color: #FFFFFF;
+    width: fit-content;
+    padding: 3px 10px;
+    height: fit-content;
+    position: fixed;
+    top: 50px;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.shortcut-actions-opener span{ 
+    font-size: 10px;
+    line-height: 12px; 
+    text-align: right; 
+    color: #FFFFFF; 
+}
+
+.shortcut-actions-opener img{
+    width: 15px;
+    height: 15px;
+}
+
+.shortcut-actions-container{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 80px;
+}
+
+.shortcut-actions-container h1{  
+    font-size: 15px;
+    line-height: 18px; 
+    color: #2E2D2D;
+    width: 90%;
+}
+
+.shortcut-actions-container h2{ 
+    font-size: 14px;
+    line-height: 21px;
+    width: 85%;
+    color: #2E2D2D;
+    margin-top: 5px;
+
+}
+
+.shortcut-actions-buttons{
+    width: 85%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 15px;
+}
+
+.shortcut-actions-buttons button{ 
+    width: 75px;
+    height: 70px; 
+    background: #DAFFF6;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    row-gap: 3px;
+}
+
+ 
+
+.shortcut-actions-buttons button img{
+    width: auto;
+    height: 22px;
+}
+
+.shortcut-actions-buttons button span{ 
+    font-size: 10px;
+    line-height: 15px; 
+    text-align: center; 
+    color: #2E2D2D; 
+    margin-bottom: 8px;
+}
+
+
+.shortcut-actions-container-divider{ 
+    width: 100%;
+    height: 3px;  
+    background: rgba(46, 45, 45, 0.2);
+    margin-top: 34px;
+}
+
+
+
