@@ -10,6 +10,8 @@
 
 
 {% block basebodyblock %}
+
+
 <nav class="navigation-bar">
     <div class="navigation-icon">
         <img src="{% static "assets/icon.png" %}" alt="logo" class="logo">
@@ -32,7 +34,7 @@
     <img src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
 </button>
 
-<div class="shortcut-actions-container">
+<div class="shortcut-actions-container" style="display: none;">
     <h1 class="poppins-bold">Welcome back! </h1>
     <h2 class="poppins-light ellipsis">Teacher Makie</h2>
     <div class="shortcut-actions-buttons">
@@ -64,6 +66,37 @@
     <div class="shortcut-actions-container-divider"></div>
 </div>
 
+
+
+
+
+<section class="dashboard-section">
+
+    <h1 class="poppins-light">Dashboard</h1>
+    
+    <div class="dashboard-analytics">
+        <div class="analytics-container">
+            <h2 class="poppins-medium">30</h2> 
+            <h3 class="poppins-light">Number of Classroms</h3>
+        </div>
+        <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+    </div>
+    <div class="dashboard-analytics">
+        <div class="analytics-container">
+            <h2 class="poppins-medium">30</h2> 
+            <h3 class="poppins-light">Number of Classroms</h3>
+        </div>
+        <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+    </div>
+    <div class="dashboard-analytics">
+        <div class="analytics-container">
+            <h2 class="poppins-medium">30</h2> 
+            <h3 class="poppins-light">Number of Classroms</h3>
+        </div>
+        <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+    </div>
+
+</section>
 
 
 {% endblock basebodyblock %}
