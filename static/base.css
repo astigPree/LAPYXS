@@ -105,3 +105,33 @@ font-family: "Poppins", sans-serif;
 font-weight: 900;
 font-style: italic;
 }
+
+html,body{
+    margin: 0;
+    padding: 0;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6{ 
+    margin: 0;
+    padding: 0;
+}
+
+
+
+#main-body{
+    max-width: 425px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto; 
+    min-height: 300px;
+}
