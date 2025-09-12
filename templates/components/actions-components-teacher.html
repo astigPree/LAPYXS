@@ -21,34 +21,39 @@
     <img src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
 </button>
 
-<div class="shortcut-actions-container" style="display: none;">
+<div class="shortcut-actions-container" >
     <h1 class="poppins-bold">Welcome back! </h1>
     <h2 class="poppins-light ellipsis">Teacher Makie</h2>
     <div class="shortcut-actions-buttons">
-        <button>
-            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-medium">Classroom</span>
-        </button>
-        <button>
-            <img src="{% static "assets/material-icon.svg" %}" alt="material-icon" class="material-icon">
-            <span class="poppins-medium">Materials</span>
-        </button>
-        <button>
-            <img src="{% static "assets/assessment-icon.svg" %}" alt="assessment-icon" class="assessment-icon">
-            <span class="poppins-medium">Assessment</span>
-        </button>
-        <button>
-            <img src="{% static "assets/post-icon.svg" %}" alt="post-icon" class="post-icon">
-            <span class="poppins-medium">Post</span>
-        </button>
-        <button>
-            <img src="{% static "assets/report-icon.svg" %}" alt="report-icon" class="report-icon">
-            <span class="poppins-medium">Reports</span>
-        </button>
-        <button>
-            <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
-            <span class="poppins-medium">Message</span>
-        </button>
+        {% if action_to_show == "teacher" %}
+            <button>
+                <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+                <span class="poppins-medium">Classroom</span>
+            </button>
+            <button>
+                <img src="{% static "assets/material-icon.svg" %}" alt="material-icon" class="material-icon">
+                <span class="poppins-medium">Materials</span>
+            </button>
+            <button>
+                <img src="{% static "assets/assessment-icon.svg" %}" alt="assessment-icon" class="assessment-icon">
+                <span class="poppins-medium">Assessment</span>
+            </button>
+            <button>
+                <img src="{% static "assets/post-icon.svg" %}" alt="post-icon" class="post-icon">
+                <span class="poppins-medium">Post</span>
+            </button>
+            <button>
+                <img src="{% static "assets/report-icon.svg" %}" alt="report-icon" class="report-icon">
+                <span class="poppins-medium">Reports</span>
+            </button>
+            <button>
+                <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
+                <span class="poppins-medium">Message</span>
+            </button>
+        
+        {% else %}
+        
+        {% endif %}
     </div>
     <div class="shortcut-actions-container-divider"></div>
 </div>
