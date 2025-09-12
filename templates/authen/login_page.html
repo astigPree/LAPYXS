@@ -11,6 +11,28 @@
 
 {% block basebodyblock %}
 
+<img src="{% static "assets/icon.png" %}" alt="logo" class="logo">
+<h1 class="title poppins-bold">LAPYXS</h1>
+<h2 class="subtitle poppins-light">A VIRTUAL CLASSROOM SYSTEM</h2>
+
+<div class="login-container">
+    <h3 class="poppins-bold">Welcome Back!</h3>
+    <h4 class="poppins-regular">Log in to your classroom.</h4>
+    <label class="poppins-regular">Email Address</label>
+    <input type="text" placeholder="Enter the email you signed up with" class="poppins-regular input-field">
+    <label class="poppins-regular">Password</label>
+    <input type="text" placeholder="Enter your secure password" class="poppins-regular input-field">
+</div>
+
+
+<button  class="poppins-bold login-button">
+    Log In Now
+</button>
+
+<hr>
+
+<a href="#" class="poppins-regular teacher-account">Click here to create account for teacher</a>
+<a href="#" class="poppins-regular student-account">Click here to create account for student</a>
 
 
 {% endblock basebodyblock %}
