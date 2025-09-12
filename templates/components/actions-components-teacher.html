@@ -21,7 +21,7 @@
     <img src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
 </button>
 
-<div class="shortcut-actions-container" >
+<div class="shortcut-actions-container" style="display: none;">
     <h1 class="poppins-bold">Welcome back! </h1>
     <h2 class="poppins-light ellipsis">Teacher Makie</h2>
     <div class="shortcut-actions-buttons">
@@ -58,3 +58,32 @@
     <div class="shortcut-actions-container-divider"></div>
 </div>
 
+
+<div class="notifications-container" style="display: none;">
+    <div class="notications-wrapper">
+        <div class="notification-header-container">
+            <h2 class="poppins-regular">Notifications</h2>
+            <img src="{% static "assets/back-icon.svg" %}" alt="back-icon" class="back-icon">
+        </div>
+
+        <input type="date" name="notification-date" class="poppins-regular notification-date-input">
+        <div class="notifications-scroller">
+            <div class="notifications-scroller-wrapper">
+
+
+                <div class="notification-content">
+                    <h4 class="poppins-bold">Notification Title</h4>
+                    <h5 class="poppins-regular">Notification Subtitle</h5>
+                </div>
+
+                <div class="notification-content">
+                    <h4 class="poppins-bold">Notification Title</h4>
+                    <h5 class="poppins-regular">Notification Subtitle</h5>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
