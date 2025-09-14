@@ -1,129 +1,254 @@
 from django.db import models
-
-# Create your models here.
-
-"""
-This is a rich and well-thought-out feature set, Makie! To support this in Django, you’ll want to design models that are modular, scalable, and role-aware. Here's a breakdown of **key data models** and **fields** you should consider, organized by functionality:
-
----
-
-### 👤 User Management
-
-**Models: `User`, `Profile`**
-- `User` (extend `AbstractUser`)
-  - `username`, `email`, `password`
-  - `is_teacher`, `is_student` (Boolean flags or use `role` field)
-- `Profile`
-  - `user` (OneToOne)
-  - `full_name`, `bio`, `avatar`
-  - `contact_info`, `school_name`, `grade_level` (for students)
-
----
-
-### 🏫 Classroom Management
-
-**Model: `Classroom`**
-- `name`, `description`, `subject`, `created_by` (FK to Teacher)
-- `students` (ManyToMany to User)
-- `schedule`, `start_date`, `end_date`
-- 'link' (URLField)
-
-**Model: `Enrollment`**
-- `student`, `classroom`, `date_joined`, `status`
-
----
-
-### 📚 Content Management
-
-**Model: `LearningMaterial`**
-- `title`, `description`, `file` (FileField), `link` (URLField)
-- `uploaded_by` (FK to Teacher), `classroom` (FK)
-- `material_type` (choices: module, slide, doc, link)
-
----
-
-### 📝 Assessment and Evaluation
-
-**Model: `Assessment`**
-- `title`, `description`, `type` (quiz, assignment, exam)
-- `classroom`, `created_by`, `due_date`, `max_score`
-
-**Model: `Question`**
-- `assessment`, `text`, `question_type` (MCQ, essay, etc.)
-- `choices`, `correct_answer` (for auto-grading)
-
-**Model: `Submission`**
-- `student`, `assessment`, `submitted_file`, `answers`, `submitted_at`
-- `grade`, `feedback`, `graded_by`, `is_graded`
-
----
-
-### 📣 Communication Tools
-
-**Model: `Announcement`**
-- `title`, `message`, `posted_by`, `classroom`, `timestamp`
-
-**Model: `MessageThread` / `DiscussionBoard`**
-- `participants`, `classroom`, `topic`, `created_at`
-
-**Model: `Message`**
-- `thread`, `sender`, `content`, `timestamp`
-
----
-
-### 📊 Monitoring and Tracking
-
-**Model: `Attendance`**
-- `student`, `classroom`, `date`, `status` (present, absent, late)
-- `marked_by`, `notes`
-
-**Model: `GradeReport`**
-- `student`, `classroom`, `assessment`, `score`, `remarks`
-
-**Model: `ProgressTracker`**
-- `student`, `classroom`, `milestone`, `status`, `updated_at`
-
----
-
-### 🧾 Feedback and Reports
-
-**Model: `Feedback`**
-- `teacher`, `student`, `assessment`, `comments`, `timestamp`
-
-**Model: `SystemReport`**
-- `student`, `classroom`, `attendance_summary`, `grade_summary`, `participation_score`
-
----
-
-### 🏅 E-Certificates
-
-**Model: `Certificate`**
-- `student`, `classroom`, `title`, `description`, `issued_on`
-- `template` (FK to `CertificateTemplate`)
-- `file` (PDF/Image), `is_downloaded`, `is_shared`
-
-**Model: `CertificateTemplate`**
-- `name`, `logo`, `signature`, `background`, `custom_text`
-
----
-
-### 🧠 Accessibility and Usability (mostly frontend)
-
-Handled via:
-- Responsive design (CSS/media queries)
-- Role-based views and permissions
-- Mobile-first layouts and progressive enhancement
-
----
-
-### 🔐 Permissions and Roles
-
-Use Django’s `Group` and `Permission` system or a custom role field in `User`. You can also use decorators like `@user_passes_test` or `@permission_required` to gate views.
-
----
-
-Would you like me to sketch out the actual Django model code for a few of these? Or maybe help you plan the UX flows for teachers vs. students?
+from django.contrib.auth.models import AbstractUser
 
 
 
-"""
+class CustomUser(AbstractUser):
+	fullname = models.CharField(max_length=255, null=True, blank=True)
+	profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+	school_name = models.CharField(max_length=255, null=True, blank=True)
+	short_bio = models.TextField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	# teachers --->
+	subject_area = models.CharField(max_length=255, null=True, blank=True)
+
+	# students --->
+	grade_level = models.CharField(max_length=255, null=True, blank=True)
+	classrooms = models.JSONField(default=list, blank=True)
+	"""
+		classrooms = [
+			classroom.pk , ...
+		]
+	"""
+
+	def __str__(self):
+		return f"{self.username} : {self.fullname}"
+
+
+class Notification(models.Model):
+	title = models.CharField(max_length=255, null=True, blank=True)
+	content = models.TextField( null=True, blank=True)
+	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='user_notifications')
+	is_seen = models.BooleanField(default=False)
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return self.title
+
+
+
+class Classroom(models.Model):
+	classroom_name = models.CharField(max_length=255, null=True, blank=True)
+	classroom_link_id = models.CharField(max_length=255, null=True, blank=True)
+	classroom_description = models.TextField( null=True, blank=True)
+	classroom_subject = models.CharField(max_length=255, null=True, blank=True)
+	classroom_owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_owner')
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return self.classroom_name
+
+class Material(models.Model):
+	material_name = models.CharField(max_length=255, null=True, blank=True)
+	material_joined = models.JSONField(default=list, blank=True , null=True)
+	"""
+		material_joined = [
+			customuser.pk , ...
+		]
+	"""
+	material_file = models.FileField(upload_to='material_files/', null=True, blank=True)
+	material_description = models.TextField( null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	material_owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='material_owner')
+	material_link = models.TextField( null=True, blank=True)
+	classroom_material = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_material')
+
+	def __str__(self):
+		return self.material_name
+
+
+class StudentMaterial(models.Model):
+	student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='student_material')
+	material = models.ForeignKey(Material, on_delete=models.CASCADE, null=True, blank=True , related_name='material_student')
+	created_at = models.DateTimeField(auto_now_add=True)
+
+
+
+class Activity(models.Model):
+	activity_name = models.CharField(max_length=255, null=True, blank=True)
+	activity_joined = models.JSONField(default=list, blank=True , null=True)
+	"""
+		activity_joined = [
+			customuser.pk , ...
+		]
+	"""
+	activity_description = models.TextField( null=True, blank=True)
+	activity_type = models.CharField(
+		max_length=255, null=True,
+		blank=True,
+		choices=[
+			('Quiz', 'Quiz'),
+			('Assessment', 'Assessment'),
+			('Exam', 'Exam'),
+			('Assignment', 'Assignment'),
+		]
+	)
+	created_at = models.DateTimeField(auto_now_add=True)
+	activity_owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_owner')
+	activity_due_date = models.DateTimeField(null=True, blank=True)
+	activity_starting_date = models.DateTimeField(null=True, blank=True)
+	activity_content = models.JSONField(default=dict, blank=True , null=True)
+	"""
+		activity_content = {
+			"1" : {
+				"type" : "checkbox",
+				"question" : "Question 1",
+				"question_image" : "activity_file.activity_id",
+				"correct_answers" : [
+					"1", "2", "3"
+				],
+				"options" : {
+					"1" : "Answer 1",
+					"2" : "Answer 2",
+					"3" : "Answer 3"
+					"4" : "Answer 4"
+				}
+			},
+			"2" : {
+				"type" : "textfield",
+				"question" : "Question 2",
+				"question_image" : "activity_file.activity_id",
+			},
+			"3" : {
+				"type" : "radio",
+				"question" : "Question 3",
+				"question_image" : "activity_file.activity_id",
+				"options" : {
+					"1" : "Answer 1",
+					"2" : "Answer 2",
+					"3" : "Answer 3"
+				},
+				"correct_answer" : "1"
+ 			},
+			"4" : {
+				"type" : "file",
+				"question" : "Question 4",
+				"question_image" : "activity_file.activity_id",
+			}
+		}
+	"""
+	activity_classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_classroom')
+
+	def __str__(self):
+		return self.activity_name
+
+
+
+class ActivityFile(models.Model):
+	activity_file = models.FileField(upload_to='activity_files/', null=True, blank=True) 
+	activity_id = models.CharField(max_length=255, null=True, blank=True)
+	activity_file_classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_file_classroom')
+	activity = models.ForeignKey(Activity, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_file')
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return f"{self.activity_id}"
+
+
+class StudentActivity(models.Model):
+	activity = models.ForeignKey(Activity, on_delete=models.CASCADE, null=True, blank=True , related_name='student_activity')
+	created_at = models.DateTimeField(auto_now_add=True)
+	activity_answers = models.JSONField(default=dict, blank=True , null=True)
+	"""
+		activity_content = {
+			"1" : {
+				"answer" : "1",
+				"answer_file" : "student_activity_file.activity_id",
+				"is_correct" : "true"
+			},
+			"2" : { 
+				"answer" : "1",
+				"answer_file" : "student_activity_file.activity_id" 
+				"is_correct" : "true"
+			},
+			"3" : {
+				"answer" : "1",
+				"answer_file" : "student_activity_file.activity_id" 
+				"is_correct" : "true"
+ 			},
+			"4" : {
+				"answer" : "1",
+				"answer_file" : "student_activity_file.activity_id" 
+				"is_correct" : "true"
+			}
+		}
+ 
+	"""
+	student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='student_activity')
+	certificate = models.FileField(upload_to='student_activity_files/', null=True, blank=True)
+	scores = models.IntegerField(null=True, blank=True, default=0)
+ 
+ 
+ 
+	def __str__(self):
+		return f"{self.activity.activity_name}"
+
+
+
+class StudentActivityFile(models.Model):
+	activity_file = models.FileField(upload_to='student_activity_files/', null=True, blank=True)
+	activity_id = models.CharField(max_length=255, null=True, blank=True)
+	activity_file_classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='student_activity_file_classroom')
+	student_activity = models.ForeignKey(StudentActivity, on_delete=models.CASCADE, null=True, blank=True , related_name='student_activity_file')
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return f"{self.activity_id}"
+
+class ClassroomPost(models.Model):
+	teacher = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_post_teacher')
+	created_at = models.DateTimeField(auto_now_add=True)
+	content = models.TextField( null=True, blank=True)
+	classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_post')
+
+	def __str__(self):
+		return f"{self.content}"
+
+
+class ClassroomPostReply(models.Model):
+	replier = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_post_replier')
+	created_at = models.DateTimeField(auto_now_add=True)
+	content = models.TextField( null=True, blank=True)
+	post = models.ForeignKey(ClassroomPost, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_post_reply')
+	classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_post_reply')
+
+	def __str__(self):
+		return f"{self.content}"
+	
+
+
+
+class Post(models.Model):
+    teacher = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='post_teacher')
+    created_at = models.DateTimeField(auto_now_add=True)
+    content = models.TextField( null=True, blank=True)
+    
+    
+class PostReply(models.Model):
+	replier = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='post_replier')
+	created_at = models.DateTimeField(auto_now_add=True)
+	content = models.TextField( null=True, blank=True)
+	post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True , related_name='post_reply')
+ 
+ 
+class Message(models.Model):
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='message_sender')
+    receiver = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='message_receiver')
+    content = models.TextField( null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    classroom_message = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_message')
+    is_seen = models.BooleanField(default=False)
+    
+
+
