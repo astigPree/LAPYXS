@@ -140,6 +140,8 @@ h1, h2, h3, h4, h5, h6{
     justify-content: flex-start;
     margin: 0 auto; 
     height: 100svh;
+    padding-bottom: 45px;
+    box-sizing: border-box;
 }
 
 .loading-modal{ 

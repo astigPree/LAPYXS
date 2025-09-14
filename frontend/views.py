@@ -20,6 +20,9 @@ def register_student_page(request):
 def teacher_dashboard_page(request):
     return render(request, 'teacher/dashboard.html')
 
+def teacher_classroom_page(request):
+    return render(request, 'teacher/classrooms.html')
+
 
 
 
