@@ -11,7 +11,7 @@
 
 {% block basebodyblock %}
 
-<button class="back-button">
+<button class="back-button" onclick="window.location.href='{% url 'login_page' %}'">
     <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
     <span class="poppins-medium">BACK TO LOGIN</span>
 </button>
@@ -22,22 +22,27 @@
 
 <div class="register-container">
     <h3 class="poppins-bold">Join Your Virtual Classroom</h3>
-    <div class="register-profile">
-        <input type="file" name="profile" class="poppins-regular" hidden>
-        <img src="{% static "assets/upload-img.svg" %}" alt="default-profile" class="default-profile">
+    <div class="register-profile" id="profile-button">
+        <input type="file" name="profile" id="profile-field" class="poppins-regular" hidden>
+        <img src="{% static "assets/upload-img.svg" %}" alt="default-profile" id="profile-image" class="default-profile">
     </div>
+    <script>
+        var register_type = 'teacher';
+    </script>
     <h4 class="poppins-regular">Profile Picture</h4>
     <label class="poppins-regular">Full Name</label>
-    <input type="text" placeholder="This will appear on your submissions and certificate" class="poppins-regular input-field">
+    <input id="fullname-field" type="text" placeholder="This will appear on your submissions and certificate" class="poppins-regular input-field">
     <label class="poppins-regular">Email Address</label>
-    <input type="text" placeholder="Enter the email you signed up with" class="poppins-regular input-field">
+    <input id="email-field" type="text" placeholder="Enter the email you signed up with" class="poppins-regular input-field">
     <label class="poppins-regular">Password</label>
-    <input type="text" placeholder="Make it strong and secure" class="poppins-regular input-field">
+    <input type="password" id="password-field" placeholder="Make it strong and secure" class="poppins-regular input-field">
+    <label class="poppins-regular">Confirm Password</label>
+    <input type="password" id="confirm-password-field" placeholder="Make it strong and secure" class="poppins-regular input-field">
     <label class="poppins-regular">School Name</label>
-    <input type="text" placeholder="Optional: helps teacher recognize you" class="poppins-regular input-field">
+    <input type="text" id="school-name-field" placeholder="Optional: helps teacher recognize you" class="poppins-regular input-field">
     <label class="poppins-regular">Grade Level</label>
-    <input type="text" placeholder="Optional: helps teachers know your level" class="poppins-regular input-field">
-    <button class="poppins-bold register-button">
+    <input type="text" id="grade-level-field" placeholder="Optional: helps teachers know your level" class="poppins-regular input-field">
+    <button class="poppins-bold register-button" id="register-button">
         Sign Up as Student
     </button>
 
