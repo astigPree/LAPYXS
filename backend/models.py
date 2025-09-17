@@ -7,11 +7,13 @@ class CustomUser(AbstractUser):
 	fullname = models.CharField(max_length=255, null=True, blank=True)
 	profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 	school_name = models.CharField(max_length=255, null=True, blank=True)
-	short_bio = models.TextField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
+	
+	user_type = models.CharField(max_length=255, null=True, blank=True, choices=[('Teacher', 'Teacher'), ('Student', 'Student')])
 
 	# teachers --->
 	subject_area = models.CharField(max_length=255, null=True, blank=True)
+	short_bio = models.TextField(null=True, blank=True)
 
 	# students --->
 	grade_level = models.CharField(max_length=255, null=True, blank=True)
@@ -23,7 +25,7 @@ class CustomUser(AbstractUser):
 	"""
 
 	def __str__(self):
-		return f"{self.username} : {self.fullname}"
+		return f"{self.user_type} : {self.username} : {self.fullname}"
 
 
 class Notification(models.Model):

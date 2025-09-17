@@ -55,6 +55,7 @@ async function sendRequest(url, method, data) {
         return response
         
     } catch (error){
+        console.log(error)
         return null
     }
  

@@ -31,7 +31,9 @@ function prepare_teacher_data(){
         'confirm_password': confirm_password_field.value,
         'school_name': school_name_field.value,
         'subject_area': subject_area_field.value,
-        'description': description_field.value
+        'description': description_field.value,
+        'profile': profile_field?.files[0] || null,
+        'register_type': register_type
     };
 }
 
@@ -42,11 +44,51 @@ function prepare_student_data(){
         'password': password_field.value,
         'confirm_password': confirm_password_field.value,
         'school_name': school_name_field.value,
-        'grade_level': grade_level_field.value
+        'grade_level': grade_level_field.value,
+        'profile': profile_field?.files[0] || null,
+        'register_type': register_type
     };
 }
 
 
+register_button.addEventListener('click' , async () => {
+
+    console.log('register button clicked', register_button.disabled);
+    if (register_button.disabled) return;
+
+    register_button.disabled = true;
+
+    let data = null;
+    if(register_type == 'teacher'){ 
+        data = prepare_teacher_data();
+    }
+    else if(register_type == 'student'){ 
+        data = prepare_student_data();
+    }
+
+    console.log(data);
+
+    const response = await sendRequest('../api/register', 'POST', data);
+    console.log(response);
+    if (!response){
+        // Todo: show error message
+        register_button.disabled = false;
+        return;
+    }
+
+    if (!response?.ok){
+        // Todo: show error message
+        register_button.disabled = false;
+        return;
+    }
+
+    const response_data = await response.json(); 
+    console.log(response_data);
+
+    register_button.disabled = false;
+
+
+});
 
 
 

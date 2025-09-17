@@ -1,5 +1,8 @@
 from django.urls import path
-from . import views
-urlpatterns = [
+from backend.views import *
 
+urlpatterns = [
+    path('register', api_register_auth , name='api_register_auth'),
+    path('login', api_login_auth , name='api_login_auth'),
+    path('logout', api_logout_auth , name='api_logout_auth'),
 ]
