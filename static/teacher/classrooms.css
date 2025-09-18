@@ -126,7 +126,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 30svh;
+    margin-top: 26svh;
 }
 
 .classroom-add-modal-header{
@@ -193,8 +193,31 @@ label{
     outline: none;
 }
 
+.classroom_add_modal_actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 80%;
+    height: fit-content;
+    column-gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 12px;
+}
 
-
+.classroom_add_modal_actions button{  
+    border: none;
+    width: 40%;
+    background: #FA191C;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 15px; 
+    text-align: center;
+    color: #FFFFFF; 
+    padding: 5px 0px;
+    cursor: pointer;
+}
 
 
 
