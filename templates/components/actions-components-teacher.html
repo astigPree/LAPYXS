@@ -56,6 +56,18 @@
             </button>
         
         {% else %}
+            <button  style="{% if selected == 'student_dashboard' %}display : none;{% endif %}">
+                <img src="{% static "assets/dashboard-icon.svg" %}" alt="dashboard-icon" class="dashboard-icon">
+                <span class="poppins-medium">Dashboard</span>
+            </button>
+            <button  style="{% if selected == 'student_message' %}display : none;{% endif %}">
+                <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
+                <span class="poppins-medium">Message</span>
+            </button>
+            <button  style="{% if selected == 'student_post' %}display : none;{% endif %}">
+                <img src="{% static "assets/post-icon.svg" %}" alt="post-icon" class="post-icon">
+                <span class="poppins-medium">Post</span>
+            </button>
         
         {% endif %}
     </div>

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}">
+<link rel="stylesheet" href="{% static "teacher/dashboard.css" %}">
+<script src="{% static "teacher/dashboard.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_dashboard" %}
+
+
+
+
+<section class="dashboard-section">
+
+    <h1 class="poppins-light">Dashboard</h1>
+    
+    <div class="dashboard-analytics">
+        <div class="analytics-container">
+            <h2 class="poppins-medium">30</h2> 
+            <h3 class="poppins-light">Number of Classroms</h3>
+        </div>
+        <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+    </div>
+    <div class="dashboard-analytics">
+        <div class="analytics-container">
+            <h2 class="poppins-medium">30</h2> 
+            <h3 class="poppins-light">Number of Classroms</h3>
+        </div>
+        <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+    </div>
+    <div class="dashboard-analytics">
+        <div class="analytics-container">
+            <h2 class="poppins-medium">30</h2> 
+            <h3 class="poppins-light">Number of Classroms</h3>
+        </div>
+        <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+    </div>
+
+    
+
+</section>
+
+
+
+
+
+
+
+
+
+{% endblock basebodyblock %}

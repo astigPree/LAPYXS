@@ -25,13 +25,13 @@ profile_field.addEventListener("change", () => {
 
 function prepare_teacher_data(){ 
     return {
-        'fullname': fullname_field.value,
-        'email': email_field.value,
-        'password': password_field.value,
-        'confirm_password': confirm_password_field.value,
-        'school_name': school_name_field.value,
-        'subject_area': subject_area_field.value,
-        'description': description_field.value,
+        'fullname': fullname_field?.value,
+        'email': email_field?.value,
+        'password': password_field?.value,
+        'confirm_password': confirm_password_field?.value,
+        'school_name': school_name_field?.value,
+        'subject_area': subject_area_field?.value,
+        'description': description_field?.value,
         'profile': profile_field?.files[0] || null,
         'register_type': register_type
     };
@@ -39,12 +39,12 @@ function prepare_teacher_data(){
 
 function prepare_student_data(){
     return {
-        'fullname': fullname_field.value,
-        'email': email_field.value,
-        'password': password_field.value,
-        'confirm_password': confirm_password_field.value,
-        'school_name': school_name_field.value,
-        'grade_level': grade_level_field.value,
+        'fullname': fullname_field?.value,
+        'email': email_field?.value,
+        'password': password_field?.value,
+        'confirm_password': confirm_password_field?.value,
+        'school_name': school_name_field?.value,
+        'grade_level': grade_level_field?.value,
         'profile': profile_field?.files[0] || null,
         'register_type': register_type
     };
