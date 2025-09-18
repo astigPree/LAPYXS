@@ -137,6 +137,14 @@
         document.getElementById("notifications-container").classList.toggle("toggled-notifications-container");
     });
 
+    account_information_button.addEventListener("click", function() {
+        if ( "{{ request.user.user_type }}" == "Teacher" ) {
+            window.location.href = "{% url 'teacher_accounts_page' %}";
+        } else {
+            {% comment %} window.location.href = "{% url 'student_accounts_page' %}"; {% endcomment %}
+        }
+    });
+
 
 </script>
 

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "authen/register_account.css" %}">
+<script src="{% static "teacher/accounts.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+<button class="back-button" onclick="window.location.href='{% url 'login_page' %}'">
+    <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
+    <span class="poppins-medium">BACK TO LOGIN</span>
+</button>
+
+<img src="{% static "assets/icon.png" %}" alt="logo" class="logo">
+<h1 class="title poppins-bold">LAPYXS</h1>
+<h2 class="subtitle poppins-light">A VIRTUAL CLASSROOM SYSTEM</h2>
+
+<div class="register-container">
+    <h3 class="poppins-bold">Create Your Teacher Account</h3>
+    <div class="register-profile" id="profile-button">
+        <input id="profile-field" type="file" name="profile" class="poppins-regular" hidden>
+        <img src="{% static "assets/upload-img.svg" %}" id="profile-image" alt="default-profile" class="default-profile">
+    </div>
+    <script>
+        var register_type = 'teacher';
+    </script>
+    <h4 class="poppins-regular">Profile Picture</h4>
+    <label class="poppins-regular">Full Name</label>
+    <input readonly value="{{ request.user.fullname }}" type="text" id="fullname-field" placeholder="Your name as it will appear to students" class="poppins-regular input-field">
+    <label class="poppins-regular">Email Address</label>
+    <input readonly value="{{ request.user.email }}" type="email" id="email-field" placeholder="We’ll use this to send updates and login info" class="poppins-regular input-field">
+    <label class="poppins-regular">Password</label>
+    <input type="password" id="password-field" placeholder="Make it strong and secure" class="poppins-regular input-field">
+    <label class="poppins-regular">Confirm Password</label>
+    <input type="password" id="confirm-password-field" placeholder="Re-type your password" class="poppins-regular input-field">
+    <label class="poppins-regular">School Name</label>
+    <input value="{{ request.user.school_name }}" type="text" id="school-name-field" placeholder="Helps students recognize your school" class="poppins-regular input-field">
+    <label class="poppins-regular">Subject Area</label>
+    <input type="text" id="subject-area-field" placeholder="What do you teach?" class="poppins-regular input-field">
+    <label value="{{ request.user.subject_area }}" class="poppins-regular">Short Bio</label>
+    <textarea name="description" id="description-field" placeholder="Tell us a bit about your teaching style or experience" class="poppins-regular textarea-field"></textarea>
+    
+    <br>
+    <button class="poppins-bold register-button" id="update-button">
+        Update Information
+    </button>
+    <br>
+    <button class="poppins-bold logout-button" id="logout-button">
+        Logout Account
+    </button>
+
+</div>
+
+
+
+
+
+
+{% endblock basebodyblock %}
