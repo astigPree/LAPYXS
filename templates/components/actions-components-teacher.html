@@ -6,24 +6,24 @@
     </div>
 
     <div class="navigation-shortcut-icon">
-        <div class="navigation-notification">
+        <div class="navigation-notification" id="account-information-button">
             <img src="{% static "assets/account-icon.svg" %}" alt="shortcut-icon" class="shortcut-icon">
         </div>
-        <div class="navigation-notification">
+        <div class="navigation-notification" id="account-notification-button">
             <span id="notification-red"></span>
             <img src="{% static "assets/notification-icon.svg" %}" alt="notification-icon" class="notification-icon">
         </div>
     </div>
 </nav>
 
-<button class="shortcut-actions-opener">
-    <span class="poppins-light">Show Actions</span>
-    <img src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
+<button class="shortcut-actions-opener" id="teacher-actions-opener">
+    <span class="poppins-light" id="actions-opener-text">Hide Actions</span>
+    <img id="actions-opener-icon" src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
 </button>
 
-<div class="shortcut-actions-container" style="display: none;">
+<div class="shortcut-actions-container" id="teacher-actions-container">
     <h1 class="poppins-bold">Welcome back! </h1>
-    <h2 class="poppins-light ellipsis">Teacher Makie</h2>
+    <h2 class="poppins-light ellipsis">{{ request.user.fullname }}</h2>
     <div class="shortcut-actions-buttons">
         {% if action_to_show == "teacher" %} 
             <button  style="{% if selected == 'teacher_dashboard' %}display : none;{% endif %}">
@@ -62,12 +62,32 @@
     <div class="shortcut-actions-container-divider"></div>
 </div>
 
+<script>
+    const teacher_actions_opener = document.getElementById("teacher-actions-opener");
+    const teacher_actions_container = document.getElementById("teacher-actions-container");
+    const actions_opener_text = document.getElementById("actions-opener-text");
+    const actions_opener_icon = document.getElementById("actions-opener-icon");
 
-<div class="notifications-container" style="display: none;">
+    teacher_actions_opener.addEventListener("click", function() { 
+        teacher_actions_container.classList.toggle("toggled"); 
+        actions_opener_icon.classList.toggle("toggled-shorcut-actions-opener-img");
+
+        if (teacher_actions_container.classList.contains("toggled")) {
+            actions_opener_text.innerText = "Show Actions";
+        } else {
+            actions_opener_text.innerText = "Hide Actions";
+        }
+
+    });
+</script>
+
+
+
+<div class="notifications-container" style="display: none;" id="notifications-container">
     <div class="notications-wrapper">
         <div class="notification-header-container">
             <h2 class="poppins-regular">Notifications</h2>
-            <img src="{% static "assets/back-icon.svg" %}" alt="back-icon" class="back-icon">
+            <img id="notifications-container-back-icon" src="{% static "assets/back-icon.svg" %}" alt="back-icon" class="back-icon">
         </div>
 
         <input type="date" name="notification-date" class="poppins-regular notification-date-input">
@@ -91,3 +111,20 @@
 
     </div>
 </div>
+
+<script>
+    const account_information_button = document.getElementById("account-information-button");
+    const account_notification_button = document.getElementById("account-notification-button");
+    const notifications_container_back_icon = document.getElementById("notifications-container-back-icon");
+ 
+    account_notification_button.addEventListener("click", function() { 
+        document.getElementById("notifications-container").classList.toggle("toggled-notifications-container");
+    });
+
+    notifications_container_back_icon.addEventListener("click", function() { 
+        document.getElementById("notifications-container").classList.toggle("toggled-notifications-container");
+    });
+
+
+</script>
+
