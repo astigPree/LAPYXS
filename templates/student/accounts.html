@@ -11,9 +11,9 @@
 
 {% block basebodyblock %}
 
-<button class="back-button" onclick="window.location.href='{% url 'home_page' %}'">
+<button class="back-button" onclick="window.location.href='{% url 'login_page' %}'">
     <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
-    <span class="poppins-medium">Go Back</span>
+    <span class="poppins-medium">BACK TO LOGIN</span>
 </button>
 
 <img src="{% static "assets/icon.png" %}" alt="logo" class="logo">
@@ -21,33 +21,32 @@
 <h2 class="subtitle poppins-light">A VIRTUAL CLASSROOM SYSTEM</h2>
 
 <div class="register-container">
-    <h3 class="poppins-bold">Create Your Teacher Account</h3>
+    <h3 class="poppins-bold">Join Your Virtual Classroom</h3>
     <div class="register-profile" id="profile-button">
-        <input id="profile-field" type="file" name="profile" class="poppins-regular" hidden>
-        <img id="profile-image" alt="default-profile" class="default-profile" src="">
+        <input type="file" name="profile" id="profile-field" class="poppins-regular" hidden>
+        <img src="{% static "assets/upload-img.svg" %}" alt="default-profile" id="profile-image" class="default-profile">
         <script>
             const image_path = "{{ request.user.profile_image.url|escapejs }}";
             document.getElementById('profile-image').src = image_path;  
         </script>
     </div>
     <script>
-        var register_type = 'teacher';
+        var register_type = 'student';
     </script>
     <h4 class="poppins-regular">Profile Picture</h4>
     <label class="poppins-regular">Full Name</label>
-    <input value="{{ request.user.fullname }}" type="text" id="fullname-field" placeholder="Your name as it will appear to students" class="poppins-regular input-field">
+    <input value="{{ request.user.fullname }}"  id="fullname-field" type="text" placeholder="This will appear on your submissions and certificate" class="poppins-regular input-field">
     <label class="poppins-regular">Email Address</label>
-    <input readonly value="{{ request.user.email }}" type="email" id="email-field" placeholder="We’ll use this to send updates and login info" class="poppins-regular input-field">
+    <input readonly value="{{ request.user.email }}" id="email-field" type="email" placeholder="Enter the email you signed up with" class="poppins-regular input-field">
     <label class="poppins-regular">Password</label>
     <input type="password" id="password-field" placeholder="Make it strong and secure" class="poppins-regular input-field">
     <label class="poppins-regular">Confirm Password</label>
-    <input type="password" id="confirm-password-field" placeholder="Re-type your password" class="poppins-regular input-field">
+    <input type="password" id="confirm-password-field" placeholder="Make it strong and secure" class="poppins-regular input-field">
     <label class="poppins-regular">School Name</label>
-    <input value="{{ request.user.school_name }}" type="text" id="school-name-field" placeholder="Helps students recognize your school" class="poppins-regular input-field">
-    <label class="poppins-regular">Subject Area</label>
-    <input type="text" value="{{ request.user.subject_area }}" id="subject-area-field" placeholder="What do you teach?" class="poppins-regular input-field">
-    <label value="{{ request.user.subject_area }}" class="poppins-regular">Short Bio</label>
-    <textarea name="description" id="description-field" placeholder="Tell us a bit about your teaching style or experience" class="poppins-regular textarea-field">{{request.user.short_bio}}</textarea>
+    <input value="{{ request.user.school_name }}" type="text" id="school-name-field" placeholder="Helps teacher recognize you" class="poppins-regular input-field">
+    <label class="poppins-regular">Grade Level</label>
+    <input value="{{ request.user.grade_level }}" type="text" id="grade-level-field" placeholder="Helps teachers know your level" class="poppins-regular input-field">
+
     
     <br>
     <button class="poppins-bold register-button" id="update-button">
@@ -59,6 +58,7 @@
     </button>
 
 </div>
+
 
 
 

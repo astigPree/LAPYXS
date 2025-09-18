@@ -141,7 +141,7 @@
         if ( "{{ request.user.user_type }}" == "Teacher" ) {
             window.location.href = "{% url 'teacher_accounts_page' %}";
         } else {
-            {% comment %} window.location.href = "{% url 'student_accounts_page' %}"; {% endcomment %}
+            window.location.href = "{% url 'student_accounts_page' %}";
         }
     });
 
