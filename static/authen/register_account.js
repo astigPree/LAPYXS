@@ -58,6 +58,8 @@ register_button.addEventListener('click' , async () => {
 
     register_button.disabled = true;
 
+    showLoadingModal();
+
     let data = null;
     if(register_type == 'teacher'){ 
         data = prepare_teacher_data();
@@ -69,23 +71,38 @@ register_button.addEventListener('click' , async () => {
     console.log(data);
 
     const response = await sendRequest('../api/register', 'POST', data);
-    console.log(response);
+    hideLoadingModal();
+
     if (!response){
         // Todo: show error message
-        register_button.disabled = false;
+        showErrorModal('Something went wrong. Please try again later.');
+        setTimeout(() => {
+            hideErrorModal();
+            register_button.disabled = false;
+        }, 2000); 
         return;
     }
 
     if (!response?.ok){
         // Todo: show error message
-        register_button.disabled = false;
+        const error_message = await response.json();
+        showErrorModal(error_message?.error);
+        setTimeout(() => {
+            hideErrorModal();
+            register_button.disabled = false;
+        }, 2000); 
         return;
     }
-
-    const response_data = await response.json(); 
-    console.log(response_data);
-
-    register_button.disabled = false;
+ 
+    const response_data = await response.json();
+    if (data){
+        showSuccessModal('Account created successfully.');
+        setTimeout(() => {
+            hideSuccessModal();
+            window.location.href = response_data?.url || "../home";
+        }, 2000); 
+    }
+ 
 
 
 });

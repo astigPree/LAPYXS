@@ -72,8 +72,15 @@ def api_register_auth(request):
         # Register the authentication
         base_user.set_password(password)
         base_user.save()
-         
-        return JsonResponse({'success': 'Account registered successfully.' , 'err' : f"{base_user.user_type}"}, status=200)
+        
+        # Login the user
+        login(request, base_user)
+        
+        return JsonResponse({
+            'success': 'Account registered successfully.' , 
+            'err' : f"{base_user.user_type}", 
+            'url' : reverse('home_page')
+        }, status=200)
 
          
     except Exception as e:

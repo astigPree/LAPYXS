@@ -12,26 +12,42 @@ login_button.addEventListener("click", async () => {
     }
 
     login_button.disabled = true;
+    showLoadingModal();
 
     const response = await sendRequest("../api/login", "POST", {
         "email": email,
         "password": password
     });
+    hideLoadingModal();
 
     if (!response){
         // show error message
-        login_button.disabled = false;
+        showErrorModal('Something went wrong. Please try again later.');
+        setTimeout(() => {
+            hideErrorModal();
+            login_button.disabled = false;
+        }, 2000); 
         return;
     }
 
     if (!response?.ok){
         // show error message
-        login_button.disabled = false;
+        const error_message = await response.json();
+        showErrorModal(error_message?.error);
+        setTimeout(() => {
+            hideErrorModal();
+            login_button.disabled = false;
+        }, 2000);
         return;
     }
 
     const data = await response.json();
+    
     if (data){
-        window.location.href = data?.url || "../home";
+        showSuccessModal('Login successful.');
+        setTimeout(() => {
+            hideSuccessModal();
+            window.location.href = data?.url || "../home";
+        }, 2000);
     }
 });

@@ -1,4 +1,45 @@
 
+function showLoadingModal(message) {
+    if (message) {
+        document.getElementById("loading-message").textContent = message;
+    }
+    document.getElementById("success-modal").style.display = "none";
+    document.getElementById("error-modal").style.display = "none";
+    document.getElementById("loading-modal").style.display = "flex";
+}
+
+function hideLoadingModal() {
+    document.getElementById("loading-modal").style.display = "none";
+}
+
+function showSuccessModal(message) {
+    if (message) {
+        document.getElementById("success-message").textContent = message;
+    }
+    document.getElementById("loading-modal").style.display = "none";
+    document.getElementById("error-modal").style.display = "none";
+    document.getElementById("success-modal").style.display = "flex";
+}
+
+function hideSuccessModal() {
+    document.getElementById("success-modal").style.display = "none";
+}
+
+function showErrorModal(message) {
+    if (message) {
+        document.getElementById("error-message").textContent = message;
+    }
+    document.getElementById("loading-modal").style.display = "none";
+    document.getElementById("success-modal").style.display = "none";
+    document.getElementById("error-modal").style.display = "flex";
+}
+
+function hideErrorModal() {
+    document.getElementById("error-modal").style.display = "none";
+}
+
+
+
 
 function debounce(func, delay) {
     let timer;
