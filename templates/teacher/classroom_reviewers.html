@@ -50,15 +50,15 @@
         </div>
     </div>
 
-    <input type="month" name="" id="month-field" class="poppins-regular notification-date-input" style="align-self: flex-end; margin-right: 8%">
+    <input type="month" name="" id="month-field" class="poppins-regular notification-date-input" style="align-self: flex-end; margin-right: 8%; width: 125px;">
     <hr style="color: black; width: 85%; margin-top: 10px; height: 0.5px; background-color: black;">
 
-    <div class="materials-collections">
+    <div class="materials-collections" id="material_collections">
         <div class="material-empty" style="display: none;">
             <h3 class="poppins-light"> There are no material uploaded this month! </h3>
         </div>
 
-        <div class="material-container">
+        <div class="material-container" style="display: none;" >
             <img src="{% static 'assets/delete-materials-icon.svg' %}" alt="" class="collections-delete-button">
             <h2 class="poppins-regular ellipsis"> Reviewer For Final </h2>
             <h5 class="poppins-light ellipsis">Date Uploaded : December 12, 2003</h5>
@@ -74,7 +74,7 @@
     </div>
 
 
-    <img src="{% static 'assets/add-material-button.svg' %}" alt="" class="add-collection-button">
+    <img src="{% static 'assets/add-material-button.svg' %}" alt="" class="add-collection-button" id="add_collection_button">
  
 
 </section>
@@ -106,6 +106,97 @@
 
 
 
+<div class="classroom-delete-modal" id="classroom_delete_modal" style="display: none;">
 
+    <div class="classroom-delete-modal-container">
+        
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Delete Classroom</span>
+        </div>
+        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all the students, exams and materials uploaded in this classroom</p>
+        
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="continue_delete_button">Continue</button>
+            <button class="poppins-extrabold" id="cancel_delete_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="classroom-delete-modal" id="delete_material_modal" style="display: none;">
+
+    <div class="classroom-delete-modal-container">
+        
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Delete Material</span>
+        </div>
+        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all connected to this materials. </p>
+        
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="continue_delete_material_button">Continue</button>
+            <button class="poppins-extrabold" id="cancel_delete_material_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="classroom-add-modal" id="add_material_modal" style="display: none;">
+    <div class="classroom-add-modal-container" style="margin-top: 20svh;">
+
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Add Learning Materials</span>
+        </div>
+        
+        <label class="poppins-regular">Material Name</label>
+        <input id="material_name" type="text" placeholder="Enter your Material name" class="poppins-regular input-field">
+        <label class="poppins-regular">Material Descriptions</label>
+        <textarea id="material_description" name="description" placeholder="What this materials is all about?" class="poppins-regular textarea-field"></textarea>
+        <label class="poppins-regular">Material Link</label>
+        <input id="material_link" type="text" placeholder="Optional: Add additional link " class="poppins-regular input-field">
+        <label class="poppins-regular">Material File</label>
+        <input id="material_file_button" type="button" value="Optional: Click Here to upload the file" class="poppins-regular file-field ellipsis">
+        <input type="file" name="" id="material_file" hidden>
+
+
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="add_matterial_button">Continue</button>
+            <button class="poppins-extrabold" id="cancel_adding_material_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var clasrroms_pages_link = "{% url 'teacher_classroom_page' %}";
+</script>
 
 {% endblock basebodyblock %}

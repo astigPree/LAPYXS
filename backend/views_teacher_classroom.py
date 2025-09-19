@@ -186,5 +186,104 @@ def api_get_teacher_materials(request):
 
 
 
+def api_teacher_delete_classroom(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classroom_id = request.POST.get('classroom_id', None)
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    
+    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom:
+        return JsonResponse({'error': 'Classroom not found.'}, status=400)
+    
+    classroom.delete()
+    
+    return JsonResponse({'success': 'Classroom deleted successfully.'}, status=200)
+
+
+
+def api_teacher_add_material(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+     
+    classroom_id = request.POST.get('classroom_id', None)
+    material_name = request.POST.get('material_name', None)
+    material_description = request.POST.get('material_description', None)
+    material_link = request.POST.get('material_link', None)
+    material_file = request.FILES.get('material_file', None)
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not isinstance(material_name, str):
+        return JsonResponse({'error': 'Material name is required.'}, status=400)
+    if not isinstance(material_description, str):
+        return JsonResponse({'error': 'Material description is required.'}, status=400)
+    
+    if material_link:
+        if not isinstance(material_link, str):
+            return JsonResponse({'error': 'Material link is required.'}, status=400)
+        
+    classroom_obj = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom_obj:
+        return JsonResponse({'error': 'Classroom not found.'}, status=400)
+    
+    material_obj = Material.objects.create(
+        material_name=material_name,
+        material_description=material_description,  
+        classroom_material=classroom_obj,
+        material_owner=request.user
+    )
+    
+    if material_link:
+        material_obj.material_link = material_link
+    if material_file:
+        material_obj.material_file = material_file
+    material_obj.save()
+    
+    return JsonResponse({'success': 'Material added successfully.'}, status=200)
+
+
+
+def api_teacher_delete_material(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    material_id = request.POST.get('material_id', None)
+    if not isinstance(material_id, str):
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    if not material_id.isdigit():
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    
+    material = Material.objects.filter(id=int(material_id), material_owner=request.user).first()
+    if not material:
+        return JsonResponse({'error': 'Material not found.'}, status=400)
+    
+    material.delete()
+    
+    return JsonResponse({'success': 'Material deleted successfully.'}, status=200)
+
 
 
