@@ -20,7 +20,7 @@
 <section class="classroom-section">
 
     <div class="classroom-title">
-        <h1 class="poppins-light">Classroom</h1>
+        <h1 class="poppins-light">Classrooms</h1>
         <button class="poppins-medium" id="create_classroom_button">
             Create Classroom
         </button>
@@ -57,7 +57,7 @@
         </div>
         
         <label class="poppins-regular">Classroom Name</label>
-        <input id="classroom_name" type="text" placeholder="Enter Your Classaroom Name" class="poppins-regular input-field">
+        <input id="classroom_name" type="text" placeholder="Enter Your Classroom Name" class="poppins-regular input-field">
         <label class="poppins-regular">Classroom Descriptions</label>
         <textarea id="classroom_description" name="description" placeholder="What this classroom is all about?" class="poppins-regular textarea-field"></textarea>
         <label class="poppins-regular">Classroom Subject</label>
@@ -72,7 +72,9 @@
 </div>
 
 
-
+<script>
+    var classroom_material_view_page = "{% url 'teacher_classroom_reviewers_page' %}";
+</script>
 
 
 

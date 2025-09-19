@@ -14,8 +14,6 @@
     opacity: 1;
 }
 
-
-
 .classroom-title{
     display: flex;
     flex-direction: row;
@@ -25,7 +23,6 @@
     height: fit-content;
     margin-top: 100px;
 }
-
 
 .classroom-title h1{
     flex: 1; 
@@ -52,59 +49,204 @@
 }
 
 
-.classrooms-selections{
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 20px;
-    height: fit-content;
-}
- 
-
-.classroom-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 85%; 
-    height: 57px;  
+.classroom-info-container{  
+    width: 85%;
+    height: fit-content;  
     background: #A3E3FF;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     border-radius: 4px;
-    margin-top: 24px;
-}
-
-
-.classroom-content{
-    height: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
-    flex: 1;
-    width: calc(100% - 50px);
-    margin-left: 15px;
+    justify-content: flex-start;
+    margin-top: 20px; 
+    padding: 10px 20px; 
 }
 
-.classroom-content h2{ 
-    font-size: 16px;
-    line-height: 22px; 
+
+.classroom-info-container h2{ 
+    font-size: 18px;
+    line-height: 25px;  
     color: #2E2D2D; 
-    width: 100%; 
+    margin-top: 10px; 
 }
-.classroom-content h3{ 
+.classroom-info-container h3{ 
+    font-size: 12px;
+    line-height: 15px;  
+    color: #2E2D2D;  
+    margin-top: 3px;
+}
+
+
+.classroom-info-action{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    column-gap: 10px;
+    align-self: flex-end;
+    margin-top: 12px;
+}
+
+.classroom-info-action button{
+    background: #ABFDE8; 
     font-size: 10px;
     line-height: 12px; 
     color: #2E2D2D; 
-    width: 100%; 
+    width: fit-content;
+    height: fit-content;
+    padding: 3px 5px;
+    border: 0.5px solid #2E2D2D;
+    border-radius: 2px; 
+    cursor: pointer;
 }
 
-.classroom-container img{
-    width: 25px;
-    height: 25px;
-    margin-right: 20px; 
+.classroom-info-action span{ 
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D; 
+}
+
+
+
+.classroom-all-actions-container{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: fit-content;
+    row-gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.classrooms-all-actions{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.classrooms-all-actions button{ 
+    width: 48%;
+    height: fit-content;  
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px; 
+    font-size: 10px;
+    line-height: 12px; 
+    text-align: center; 
+    color: #FFFFFF; 
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer
+}
+
+
+.materials-collections{
+    width: 85%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 10px;
+    margin-bottom: 40px;
+    padding-top: 18px;
+}
+
+
+.material-empty{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.material-empty h3{
+    font-size: 16px;
+    line-height: 21px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: center;
+}
+
+
+.material-container{
+    width: 100%; 
+    height: 86px; 
+    background: #EFF7F6;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;  
+    padding: 0px 25px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.material-container h2{
+    font-size: 15px;
+    line-height: 20px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: left;
+}
+
+.material-container h5{
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: left;
+}
+
+.collections-delete-button{
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.collection-visit-button{
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    bottom: 5px;
+    right: 15px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D;
+    text-decoration: underline;
+}
+
+
+.collection-category{ 
+    width: fit-content;
+    height: fit-content;  
+    background: #A3E3FF;
+    border-radius: 0px 2px; 
+    font-size: 8px;
+    line-height: 12px; 
+    color: #1A8FE3;
+    padding: 3px 8px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+
 }
 
 
@@ -229,4 +371,12 @@ label{
 
 
 
-
+.add-collection-button{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer; 
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+}

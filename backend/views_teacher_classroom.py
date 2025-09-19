@@ -80,3 +80,111 @@ def api_get_teacher_classrooms(request):
         
     return JsonResponse({'classrooms': classrooms_data}, status=200)
 
+
+def api_update_teacher_classroom(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classroom_id = request.POST.get('classroom_id', None)  
+    classroom_name = request.POST.get('classroom_name', None) 
+    classroom_description = request.POST.get('classroom_description', None) 
+    classroom_subject = request.POST.get('classroom_subject', None) 
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_name:
+        return JsonResponse({'error': 'Classroom name is required.'}, status=400)
+    if not classroom_description:
+        return JsonResponse({'error': 'Classroom description is required.'}, status=400)
+    if not classroom_subject:
+        return JsonResponse({'error': 'Classroom subject is required.'}, status=400)
+    
+    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom:
+        return JsonResponse({'error': 'Classroom not found.'}, status=400)
+    
+    classroom.classroom_name = classroom_name
+    classroom.classroom_description = classroom_description
+    classroom.classroom_subject = classroom_subject
+    classroom.save()
+    
+    return JsonResponse({'success': 'Classroom updated successfully.'}, status=200)
+
+
+def api_get_teacher_classroom(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classroom_id = request.POST.get('classroom_id', None)
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    
+    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom:
+        return JsonResponse({'error': 'Classroom not found.'}, status=400)
+    
+    return JsonResponse({
+        'classroom': {
+            'classroom_name': classroom.classroom_name, 
+            'classroom_description': classroom.classroom_description,
+            'classroom_subject': classroom.classroom_subject,
+            'classroom_link_id': classroom.classroom_link_id
+        }
+    }, status=200)
+
+
+def api_get_teacher_materials(request):
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classroom_id = request.POST.get('classroom_id', None)
+    selected_month = request.POST.get('selected_month', None)
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not selected_month:
+        return JsonResponse({'error': 'Selected month is required.'}, status=400)
+    try:
+        selected_month = int(selected_month.split('-')[1])  # "09" → 9
+    except (AttributeError, ValueError, IndexError):
+        return JsonResponse({'error': 'Invalid month format'}, status=400)
+    
+    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom:
+        return JsonResponse({'error': 'Classroom not found.'}, status=400)
+    
+    materials = Material.objects.filter(
+        classroom_material=classroom, 
+        material_owner=request.user,
+        created_at__month=selected_month
+    ).values()
+    
+    return JsonResponse({'materials': list(materials)}, status=200)
+
+
+
+
+

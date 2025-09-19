@@ -10,6 +10,8 @@ const classroom_subject = document.getElementById("classroom_subject");
 const continue_button = document.getElementById("continue_button");
 const cancel_button = document.getElementById("cancel_button");
 
+const classroom_container = document.getElementById("classroom_selections");
+
 
 create_classroom_button.addEventListener("click", () => {
     classroom_add_modal.style.display = "flex";
@@ -71,12 +73,13 @@ continue_button.addEventListener("click", async () => {
 
 (async()=>{
 
-const response = await sendRequest("../api/get_teacher_classroom", "POST", {}); 
+const response = await sendRequest("../api/get_teacher_classrooms", "POST", {}); 
 
 if (response?.ok){
     const data = await response.json();
 
-    const classroom_container = document.getElementById("classroom_selections");
+    document.querySelector('.classroom-section').classList.add('open');
+
     classroom_container.innerHTML = "";
 
     data.classrooms.forEach((classroom) => {
@@ -96,4 +99,19 @@ if (response?.ok){
 
 
 })();
+
+
+classroom_container.addEventListener('click', function (e) {
+    const target = e.target;
+
+    // Check if the clicked element is the image
+    if (target.classList.contains('classroom-icon')) {
+        const classroomId = target.dataset.key; 
+
+        sessionStorage.setItem('classroom_id', classroomId); 
+
+        window.location.href = classroom_material_view_page;
+    }
+});
+
 
