@@ -71,7 +71,7 @@ def api_get_teacher_classrooms(request):
         User : CustomUser = get_user_model()
         
         for student in User.objects.filter(user_type="Student"):
-            if classroom in student.classrooms:
+            if classroom.pk in student.classrooms:
                 classroom_data['number_of_students'] += 1
         
         

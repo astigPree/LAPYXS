@@ -9,5 +9,10 @@ urlpatterns = [
     
     # TEACHER ------------------------
     path('create_classroom', api_create_classroom , name='api_create_classroom'),
-    path('get_classroom', api_get_teacher_classrooms , name='api_get_classroom'),
+    path('get_teacher_classroom', api_get_teacher_classrooms , name='api_get_teacher_classroom'),
+    
+    
+    # STUDENT ------------------------
+    path('join_classroom', api_student_join_classroom , name='api_student_join_classroom'),
+    path('get_student_classroom', api_get_student_classrooms , name='api_get_student_classroom'),
 ]

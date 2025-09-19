@@ -47,6 +47,8 @@ def student_dashboard_page(request):
 def student_accounts_page(request):
     return render(request, 'student/accounts.html')
 
+def student_classroom_page(request):
+    return render(request, 'student/classrooms.html')
 
 
 
