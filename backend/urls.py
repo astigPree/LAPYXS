@@ -7,6 +7,9 @@ urlpatterns = [
     path('logout', api_logout_auth , name='api_logout_auth'),
     path('update', api_update_auth , name='api_update_auth'),
     
+    path('notifications', api_get_notification , name='api_get_notification'),
+    path('seen_notification', api_seen_notification , name='api_seen_notification'),
+    
     # TEACHER ------------------------
     path('create_classroom', api_create_classroom , name='api_create_classroom'),
     path('get_teacher_classrooms', api_get_teacher_classrooms , name='api_get_teacher_classroom'),

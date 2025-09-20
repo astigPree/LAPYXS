@@ -79,8 +79,19 @@
     display: none !important;
 }
 
+@keyframes toggleAnim {
+    from {
+        opacity: 0; 
+    }
+    to {
+        opacity: 1; 
+    }
+}
+
+
 .toggled-notifications-container{
-    display: flex !important;
+    display: flex !important; 
+    animation: toggleAnim 0.3s ease-in-out forwards !important;
 }
 
 .shortcut-actions-opener{  
@@ -101,6 +112,7 @@
     column-gap: 5px;
     border: none;
     cursor: pointer;
+    transition: all 0.3s ease-in-out; 
 }
 
 .shortcut-actions-opener span{ 
@@ -213,7 +225,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 24px;
-
+    opacity: 0;
 }
 
 .notications-wrapper{  
@@ -256,7 +268,7 @@
 }
 
 .notification-date-input{ 
-    width: 106px;
+    width: 116px;
     height: 22px; 
     background: #1A8FE3;
     border-radius: 2px; 

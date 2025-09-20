@@ -10,7 +10,7 @@
             <img src="{% static "assets/account-icon.svg" %}" alt="shortcut-icon" class="shortcut-icon">
         </div>
         <div class="navigation-notification" id="account-notification-button">
-            <span id="notification-red"></span>
+            <span id="notification-red" style="display: none;"></span>
             <img src="{% static "assets/notification-icon.svg" %}" alt="notification-icon" class="notification-icon">
         </div>
     </div>
@@ -114,6 +114,16 @@
         sessionStorage.setItem("is_toggled", is_toggled);
 
     });
+
+
+    const account_information_button = document.getElementById("account-information-button");
+    account_information_button.addEventListener("click", function() {
+        if ( "{{ request.user.user_type }}" == "Teacher" ) {
+            window.location.href = "{% url 'teacher_accounts_page' %}";
+        } else {
+            window.location.href = "{% url 'student_accounts_page' %}";
+        }
+    });
 </script>
 
 
@@ -125,17 +135,12 @@
             <img id="notifications-container-back-icon" src="{% static "assets/back-icon.svg" %}" alt="back-icon" class="back-icon">
         </div>
 
-        <input type="date" name="notification-date" class="poppins-regular notification-date-input">
+        <input type="month" name="notification-date" id="notification-date" class="poppins-regular notification-date-input">
         <div class="notifications-scroller">
-            <div class="notifications-scroller-wrapper">
+            <div class="notifications-scroller-wrapper" id="notification_list">
 
 
-                <div class="notification-content">
-                    <h4 class="poppins-bold">Notification Title</h4>
-                    <h5 class="poppins-regular">Notification Subtitle</h5>
-                </div>
-
-                <div class="notification-content">
+                <div class="notification-content" style="display: none;">
                     <h4 class="poppins-bold">Notification Title</h4>
                     <h5 class="poppins-regular">Notification Subtitle</h5>
                 </div>
@@ -147,27 +152,5 @@
     </div>
 </div>
 
-<script>
-    const account_information_button = document.getElementById("account-information-button");
-    const account_notification_button = document.getElementById("account-notification-button");
-    const notifications_container_back_icon = document.getElementById("notifications-container-back-icon");
- 
-    account_notification_button.addEventListener("click", function() { 
-        document.getElementById("notifications-container").classList.toggle("toggled-notifications-container");
-    });
-
-    notifications_container_back_icon.addEventListener("click", function() { 
-        document.getElementById("notifications-container").classList.toggle("toggled-notifications-container");
-    });
-
-    account_information_button.addEventListener("click", function() {
-        if ( "{{ request.user.user_type }}" == "Teacher" ) {
-            window.location.href = "{% url 'teacher_accounts_page' %}";
-        } else {
-            window.location.href = "{% url 'student_accounts_page' %}";
-        }
-    });
-
-
-</script>
+<script src="{% static 'actions-components.js' %}" defer></script>
 
