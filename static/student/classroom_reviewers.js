@@ -70,9 +70,9 @@ async function get_materials_and_activities(){
                         <h2 class="poppins-light ellipsis">Due Date : ${item.due_date ? item.due_date : 'N/A'} </h2>
 
                         <span class="collection-category poppins-black">
-                            Material
+                            ${item.type}
                         </span>
-                        <button class="poppins-light collection-visit-button" data-id="${item.id}" >
+                        <button data-type="${item.type}" class="poppins-light collection-visit-button" data-id="${item.id}" >
                             Click here to view
                         </button>
 
@@ -100,11 +100,14 @@ material_collections.addEventListener('click', function (e) {
     // Check if the clicked element is the view button
     if (target.classList.contains('collection-visit-button')) {
         const materialId = target.dataset.id;
-        console.log('View material ID:', materialId);
+        const materialType = target.dataset.type;
+        console.log('View material ID:', materialId + ' Type: ' + materialType);
 
         // You can now trigger a modal, fetch details, or redirect
         sessionStorage.setItem('material_id', materialId);
-        // window.location.href = classroom_view_reviewer_link;
+        if (materialType == 'Material'){
+            window.location.href = classroom_view_reviewer_link;
+        } 
     }
 });
 
@@ -202,3 +205,8 @@ continue_delete_button.addEventListener("click", async () => {
         }, 2000);
     }
 });
+
+
+
+
+

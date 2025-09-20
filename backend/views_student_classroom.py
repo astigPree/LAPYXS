@@ -181,6 +181,7 @@ def api_get_student_materials_activities(request):
     list_of_materials = []
     for material in materials:
         list_of_materials.append({
+            'type' : 'Material',
             'name': material.material_name,
             'id' : material.pk,
             'is_joined' : request.user.pk in material.material_joined,
@@ -191,6 +192,7 @@ def api_get_student_materials_activities(request):
     list_of_activities = []
     for activity in activities:
         list_of_activities.append({
+            'type' : 'Activity',
             'name': activity.activity_name,
             'id' : activity.pk,
             'is_joined' : request.user.pk in activity.activity_joined,
@@ -209,4 +211,68 @@ def api_get_student_materials_activities(request):
     
     
 
+
+def api_student_get_material(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Student":
+        return JsonResponse({'error': 'You are not a Student.'}, status=400)
+    
+    material_id = request.POST.get('material_id', None)
+    if not isinstance(material_id, str):
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    if not material_id.isdigit():
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    
+    material = Material.objects.filter(id=int(material_id)).first()
+    if not material:
+        return JsonResponse({'error': 'Material not found.'}, status=400)
+    
+    return JsonResponse({
+        'material_name': material.material_name,
+        'material_description': material.material_description,
+        'material_link': material.material_link,
+        'material_file': material.material_file.url if material.material_file else None,
+        'is_joined' : request.user.pk in material.material_joined
+    }, status=200)
+
+
+
+def api_student_join_material(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Student":
+        return JsonResponse({'error': 'You are not a Student.'}, status=400)
+    
+    material_id = request.POST.get('material_id', None)
+    if not isinstance(material_id, str):
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    if not material_id.isdigit():
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    
+    material = Material.objects.filter(id=int(material_id)).first()
+    if not material:
+        return JsonResponse({'error': 'Material not found.'}, status=400)
+    
+    if request.user.pk in material.material_joined:
+        return JsonResponse({'error': 'You have already joined this material.'}, status=400)
+    
+    # Join material
+    material.material_joined.append(request.user.pk)
+    material.save()
+     
+    StudentMaterial.objects.create(
+        student=request.user,
+        material=material
+    )
+    
+    return JsonResponse({'success': 'Material joined successfully.'}, status=200)
 

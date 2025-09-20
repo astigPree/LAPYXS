@@ -20,5 +20,6 @@ urlpatterns = [
     path('student_accounts/', views.student_accounts_page, name='student_accounts_page'),
     path('student_classroom/', views.student_classroom_page, name='student_classroom_page'),
     path('student_materials/', views.student_classroom_reviewer_page, name='student_classroom_reviewer_page'),
+    path('student_classroom_view_reviewer/', views.student_classroom_view_reviewer, name='student_classroom_view_reviewer_page'),
  
 ]

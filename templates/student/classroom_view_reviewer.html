@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_reviewers.css" %}">
+<script src="{% static "student/classroom_view_reviewers.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_classroom" %}
+
+
+<section class="classroom-section">
+
+    <button class="back-button" onclick="window.location.href='{% url 'student_classroom_reviewer_page' %}'">
+        <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
+        <span class="poppins-medium">View Other Materials</span> 
+    </button>
+
+    <h1 class="poppins-regular reviewer-title" id="reviewer_title"> </h1>
+    <p class="poppins-light reviewer-descriptions" id="reviewer_descriptions"> </p>
+
+    <a href="#" class="poppins-semibold reviewer_file"  target="_blank" id="reviewer_file">Click here to view uploaded material</a>
+    <a href="#" class="poppins-bold reviewer-link" id="reviewer_link" target="_blank"> </a>
+ 
+
+    <button class="joined-button poppins-regular" id="participate_join">
+        Participate Reviewer
+    </button>
+
+</section> 
+
+
+<div class="classroom-delete-modal" id="delete_material_modal" style="display: none;">
+
+    <div class="classroom-delete-modal-container">
+        
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Delete Material</span>
+        </div>
+        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all connected to this materials. </p>
+        
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="continue_delete_material_button">Continue</button>
+            <button class="poppins-extrabold" id="cancel_delete_material_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="classroom-add-modal" id="add_material_modal" style="display: none;">
+    <div class="classroom-add-modal-container" style="margin-top: 20svh;">
+
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Edit Learning Materials</span>
+        </div>
+        
+        <label class="poppins-regular">Material Name</label>
+        <input id="material_name" type="text" placeholder="Enter your Material name" class="poppins-regular input-field">
+        <label class="poppins-regular">Material Descriptions</label>
+        <textarea id="material_description" name="description" placeholder="What this materials is all about?" class="poppins-regular textarea-field"></textarea>
+        <label class="poppins-regular">Material Link</label>
+        <input id="material_link" type="text" placeholder="Optional: Add additional link " class="poppins-regular input-field">
+        <label class="poppins-regular">Material File</label>
+        <input id="material_file_button" type="button" value="Optional: Click Here to upload the file" class="poppins-regular file-field ellipsis">
+        <input type="file" name="" id="material_file" hidden>
+
+
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="add_matterial_button">update</button>
+            <button class="poppins-extrabold" id="cancel_adding_material_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var clasrroms_reviewers_page_link = "{% url 'teacher_classroom_reviewers_page' %}";
+</script>
+
+{% endblock basebodyblock %}

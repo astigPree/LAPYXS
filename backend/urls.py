@@ -27,6 +27,7 @@ urlpatterns = [
     path('visit_student_classroom', api_get_student_classroom , name='api_get_student_classroom'),
     path('get_student_activities_materials', api_get_student_materials_activities , name='api_get_student_materials'),
     path('leave_student_classroom', api_student_leave_classroom , name='api_student_leave_classroom'),
-    
+    path('get_student_classroom_materials', api_student_get_material , name='api_student_get_material'),
+    path('update_student_material', api_student_join_material , name='api_student_join_material'),
     
 ]

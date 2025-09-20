@@ -59,6 +59,7 @@ def student_classroom_page(request):
 def student_classroom_reviewer_page(request):
     return render(request, 'student/classroom_reviewers.html')
 
-
+def student_classroom_view_reviewer(request):
+    return render(request, 'student/classroom_view_reviewer.html')
 
 
