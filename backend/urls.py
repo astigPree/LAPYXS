@@ -16,6 +16,8 @@ urlpatterns = [
     path('delete_classroom' , api_teacher_delete_classroom , name='api_teacher_delete_classroom'),
     path('create_material', api_teacher_add_material , name='api_teacher_add_material'),
     path('delete_material', api_teacher_delete_material , name='api_teacher_delete_material'),
+    path('get_teacher_material', api_teacher_get_material , name='api_teacher_get_material'),
+    path('update_material', api_teacher_update_material , name='api_teacher_update_material'),
     
     
     

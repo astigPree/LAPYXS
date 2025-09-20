@@ -11,7 +11,7 @@
 
 {% block basebodyblock %}
 
-<button class="back-button" onclick="window.location.href='{% url 'home_page' %}'">
+<button class="back-button" onclick="window.history.back();">
     <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
     <span class="poppins-medium">Go Back</span>
 </button>

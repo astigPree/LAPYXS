@@ -148,10 +148,10 @@ async function get_classroom_materials(){
                 const date = new Date(material.created_at); 
                 material_collections.insertAdjacentHTML("beforeend", ` 
                     <div class="material-container">
-                        <img src="/static/assets/delete-materials-icon.svg" alt="" class="collections-delete-button">
+                        <img data-material-id="${material.id}" data-action="delete" src="/static/assets/delete-materials-icon.svg" alt="" class="collections-delete-button">
                         <h2 class="poppins-regular ellipsis"> ${material.material_name} </h2>
                         <h5 class="poppins-light ellipsis">Date Uploaded : ${date.toLocaleDateString('en-US')}</h5>
-                        <button class="poppins-light collection-visit-button" data-material-id="${material.id}" >
+                        <button class="poppins-light collection-visit-button" data-material-id="${material.id}" data-action="view" >
                             Click here to view
                         </button> 
                         <span class="collection-category poppins-black">
@@ -172,20 +172,29 @@ monthField.addEventListener('change', () => {
 
 get_classroom_materials();
 
+ 
 
-material_collections.addEventListener('click',function (e) {
-    if (e.target.classList.contains('collections-delete-button')) {
-        const materialId = e.target.closest('.material-container')
-            .querySelector('[data-material-id]')?.dataset.materialId;
+material_collections.addEventListener('click', function (e) {
+    const target = e.target;
+    const action = target.dataset.action;
+    const materialId = target.dataset.materialId;
 
-        console.log('Material ID:', materialId);
+    if (action && materialId) {
+        console.log(`Action: ${action}, Material ID: ${materialId}`);
 
-        if (materialId) {
+        // You can branch logic here
+        if (action === 'delete') {
+            // Handle delete
             delete_material_modal.style.display = "flex";
             selected_material_id = parseInt(materialId);
+        } else if (action === 'view') {
+            // Handle view
+            sessionStorage.setItem('material_id', materialId);
+            window.location.href = classroom_view_reviewer_link;
         }
     }
 });
+
 
 
 
