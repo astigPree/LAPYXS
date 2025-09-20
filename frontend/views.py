@@ -56,6 +56,9 @@ def student_accounts_page(request):
 def student_classroom_page(request):
     return render(request, 'student/classrooms.html')
 
+def student_classroom_reviewer_page(request):
+    return render(request, 'student/classroom_reviewers.html')
+
 
 
 

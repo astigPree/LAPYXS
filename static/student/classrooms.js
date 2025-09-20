@@ -63,16 +63,17 @@ classroom_join_button.addEventListener("click", async () => {
 });
 
 
+const classroom_container = document.getElementById("classroom_selections");
 
 
 (async()=>{
 
 const response = await sendRequest("../api/get_student_classroom", "POST", {}); 
+document.querySelector('.classroom-section').classList.add('open');
 
 if (response?.ok){
     const data = await response.json();
 
-    const classroom_container = document.getElementById("classroom_selections");
     classroom_container.innerHTML = "";
 
     data.classrooms.forEach((classroom) => {
@@ -92,5 +93,19 @@ if (response?.ok){
 
 
 })();
+
+
+classroom_container.addEventListener('click', function (e) {
+    const target = e.target;
+
+    // Check if the clicked element is the image
+    if (target.classList.contains('classroom-icon')) {
+        const classroomId = target.dataset.key; 
+
+        sessionStorage.setItem('classroom_id', classroomId); 
+
+        window.location.href = classroom_page;
+    }
+});
 
 

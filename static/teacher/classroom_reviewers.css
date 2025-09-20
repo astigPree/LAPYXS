@@ -415,6 +415,16 @@ label{
 
 
 
+.classroom-descriptions{
+    width: 90%;
+    margin-bottom: 12px;
+    height: fit-content;
+    font-size: 11px;
+    line-height: 15px;  
+    color: #2E2D2D;
+    text-align: center ;
+    margin-top: 5px;
+}
 
 
 

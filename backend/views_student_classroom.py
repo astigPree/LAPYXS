@@ -20,9 +20,12 @@ def api_get_student_classrooms(request):
     
     classrooms_ids : list = request.user.classrooms
     classrooms = []
-    for cls_id in classrooms_ids:
+    has_changed = False
+    for cls_id in classrooms_ids[::-1]:
         classroom_obj = Classroom.objects.filter(id=cls_id).first()
         if not classroom_obj:
+            request.user.classrooms.remove(cls_id)
+            has_changed = True
             continue
         
         classroom_data = {
@@ -39,6 +42,9 @@ def api_get_student_classrooms(request):
 
         
         classrooms.append(classroom_data)
+    
+    if has_changed:
+        request.user.save()
 
     return JsonResponse({'classrooms': classrooms}, status=200)
 

@@ -5,7 +5,7 @@
 {% block baseheadblock %}
 <link rel="stylesheet" href="{% static "actions-components.css" %}">
 <link rel="stylesheet" href="{% static "teacher/classroom_reviewers.css" %}">
-<script src="{% static "teacher/classroom_reviewers.js" %}" defer></script>
+<script src="{% static "student/classroom_reviewers.js" %}" defer></script>
 
 {% endblock baseheadblock %}
 
@@ -16,7 +16,7 @@
 
 
 
-<section class="classroom-section">
+<section class="classroom-section open">
 
     <div class="classroom-title">
         <h1 class="poppins-light">Classroom</h1>
@@ -35,19 +35,14 @@
     </div>
 
     <div class="classroom-all-actions-container">
+        <p class="classroom-descriptions poppins-light" id="classroom_description">
+            Want to move on to the student view of the classroom next? Or dive into how assessments are created and managed from this screen?
+        </p>
+        <hr style="color: black; width: 100%; height: 2px; background-color: black;"> 
         <div class="classrooms-all-actions">
             <button style="background-color: #1A8FE3;" class="poppins-light" id="edit_classroom">Edit Classroom</button>
-            <button style="background-color: #FA191C;" class="poppins-light" id="delete_classroom">Delete Classroom</button>
-        </div>
-        <hr style="color: black; width: 100%; height: 2px; background-color: black;">
-        <div class="classrooms-all-actions">
-            <button style="background-color: #ABFDE8; color: black;" class="poppins-medium" >Materials</button>
-            <button style="background-color: #FFDC47; color: black;" class="poppins-light" >Activities</button>
-        </div>
-        <div class="classrooms-all-actions">
-            <button style="background-color: #FFDC47; color: black;" class="poppins-light" >Check Students</button>
-            <button style="background-color: #FFDC47; color: black;" class="poppins-light" >Announcement</button>
-        </div>
+            <button style="background-color: #FA191C;" class="poppins-light" id="delete_classroom">Leave Classroom</button>
+        </div> 
     </div>
 
     <input type="month" name="" id="month-field" class="poppins-regular notification-date-input" style="align-self: flex-end; margin-right: 8%; width: 125px;">
