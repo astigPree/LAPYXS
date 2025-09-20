@@ -45,10 +45,10 @@ async function get_materials_and_activities(){
 
         if (data){
             
-            if (data?.materials?.length == 0){
+            if (data?.all_items?.length == 0){
                 material_collections.insertAdjacentHTML("beforeend", ` 
                     <div class="material-empty" >
-                        <h3 class="poppins-light"> There are no material uploaded this month! </h3>
+                        <h3 class="poppins-light"> There are no material or activity uploaded this month! </h3>
                     </div>
                 `);
                 return;

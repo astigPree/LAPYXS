@@ -48,6 +48,13 @@ class Classroom(models.Model):
 	classroom_owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_owner')
 	created_at = models.DateTimeField(auto_now_add=True)
 
+	classroom_students = models.JSONField(default=list, blank=True , null=True)
+	"""
+		classroom_students = [
+			customuser.pk , ...
+		]
+	"""
+
 	def __str__(self):
 		return self.classroom_name
 

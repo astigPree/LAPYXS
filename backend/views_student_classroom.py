@@ -21,26 +21,15 @@ def api_get_student_classrooms(request):
     classrooms_ids : list = request.user.classrooms
     classrooms = []
     has_changed = False
-    for cls_id in classrooms_ids[::-1]:
-        classroom_obj = Classroom.objects.filter(id=cls_id).first()
-        if not classroom_obj:
-            request.user.classrooms.remove(cls_id)
-            has_changed = True
-            continue
-        
+    classrooms_objs = Classroom.objects.filter(id__in=classrooms_ids[::-1])
+    
+    for cls_obj in classrooms_objs:  
         classroom_data = {
-            'classroom_name': classroom_obj.classroom_name, 
-            'id': classroom_obj.pk,
-            'number_of_students': 0
+            'classroom_name': cls_obj.classroom_name, 
+            'id': cls_obj.pk,
+            'number_of_students': len(cls_obj.classroom_students) if cls_obj.classroom_students else 0
         }
-        
-        User : CustomUser = get_user_model()
-        
-        for student in User.objects.filter(user_type="Student"):
-            if classroom_obj.pk in student.classrooms:
-                classroom_data['number_of_students'] += 1
-
-        
+         
         classrooms.append(classroom_data)
     
     if has_changed:
@@ -74,6 +63,9 @@ def api_student_join_classroom(request):
     
     request.user.classrooms.append(classroom_obj.pk)
     request.user.save()
+    
+    classroom_obj.classroom_students.append(request.user.pk)
+    classroom_obj.save()
     
     return JsonResponse({'success': 'Classroom joined successfully.'}, status=200)
     
@@ -135,6 +127,20 @@ def api_student_leave_classroom(request):
     
     request.user.classrooms.remove(classroom.pk)
     request.user.save()
+    
+    classroom.classroom_students.remove(request.user.pk)
+    classroom.save()
+    
+    # Notify teacher
+    teacher = classroom.classroom_owner
+    if teacher:
+        Notification.objects.create(
+            title = "Classroom left",
+            content = f"{request.user.fullname} left classroom {classroom.classroom_name}",
+            user = teacher
+        )
+    
+    
     
     return JsonResponse({'success': 'Classroom left successfully.'}, status=200)
 
@@ -273,6 +279,16 @@ def api_student_join_material(request):
         student=request.user,
         material=material
     )
+    
+    # Notify the teacher that student joined the material
+    teacher = material.material_owner 
+    if teacher :
+        Notification.objects.create(
+            title = f"Material participation",
+            content = f"{request.user.fullname} joined your material {material.material_name}",
+            user = teacher
+        )
+        
     
     return JsonResponse({'success': 'Material joined successfully.'}, status=200)
 

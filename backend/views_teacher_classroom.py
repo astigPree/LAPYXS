@@ -65,15 +65,8 @@ def api_get_teacher_classrooms(request):
         classroom_data = {
             'classroom_name': classroom.classroom_name, 
             'id': classroom.pk,
-            'number_of_students': 0
+            'number_of_students': len(classroom.classroom_students) if classroom.classroom_students else 0
         }
-        
-        User : CustomUser = get_user_model()
-        
-        for student in User.objects.filter(user_type="Student"):
-            if classroom.pk in student.classrooms:
-                classroom_data['number_of_students'] += 1
-        
         
         classrooms_data.append(classroom_data)
          
@@ -106,7 +99,7 @@ def api_update_teacher_classroom(request):
     if not classroom_subject:
         return JsonResponse({'error': 'Classroom subject is required.'}, status=400)
     
-    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    classroom = Classroom.objects.filter(id=int(classroom_id), classroom_owner=request.user).first()
     if not classroom:
         return JsonResponse({'error': 'Classroom not found.'}, status=400)
     
@@ -202,11 +195,11 @@ def api_teacher_delete_classroom(request):
     if not classroom_id.isdigit():
         return JsonResponse({'error': 'Classroom id is required.'}, status=400)
     
-    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    classroom = Classroom.objects.filter(id=int(classroom_id), classroom_owner=request.user).first()
     if not classroom:
         return JsonResponse({'error': 'Classroom not found.'}, status=400)
     
-    classroom.delete()
+    classroom.delete() 
     
     return JsonResponse({'success': 'Classroom deleted successfully.'}, status=200)
 
@@ -256,6 +249,15 @@ def api_teacher_add_material(request):
         if material_file:
             material_obj.material_file = material_file
         material_obj.save()
+        
+        # Notify all classroom students
+        students = CustomUser.objects.filter(pk__in=classroom_obj.classroom_students, user_type="Student")
+        for student in students:
+            Notification.objects.create(
+                title = 'New material added',
+                content = f"{classroom_obj.classroom_name} has added a new material.",
+                user = student
+            )
         
     except Exception as e:
         return JsonResponse({'err': str(e) , 'error': 'Failed to add material.'}, status=400)
