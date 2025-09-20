@@ -34,7 +34,7 @@
                 <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
                 <span class="poppins-medium">Classroom</span>
             </button>
-            <button  style="{% if selected == 'teacher_materials' %}display : none;{% endif %}">
+            {% comment %} <button  style="{% if selected == 'teacher_materials' %}display : none;{% endif %}">
                 <img src="{% static "assets/material-icon.svg" %}" alt="material-icon" class="material-icon">
                 <span class="poppins-medium">Materials</span>
             </button>
@@ -45,7 +45,7 @@
             <button  style="{% if selected == 'teacher_post' %}display : none;{% endif %}">
                 <img src="{% static "assets/post-icon.svg" %}" alt="post-icon" class="post-icon">
                 <span class="poppins-medium">Post</span>
-            </button>
+            </button> {% endcomment %}
             <button  style="{% if selected == 'teacher_reports' %}display : none;{% endif %}">
                 <img src="{% static "assets/report-icon.svg" %}" alt="report-icon" class="report-icon">
                 <span class="poppins-medium">Reports</span>

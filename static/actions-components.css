@@ -325,7 +325,9 @@
     justify-content: center;
     height: fit-content;
     padding-top: 12px;
-    padding-bottom: 12px;
+    padding-bottom: 12px; 
+    padding-right: 12px; 
+    padding-left: 12px;
 }
 
 .notification-content h4{
@@ -335,7 +337,6 @@
     margin-bottom: 4px;
     width: 100%;
     height: fit-content;
-    padding-left: 12px;
 }
 
 .notification-content h5{
@@ -343,8 +344,7 @@
     line-height: 12px; 
     color: #2E2D2D; 
     width: 100%;
-    height: fit-content;
-    padding-left: 12px;
+    height: fit-content; 
 }
 
 
