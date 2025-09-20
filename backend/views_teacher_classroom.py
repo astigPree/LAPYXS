@@ -363,3 +363,53 @@ def api_teacher_update_material(request):
         return JsonResponse({'err': str(e) , 'error': 'Failed to update material.'}, status=400)
     
     return JsonResponse({'success': 'Material updated successfully.'}, status=200)
+
+
+
+
+def api_teacher_get_material_joined(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+     
+    material_id = request.POST.get('material_id', None)
+    if not isinstance(material_id, str):
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    if not material_id.isdigit():
+        return JsonResponse({'error': 'Material id is required.'}, status=400)
+    
+    material = Material.objects.filter(id=int(material_id), material_owner=request.user).first()
+    if not material:
+        return JsonResponse({'error': 'Material not found.'}, status=400)
+    
+    
+    students = CustomUser.objects.filter(
+        pk__in=material.material_joined,
+        user_type="Student"
+    )
+    
+    students_data = []
+    for student_obj in students:
+        students_data.append({
+            'id': student_obj.pk,
+            'fullname' : student_obj.fullname,
+            'email': student_obj.email,
+            'profile_image': student_obj.profile_image.url if student_obj.profile_image else None
+        })
+        
+    return JsonResponse({
+        'students': students_data
+    }, status=200)
+        
+        
+        
+        
+        
+        
+        

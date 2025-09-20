@@ -197,7 +197,7 @@ add_matterial_button.addEventListener("click", async () => {
             window.location.reload();
         }, 2000);
     }
-})
+});
 
 
 
@@ -205,6 +205,49 @@ add_matterial_button.addEventListener("click", async () => {
 
 
 
+
+const material_participants = document.getElementById("material_participants");
+(async()=>{
+
+const material_id = sessionStorage.getItem('material_id'); 
+
+const response = await sendRequest("../api/get_teacher_materials_joined", "POST", {
+    'material_id' : material_id
+}); 
+
+if (response?.ok){
+    const data = await response.json();
+
+    if (data){ 
+        material_participants.innerHTML = '';
+        if (data.students?.length == 0){
+            material_participants.insertAdjacentHTML('beforeend', ` 
+                <div class="no-paticipant" >
+                    <h6 class="poppins-light">There is no participant on this materials.</h6>
+                </div>
+            `);
+            return;
+        }
+
+        data.students.forEach((student) => {
+            material_participants.insertAdjacentHTML('beforeend', ` 
+            <div class="participant-container" >
+                <img src="${student.profile_image}" alt="">
+                <div class="participant-info">
+                    <h4 class="poppins-regular ellipsis">${student.fullname}</h4>
+                    <h5 class="poppins-light ellipsis">${student.email}</h5>
+                </div>
+            </div>     
+            `);
+        })
+    }
+
+
+}
+    
+
+
+})();
 
 
 
