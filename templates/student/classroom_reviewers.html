@@ -12,35 +12,33 @@
 
 {% block basebodyblock %}
 
-{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_classroom" %}
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_classroom" %}
 
 
 
-<section class="classroom-section open">
+<section class="classroom-section">
 
     <div class="classroom-title">
         <h1 class="poppins-light">Classroom</h1>
-        <button onclick="window.location.href='{% url 'teacher_classroom_page' %}'" class="poppins-medium" id="create_classroom_button">
+        <button onclick="window.location.href='{% url 'student_classroom_page' %}'" class="poppins-medium" id="create_classroom_button">
             Other Classrooms
         </button>
     </div>
     
     <div class="classroom-info-container">
-        <h2 class="poppins-light ellipsis" id="classroom_name_tag">Google Clasroom</h2>
-        <h3 class="poppins-semibold ellipsis" id="classroom_subject_tag">Food Beverage</h3>
+        <h2 class="poppins-light ellipsis" id="classroom_name_tag"></h2>
+        <h3 class="poppins-semibold ellipsis" id="classroom_subject_tag"></h3>
         <div class="classroom-info-action">
-            <span class="poppins-bold" id="classroom_link_id"> 123FSAHDFJK </span>
+            <span class="poppins-bold" id="classroom_link_id"></span>
             <button class="poppins-regular" id="copy_link_button">Copy ID</button>
         </div>
     </div>
 
     <div class="classroom-all-actions-container">
-        <p class="classroom-descriptions poppins-light" id="classroom_description">
-            Want to move on to the student view of the classroom next? Or dive into how assessments are created and managed from this screen?
-        </p>
+        <p class="classroom-descriptions poppins-light" id="classroom_description"></p>
         <hr style="color: black; width: 100%; height: 2px; background-color: black;"> 
         <div class="classrooms-all-actions">
-            <button style="background-color: #1A8FE3;" class="poppins-light" id="edit_classroom">Edit Classroom</button>
+            <button style="background-color: #1A8FE3;" class="poppins-light" id="first_button">Announcement</button>
             <button style="background-color: #FA191C;" class="poppins-light" id="delete_classroom">Leave Classroom</button>
         </div> 
     </div>
@@ -66,50 +64,45 @@
             </span>
         </div>
 
+
+        <div class="student-material-container">
+            <img src="{% static 'assets/check-activity-icon.svg' %}" alt="">
+
+            <h1 class="poppins-regular ellipsis">Reviewer For Final</h1>
+            <h2 class="poppins-light ellipsis">Date Uploaded : December 12, 2004</h2>
+            <h2 class="poppins-light ellipsis">Due Date : December 12, 2004 </h2>
+
+            <span class="collection-category poppins-black">
+                Material
+            </span>
+            <button class="poppins-light collection-visit-button" >
+                Click here to view
+            </button>
+
+        </div>
+
     </div>
 
+    <script>
+        var check_activity = "{% static 'assets/check-activity-icon.svg' %}";
+        var uncheck_activity = "{% static 'assets/uncheck-activity-icon.svg' %}";
+    </script>
 
-    <img src="{% static 'assets/add-material-button.svg' %}" alt="" class="add-collection-button" id="add_collection_button">
+    {% comment %} <img src="{% static 'assets/add-material-button.svg' %}" alt="" class="add-collection-button" id="add_collection_button"> {% endcomment %}
  
 
 </section>
 
-
-
-<div class="classroom-add-modal" id="classroom_edit_modal" style="display: none;">
-    <div class="classroom-add-modal-container">
-
-        <div class="classroom-add-modal-header">
-            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-semibold">Update Your Classroom</span>
-        </div>
-        
-        <label class="poppins-regular">Classroom Name</label>
-        <input id="classroom_name" type="text" placeholder="Enter Your Classroom Name" class="poppins-regular input-field">
-        <label class="poppins-regular">Classroom Descriptions</label>
-        <textarea id="classroom_description" name="description" placeholder="What this classroom is all about?" class="poppins-regular textarea-field"></textarea>
-        <label class="poppins-regular">Classroom Subject</label>
-        <input id="classroom_subject" type="text" placeholder="Enter Your Classroom Subject" class="poppins-regular input-field">
-        
-        <div class="classroom_add_modal_actions">
-            <button class="poppins-extrabold" id="update_edit_button">Update</button>
-            <button class="poppins-extrabold" id="cancel_edit_button" style="background-color: #04497B;">Cancel</button>
-        </div>
-
-    </div>
-</div>
-
-
-
+ 
 <div class="classroom-delete-modal" id="classroom_delete_modal" style="display: none;">
 
     <div class="classroom-delete-modal-container">
         
         <div class="classroom-add-modal-header">
             <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-semibold">Delete Classroom</span>
+            <span class="poppins-semibold">Leave Classroom</span>
         </div>
-        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all the students, exams and materials uploaded in this classroom</p>
+        <p class="poppins-light">Are you sure do you want to leave? Leaving this classroom will remove all your summited and connections in this classroom</p>
         
         <div class="classroom_add_modal_actions">
             <button class="poppins-extrabold" id="continue_delete_button">Continue</button>
@@ -120,64 +113,7 @@
 
 </div>
 
-
-<div class="classroom-delete-modal" id="delete_material_modal" style="display: none;">
-
-    <div class="classroom-delete-modal-container">
-        
-        <div class="classroom-add-modal-header">
-            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-semibold">Delete Material</span>
-        </div>
-        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all connected to this materials. </p>
-        
-        <div class="classroom_add_modal_actions">
-            <button class="poppins-extrabold" id="continue_delete_material_button">Continue</button>
-            <button class="poppins-extrabold" id="cancel_delete_material_button" style="background-color: #04497B;">Cancel</button>
-        </div>
-
-    </div>
-
-</div>
-
-
-
-
-
-<div class="classroom-add-modal" id="add_material_modal" style="display: none;">
-    <div class="classroom-add-modal-container" style="margin-top: 20svh;">
-
-        <div class="classroom-add-modal-header">
-            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-semibold">Add Learning Materials</span>
-        </div>
-        
-        <label class="poppins-regular">Material Name</label>
-        <input id="material_name" type="text" placeholder="Enter your Material name" class="poppins-regular input-field">
-        <label class="poppins-regular">Material Descriptions</label>
-        <textarea id="material_description" name="description" placeholder="What this materials is all about?" class="poppins-regular textarea-field"></textarea>
-        <label class="poppins-regular">Material Link</label>
-        <input id="material_link" type="text" placeholder="Optional: Add additional link " class="poppins-regular input-field">
-        <label class="poppins-regular">Material File</label>
-        <input id="material_file_button" type="button" value="Optional: Click Here to upload the file" class="poppins-regular file-field ellipsis">
-        <input type="file" name="" id="material_file" hidden>
-
-
-        <div class="classroom_add_modal_actions">
-            <button class="poppins-extrabold" id="add_matterial_button">Continue</button>
-            <button class="poppins-extrabold" id="cancel_adding_material_button" style="background-color: #04497B;">Cancel</button>
-        </div>
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
+ 
 
 
 
@@ -191,8 +127,8 @@
 
 
 <script>
-    var clasrroms_pages_link = "{% url 'teacher_classroom_page' %}";
-    var classroom_view_reviewer_link = "{% url 'teacher_classroom_view_reviewer_page' %}"
+    var clasrroms_pages_link = "{% url 'student_classroom_page' %}";
+    {% comment %} var classroom_view_reviewer_link = "{% url 'student_classroom_view_reviewer_page' %}" {% endcomment %}
 </script>
 
 {% endblock basebodyblock %}

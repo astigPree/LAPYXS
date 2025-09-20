@@ -24,4 +24,9 @@ urlpatterns = [
     # STUDENT ------------------------
     path('join_classroom', api_student_join_classroom , name='api_student_join_classroom'),
     path('get_student_classroom', api_get_student_classrooms , name='api_get_student_classroom'),
+    path('visit_student_classroom', api_get_student_classroom , name='api_get_student_classroom'),
+    path('get_student_activities_materials', api_get_student_materials_activities , name='api_get_student_materials'),
+    path('leave_student_classroom', api_student_leave_classroom , name='api_student_leave_classroom'),
+    
+    
 ]
