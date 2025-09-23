@@ -4,8 +4,8 @@
 
 {% block baseheadblock %}
 <link rel="stylesheet" href="{% static "actions-components.css" %}">
-<link rel="stylesheet" href="{% static "teacher/classroom_reviewers.css" %}">
-<script src="{% static "teacher/classroom_reviewers.js" %}" defer></script>
+<link rel="stylesheet" href="{% static "teacher/classroom_announcement.css" %}">
+<script src="{% static "teacher/classroom_announcement.js" %}" defer></script>
 
 {% endblock baseheadblock %}
 
@@ -16,7 +16,7 @@
 
 
 
-<section class="classroom-section">
+<section class="classroom-section open">
 
     <div class="classroom-title">
         <h1 class="poppins-light">Classroom</h1>
@@ -41,42 +41,23 @@
         </div>
         <hr style="color: black; width: 100%; height: 2px; background-color: black;">
         <div class="classrooms-all-actions">
-            <button style="background-color: #ABFDE8; color: black;" class="poppins-medium" >Materials</button>
+            <button onclick="window.location.href='{% url 'teacher_classroom_reviewers_page' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Materials</button>
             <button style="background-color: #FFDC47; color: black;" class="poppins-light" >Activities</button>
         </div>
         <div class="classrooms-all-actions">
             <button style="background-color: #FFDC47; color: black;" class="poppins-light" >Check Students</button>
-            <button onclick="window.location.href='{% url 'teacher_classroom_announcement_page' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Announcement</button>
+            <button style="background-color: #ABFDE8; color: black;" class="poppins-medium" >Announcement</button>
         </div>
+    </div>
+
+    <div class="announcement-container">
+        <textarea name="" id="announcement" class="textarea-field" style="height: 80%; width: calc(100% - 45px); margin: 0;" placeholder="What do you want to say to your students . . ."></textarea>
+        <img src="{% static 'assets/post-classroom-icon.svg' %}" alt="">
     </div>
 
     <input type="month" name="" id="month-field" class="poppins-regular notification-date-input" style="align-self: flex-end; margin-right: 8%; width: 125px;">
     <hr style="color: black; width: 85%; margin-top: 10px; height: 0.5px; background-color: black;">
-
-    <div class="materials-collections" id="material_collections">
-        <div class="material-empty" style="display: none;">
-            <h3 class="poppins-light"> There are no material uploaded this month! </h3>
-        </div>
-
-        <div class="material-container" style="display: none;" >
-            <img src="{% static 'assets/delete-materials-icon.svg' %}" alt="" class="collections-delete-button">
-            <h2 class="poppins-regular ellipsis"> Reviewer For Final </h2>
-            <h5 class="poppins-light ellipsis">Date Uploaded : December 12, 2003</h5>
-            <button class="poppins-light collection-visit-button" >
-                Click here to view
-            </button>
-
-            <span class="collection-category poppins-black">
-                Material
-            </span>
-        </div>
-
-    </div>
-
-
-    <img src="{% static 'assets/add-material-button.svg' %}" alt="" class="add-collection-button" id="add_collection_button">
  
-
 </section>
 
 
