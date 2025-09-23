@@ -55,6 +55,8 @@
     line-height: 16px; 
     color: #2E2D2D;
     margin-top: 8px;
+    height: fit-content;
+
 }
 
 .reviewer_file{ 
@@ -66,18 +68,25 @@
     margin-top: 12px;
     cursor: pointer;
     text-align: left;
+    height: fit-content;
 }
 
-.reviewer-link{ 
+.reviewer-link {
     font-size: 10px;
-    line-height: 15px; 
-    text-decoration-line: underline; 
+    line-height: 15px;
+    text-decoration-line: underline;
     color: #2E2D2D;
     width: 85%;
     margin-top: 12px;
     cursor: pointer;
-    text-align: left;  
+    text-align: left;
+    height: fit-content;
+    overflow-wrap: break-word;     /* Break long words */
+    word-break: break-word;        /* Force break if needed */
+    white-space: normal;           /* Allow wrapping */
+    display: inline-block;         /* Respect width */
 }
+
 
 
 .actions-button{

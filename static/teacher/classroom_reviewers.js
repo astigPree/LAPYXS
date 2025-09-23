@@ -315,6 +315,7 @@ continue_delete_material_button.addEventListener("click", async () => {
         get_classroom_materials();
         setTimeout(() => {  
             delete_material_modal.style.display = "none";
+            continue_delete_material_button.disabled = false;
             hideSuccessModal();
         }, 2000);
     }

@@ -60,3 +60,6 @@ def api_seen_notification(request):
     ).order_by('-created_at').values('title', 'content', 'is_seen')
     
     return JsonResponse({'notifications': list(notifications)}, status=200)
+
+
+ 

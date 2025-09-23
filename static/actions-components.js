@@ -96,10 +96,15 @@ async function seenCheckNotification(){
 
 
 
-setTimeout(()=>{
+setTimeout( async ()=>{
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    notification_date.value = `${year}-${month}`;
-    firstCheckNotification();
+    notification_date.value = `${year}-${month}`; 
+    await firstCheckNotification();
 }, 100);
+
+
+notification_date.addEventListener("change", async () => {
+    await firstCheckNotification();
+});

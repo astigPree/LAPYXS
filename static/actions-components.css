@@ -314,6 +314,18 @@
     row-gap: 12px;
 }
 
+
+@keyframes animateNotificationBox {
+    from {
+        opacity: 0; 
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1; 
+        transform: translateY(0px);
+    }
+}
+
 .notification-content{ 
     width: 80%;
     min-height: 48px;  
@@ -328,6 +340,7 @@
     padding-bottom: 12px; 
     padding-right: 12px; 
     padding-left: 12px;
+    animation: animateNotificationBox 0.3s ease-in-out forwards;
 }
 
 .notification-content h4{
