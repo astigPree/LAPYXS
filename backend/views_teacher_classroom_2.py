@@ -77,9 +77,13 @@ def api_teacher_get_post(request):
     classroom_post = ClassroomPost.objects.filter(
         classroom=classroom, 
         created_at__month=selected_month
-    ).order_by('-created_at').values('content', 'created_at')
+    ).order_by('-created_at').values('content', 'created_at' , 'id')
     
     
-    return JsonResponse({'classroom_post': list(classroom_post)}, status=200)
+    return JsonResponse({
+        'classroom_post': list(classroom_post),
+        'name' : request.user.fullname,
+        'profile' : request.user.profile_image.url if request.user.profile_image else None
+    }, status=200)
 
 

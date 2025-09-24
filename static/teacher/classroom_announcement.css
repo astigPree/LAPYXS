@@ -296,4 +296,162 @@ label{
 } 
 
 
+ 
+
+.materials-collections{
+    width: 85%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 10px;
+    margin-bottom: 4    0px;
+    padding-top: 18px;
+}
+
+
+.material-empty{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: materialFaidInUp 0.5s ease-in-out;
+}
+
+.material-empty h3{
+    font-size: 16px;
+    line-height: 21px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: center;
+}
+
+
+@keyframes materialFaidInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 30%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+}
+
+
+
+
+.announcement{ 
+    box-sizing: border-box;  
+    width: 100%;
+    height: fit-content;
+    background: #EFF7F6;
+    border: 0.5px solid #2E2D2D;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 20px;
+    margin-bottom: 10px; 
+    position: relative;
+    animation: materialFaidInUp 0.5s ease-in-out;
+}
+
+
+.announcement-title-box{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 5px;
+}
+
+.announcement-title-box img{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.announcement-title-box h4{
+    font-size: 12px;
+    line-height: 15px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: left;
+    width: calc(100% - 30px - 70px); 
+}
+
+.delete-announcement{
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    border: none; 
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D;  
+    background: #D11149;
+    border-radius: 0px 2px; 
+    font-size: 10px;
+    line-height: 12px; 
+    padding: 5px 10px;
+    color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+.announcement p{ 
+    width: 100%;
+    height: fit-content;  
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D; 
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+
+.announcement-dates{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.announcement-dates h6{
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: left;
+    width: fit-content;
+    height: fit-content;
+}
+
+.announcement-dates button{
+    background: transparent;
+    cursor: pointer;
+    border: none;
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D;
+    width: fit-content;
+    height: fit-content;
+    text-decoration: underline;
+}
+
+
+
+
 
