@@ -271,7 +271,8 @@ material_collections.addEventListener("click", function (event) {
 
     } else if (action === "view") {
         // handle view logic
-
+        sessionStorage.setItem('post_id', postId);
+        window.location.href = classroom_view_announcement_link;
 
     }
 });

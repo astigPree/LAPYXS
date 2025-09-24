@@ -12,6 +12,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between; 
+    z-index: 30;
 }
 
 
@@ -113,6 +114,7 @@
     border: none;
     cursor: pointer;
     transition: all 0.3s ease-in-out; 
+    z-index: 30;
 }
 
 .shortcut-actions-opener span{ 

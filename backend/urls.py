@@ -25,6 +25,10 @@ urlpatterns = [
     path('get_teacher_classroom_post', api_teacher_get_post , name='api_teacher_get_post'),
     path('add_teacher_classroom_post', api_teacher_create_post , name='api_teacher_create_post'),
     path('delete_teacher_classroom_post', api_teacher_remove_post , name='api_teacher_remove_post'),
+    path('get_teacher_classroom_selected_post', api_teacher_get_selected_post , name='api_teacher_get_selected_post'),
+    path('reply_teacher_classroom_post', api_teacher_reply_post , name='api_teacher_reply_post'),
+    path('get_teacher_classroom_post_replies', api_teacher_get_replies , name='api_teacher_get_replies'),
+    path('delete_teacher_classroom_post_reply', api_teacher_delete_replies , name='api_teacher_delete_replies'),
     
     
     # STUDENT ------------------------
