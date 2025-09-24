@@ -1,0 +1,673 @@
+
+.classroom-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: fit-content;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.classroom-section.open{
+    opacity: 1;
+}
+
+.classroom-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    height: fit-content;
+    margin-top: 100px;
+}
+
+.classroom-title h1{
+    flex: 1; 
+    font-size: 16px;
+    line-height: 21px;  
+    color: #2E2D2D; 
+    height: fit-content;
+    
+}
+.classroom-title button{  
+    background: #ABFDE8;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    width: fit-content;
+    height: fit-content;
+    padding: 8px 15px;
+    font-size: 10px;
+    line-height: 12px; 
+    text-align: center;
+    border: none;
+    color: #2E2D2D;
+    cursor: pointer;
+
+}
+
+
+.classroom-info-container{  
+    width: 85%;
+    height: fit-content;  
+    background: #A3E3FF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 20px; 
+    padding: 10px 20px; 
+}
+
+
+.classroom-info-container h2{ 
+    font-size: 18px;
+    line-height: 25px;  
+    color: #2E2D2D; 
+    margin-top: 10px; 
+}
+.classroom-info-container h3{ 
+    font-size: 12px;
+    line-height: 15px;  
+    color: #2E2D2D;  
+    margin-top: 3px;
+}
+
+
+.classroom-info-action{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    column-gap: 10px;
+    align-self: flex-end;
+    margin-top: 12px;
+}
+
+.classroom-info-action button{
+    background: #ABFDE8; 
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D; 
+    width: fit-content;
+    height: fit-content;
+    padding: 3px 5px;
+    border: 0.5px solid #2E2D2D;
+    border-radius: 2px; 
+    cursor: pointer;
+}
+
+.classroom-info-action span{ 
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D; 
+}
+
+
+
+.classroom-all-actions-container{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: fit-content;
+    row-gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.classrooms-all-actions{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.classrooms-all-actions button{ 
+    width: 48%;
+    height: fit-content;  
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px; 
+    font-size: 10px;
+    line-height: 12px; 
+    text-align: center; 
+    color: #FFFFFF; 
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer
+}
+
+
+.classroom-descriptions{
+    width: 90%;
+    margin-bottom: 12px;
+    height: fit-content;
+    font-size: 11px;
+    line-height: 15px;  
+    color: #2E2D2D;
+    text-align: center ;
+    margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.classroom-delete-modal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: fixed;
+    top: 0px;
+    left: 0px; 
+    z-index: 50;  
+    background: rgba(171, 253, 232, 0.4); 
+}
+
+.classroom-delete-modal-container{ 
+    max-width: 400px;
+    width: 80%; 
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 34svh;
+}
+
+.classroom-delete-modal-container p{
+    width: 80%;
+    height: fit-content;
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center; 
+}
+
+
+.announcement-container{  
+    width: 85%;
+    height: 61px; 
+    margin-top: 8px;
+    margin-bottom: 12px;
+    background: #EFF7F6;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+    box-sizing: border-box;
+}
+
+.announcement-container img{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+label{ 
+    font-size: 12px;
+    line-height: 9px;   
+    width: 80%;
+    color: #2E2D2D;
+    height: fit-content;
+    margin-bottom: 5px;
+}
+
+.input-field{ 
+    width: 80%;
+    height: 30px;  
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 8px; 
+    color: #2E2D2D;  
+    padding-left: 10px;
+    margin-bottom: 12px;
+    outline: none;
+}
+
+
+.textarea-field{
+    width: 80%;
+    height: 100px;
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D;  
+    padding-left: 10px;
+    margin-bottom: 12px;
+    resize: none;
+    overflow: auto;
+    padding: 10px;
+    outline: none;
+}
+
+.file-field{ 
+    width: 80%;
+    height: 30px;  
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 8px; 
+    color: #2E2D2D; 
+    margin-bottom: 12px;
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+#announcement_button {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+} 
+
+
+ 
+
+.materials-collections{
+    width: 85%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    row-gap: 10px;
+    margin-bottom: 4    0px;
+    padding-top: 18px;
+}
+
+
+.material-empty{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: materialFaidInUp 0.5s ease-in-out;
+}
+
+.material-empty h3{
+    font-size: 16px;
+    line-height: 21px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: center;
+}
+
+
+@keyframes materialFaidInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 30%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+}
+
+
+
+
+.announcement{ 
+    box-sizing: border-box;  
+    width: 100%;
+    height: fit-content;
+    background: #EFF7F6;
+    border: 0.5px solid #2E2D2D;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 20px;
+    margin-bottom: 10px; 
+    position: relative;
+    animation: materialFaidInUp 0.5s ease-in-out;
+}
+
+
+.announcement-title-box{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 5px;
+}
+
+.announcement-title-box img{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.announcement-title-box h4{
+    font-size: 12px;
+    line-height: 15px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: left;
+    width: calc(100% - 30px - 70px); 
+}
+
+.delete-announcement{
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    border: none; 
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D;  
+    background: #D11149;
+    border-radius: 0px 2px; 
+    font-size: 10px;
+    line-height: 12px; 
+    padding: 5px 10px;
+    color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
+.announcement p{ 
+    width: 100%;
+    height: fit-content;  
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D; 
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+
+.announcement-dates{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.announcement-dates h6{
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D; 
+    width: 100%;
+    text-align: left;
+    width: fit-content;
+    height: fit-content;
+}
+
+.announcement-dates button{
+    background: transparent;
+    cursor: pointer;
+    border: none;
+    font-size: 10px;
+    line-height: 12px; 
+    color: #2E2D2D;
+    width: fit-content;
+    height: fit-content;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+.classroom-add-modal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: fixed;
+    top: 0px;
+    left: 0px; 
+    z-index: 50;  
+    background: rgba(171, 253, 232, 0.4); 
+}
+
+.classroom-add-modal-container{ 
+    max-width: 400px;
+    width: 80%;
+    min-height: 302px; 
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 26svh;
+}
+
+.classroom-add-modal-header{
+    display: flex;
+    width: 90%;
+    height: fit-content;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.classroom-add-modal-header img{
+    width: 20px;
+    height: 20px;  
+}
+
+.classroom-add-modal-header span{  
+    font-size: 11px;
+    line-height: 15px;  
+    color: #2E2D2D; 
+}
+
+label{ 
+    font-size: 12px;
+    line-height: 9px;   
+    width: 80%;
+    color: #2E2D2D;
+    height: fit-content;
+    margin-bottom: 5px;
+}
+
+.input-field{ 
+    width: 80%;
+    height: 30px;  
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 8px; 
+    color: #2E2D2D;  
+    padding-left: 10px;
+    margin-bottom: 12px;
+    outline: none;
+}
+
+
+.textarea-field{
+    width: 80%;
+    height: 100px;
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D;  
+    padding-left: 10px;
+    margin-bottom: 12px;
+    resize: none;
+    overflow: auto;
+    padding: 10px;
+    outline: none;
+}
+
+.file-field{ 
+    width: 80%;
+    height: 30px;  
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 8px; 
+    color: #2E2D2D; 
+    margin-bottom: 12px;
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+
+.classroom_add_modal_actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 80%;
+    height: fit-content;
+    column-gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 12px;
+}
+
+.classroom_add_modal_actions button{  
+    border: none;
+    width: 40%;
+    background: #FA191C;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 15px; 
+    text-align: center;
+    color: #FFFFFF; 
+    padding: 5px 0px;
+    cursor: pointer;
+}
+
+
+
+.add-collection-button{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer; 
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+}
+
+
+
+.classroom-descriptions{
+    width: 90%;
+    margin-bottom: 12px;
+    height: fit-content;
+    font-size: 11px;
+    line-height: 15px;  
+    color: #2E2D2D;
+    text-align: center ;
+    margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.classroom-delete-modal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: fixed;
+    top: 0px;
+    left: 0px; 
+    z-index: 50;  
+    background: rgba(171, 253, 232, 0.4); 
+}
+
+.classroom-delete-modal-container{ 
+    max-width: 400px;
+    width: 80%; 
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 34svh;
+}
+
+.classroom-delete-modal-container p{
+    width: 80%;
+    height: fit-content;
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center; 
+}
+
+
+
+
