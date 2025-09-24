@@ -455,3 +455,219 @@ label{
 
 
 
+
+
+.classroom-add-modal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: fixed;
+    top: 0px;
+    left: 0px; 
+    z-index: 50;  
+    background: rgba(171, 253, 232, 0.4); 
+}
+
+.classroom-add-modal-container{ 
+    max-width: 400px;
+    width: 80%;
+    min-height: 302px; 
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 26svh;
+}
+
+.classroom-add-modal-header{
+    display: flex;
+    width: 90%;
+    height: fit-content;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.classroom-add-modal-header img{
+    width: 20px;
+    height: 20px;  
+}
+
+.classroom-add-modal-header span{  
+    font-size: 11px;
+    line-height: 15px;  
+    color: #2E2D2D; 
+}
+
+label{ 
+    font-size: 12px;
+    line-height: 9px;   
+    width: 80%;
+    color: #2E2D2D;
+    height: fit-content;
+    margin-bottom: 5px;
+}
+
+.input-field{ 
+    width: 80%;
+    height: 30px;  
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 8px; 
+    color: #2E2D2D;  
+    padding-left: 10px;
+    margin-bottom: 12px;
+    outline: none;
+}
+
+
+.textarea-field{
+    width: 80%;
+    height: 100px;
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D;  
+    padding-left: 10px;
+    margin-bottom: 12px;
+    resize: none;
+    overflow: auto;
+    padding: 10px;
+    outline: none;
+}
+
+.file-field{ 
+    width: 80%;
+    height: 30px;  
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px; 
+    font-size: 11px;
+    line-height: 8px; 
+    color: #2E2D2D; 
+    margin-bottom: 12px;
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+
+.classroom_add_modal_actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 80%;
+    height: fit-content;
+    column-gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 12px;
+}
+
+.classroom_add_modal_actions button{  
+    border: none;
+    width: 40%;
+    background: #FA191C;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 15px; 
+    text-align: center;
+    color: #FFFFFF; 
+    padding: 5px 0px;
+    cursor: pointer;
+}
+
+
+
+.add-collection-button{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer; 
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+}
+
+
+
+.classroom-descriptions{
+    width: 90%;
+    margin-bottom: 12px;
+    height: fit-content;
+    font-size: 11px;
+    line-height: 15px;  
+    color: #2E2D2D;
+    text-align: center ;
+    margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.classroom-delete-modal{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: fixed;
+    top: 0px;
+    left: 0px; 
+    z-index: 50;  
+    background: rgba(171, 253, 232, 0.4); 
+}
+
+.classroom-delete-modal-container{ 
+    max-width: 400px;
+    width: 80%; 
+    height: fit-content;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 34svh;
+}
+
+.classroom-delete-modal-container p{
+    width: 80%;
+    height: fit-content;
+    font-size: 11px;
+    line-height: 15px; 
+    color: #2E2D2D;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center; 
+}
+
+
+
+

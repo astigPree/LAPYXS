@@ -24,6 +24,7 @@ urlpatterns = [
     path('get_teacher_materials_joined', api_teacher_get_material_joined , name='api_teacher_get_material_joined'),
     path('get_teacher_classroom_post', api_teacher_get_post , name='api_teacher_get_post'),
     path('add_teacher_classroom_post', api_teacher_create_post , name='api_teacher_create_post'),
+    path('delete_teacher_classroom_post', api_teacher_remove_post , name='api_teacher_remove_post'),
     
     
     # STUDENT ------------------------

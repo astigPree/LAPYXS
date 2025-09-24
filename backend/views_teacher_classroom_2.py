@@ -87,3 +87,29 @@ def api_teacher_get_post(request):
     }, status=200)
 
 
+def api_teacher_remove_post(request):
+       
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    
+    post_id = request.POST.get('post_id', None) 
+    if not isinstance(post_id, str):
+        return JsonResponse({'error': 'Post id is required.'}, status=400)
+    if not post_id.isdigit():
+        return JsonResponse({'error': 'Post id is required.'}, status=400) 
+
+    
+    classroom_post = ClassroomPost.objects.filter(id=int(post_id)).first()
+    if classroom_post is None:
+        return JsonResponse({'error': 'Classroom post not found.'}, status=400)
+    
+    classroom_post.delete()
+    
+    return JsonResponse({'success': 'Classroom post deleted successfully.'}, status=200)
