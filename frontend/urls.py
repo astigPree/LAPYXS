@@ -25,7 +25,7 @@ urlpatterns = [
     path('student_classroom_view_reviewer/', views.student_classroom_view_reviewer, name='student_classroom_view_reviewer_page'),
 
     path('student_classroom_announcement/', views.student_classroom_announcement_page, name='student_classroom_announcement_page'),
-
- 
+    path('student_comments/', views.student_classroom_comments_page, name='student_classroom_comments_page'),
+    
  
 ]

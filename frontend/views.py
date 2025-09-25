@@ -124,3 +124,11 @@ def student_classroom_announcement_page(request):
     if request.user.user_type != 'Student':
         return redirect('home_page')
     return render(request, 'student/classroom_announcement.html')
+
+
+def student_classroom_comments_page(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Student':
+        return redirect('home_page')
+    return render(request, 'student/classroom_comments.html')

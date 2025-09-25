@@ -5,7 +5,7 @@
 {% block baseheadblock %}
 <link rel="stylesheet" href="{% static "actions-components.css" %}">
 <link rel="stylesheet" href="{% static "teacher/classroom_comments.css" %}">
-<script src="{% static "teacher/classroom_comments.js" %}" defer></script>
+<script src="{% static "student/classroom_comments.js" %}" defer></script>
 
 {% endblock baseheadblock %}
 
@@ -17,7 +17,7 @@
 
 <section class="classroom-section">
 
-    <button class="back-button" onclick="window.location.href='{% url 'teacher_classroom_announcement_page' %}'">
+    <button class="back-button" onclick="window.location.href='{% url 'student_classroom_announcement_page' %}'">
         <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
         <span class="poppins-medium">View Other Post</span> 
     </button>
