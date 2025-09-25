@@ -39,5 +39,9 @@ urlpatterns = [
     path('leave_student_classroom', api_student_leave_classroom , name='api_student_leave_classroom'),
     path('get_student_classroom_materials', api_student_get_material , name='api_student_get_material'),
     path('update_student_material', api_student_join_material , name='api_student_join_material'),
+    path('get_student_classroom_post', api_student_get_post , name='api_student_get_post'),
+    path('reply_student_classroom_post', api_student_reply_post , name='api_student_reply_post'),
+    path('get_student_classroom_selected_post', api_student_get_selected_post , name='api_student_get_selected_post'),
+    path('get_student_classroom_post_replies', api_student_get_replies , name='api_student_get_replies'),
     
 ]

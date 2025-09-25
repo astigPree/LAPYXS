@@ -292,3 +292,12 @@ def api_student_join_material(request):
     
     return JsonResponse({'success': 'Material joined successfully.'}, status=200)
 
+
+
+
+
+
+
+
+
+

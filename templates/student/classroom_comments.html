@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_comments.css" %}">
+<script src="{% static "teacher/classroom_comments.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="teacher_classroom" %}
+
+
+<section class="classroom-section">
+
+    <button class="back-button" onclick="window.location.href='{% url 'teacher_classroom_announcement_page' %}'">
+        <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
+        <span class="poppins-medium">View Other Post</span> 
+    </button>
+
+    <div class="announcement main">
+        <div class="announcement-title-box">
+            <img src="" alt="" id="main_pic">
+            <h4 class="poppins-regular ellipsis" id="main_name">Tech makie</h4>
+        </div> 
+
+        <p class="poppins-light" id="main_content">Let’s build a classroom screen that feels like a hub of learning—organized, warm, and empowering for teachers like you, Makie. This is where you manage everything: students, materials, assessments, and progress.</p>
+        
+        <div class="announcement-dates">
+            <h6 class="poppins-regular" id="main_date">December 24, 2005 at 12:00 PM</h6> 
+        </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="materials-collections" id="material_collections">
+
+        <div class="announcement" style="display: none;">
+            <div class="announcement-title-box">
+                <img src="" alt="">
+                <h4 class="poppins-regular ellipsis">Tech makie</h4>
+            </div>
+            <button class="delete-announcement poppins-bold">
+                Delete Post
+            </button>
+
+            <p class="poppins-light">Let’s build a classroom screen that feels like a hub of learning—organized, warm, and empowering for teachers like you, Makie. This is where you manage everything: students, materials, assessments, and progress.</p>
+            
+            <div class="announcement-dates">
+                <h6 class="poppins-regular">December 24, 2005 at 12:00 PM</h6> 
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+    
+<div class="announcement-container">
+    <textarea name="" id="announcement" class="textarea-field" style="height: 80%; width: calc(100% - 45px); margin: 0;" placeholder="What do you want to say to your students . . ."></textarea>
+    <img src="{% static 'assets/post-classroom-icon.svg' %}" alt="" id="announcement_button">
+</div>
+
+
+
+
+</section> 
+
+
+
+
+
+<script>
+    var clasrroms_reviewers_page_link = "{% url 'teacher_classroom_reviewers_page' %}";
+</script>
+
+{% endblock basebodyblock %}
