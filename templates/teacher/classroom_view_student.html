@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_reviewers.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_reviewers.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_student.css" %}">
+<script src="{% static "teacher/classroom_view_student.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_classroom" %}
+
+
+<section class="classroom-section ">
+
+    <button class="back-button" onclick="window.location.href='{% url 'teacher_classroom_check_students' %}'">
+        <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
+        <span class="poppins-medium">View Other Students</span> 
+    </button>
+
+    <div class="student-information">
+        <img src="{% static 'assets/icon.png' %}" id="profile" alt="">
+    </div>
+
+    <div class="student-form-info">
+        <h5 class="poppins-medium">Student Name : </h5>
+        <h6 class="poppins-light" id="student_name"> John Catamora </h6>
+    </div>
+
+    <div class="student-form-info">
+        <h5 class="poppins-medium">School Name : </h5>
+        <h6 class="poppins-light" id="school_name"> Masbate National Comprehensive High School </h6>
+    </div>
+
+    <div class="student-form-info">
+        <h5 class="poppins-medium">Grade Level : </h5>
+        <h6 class="poppins-light" id="grade_level"> Grade 5 </h6>
+    </div> 
+
+    <div class="student-collections-title">
+        <span></span>
+        <h5 class="poppins-bold">List of Uploaded</h5>
+    </div>
+
+    <div class="materials-collections" id="material_collections">
+
+        <div class="material-empty" style="display: none;">
+            <h3 class="poppins-light"> There are no activities or reviewer student submitted/participated </h3>
+        </div>
+
+
+        <div class="student-material-container" style="display: none;">
+            <img src="{% static 'assets/check-activity-icon.svg' %}" alt="">
+
+            <h1 class="poppins-regular ellipsis">Reviewer For Final</h1>
+            <h2 class="poppins-light ellipsis">Date Uploaded : December 12, 2004</h2>
+            <h2 class="poppins-light ellipsis">Due Date : December 12, 2004 </h2>
+
+            <span class="collection-category poppins-black">
+                Material
+            </span>
+            <button class="poppins-light collection-visit-button" >
+                Click here to view
+            </button> 
+        </div>
+
+    </div>
+
+</section> 
+
+ 
+  
+
+<script>
+    var check_activity = `{% static 'assets/check-activity-icon.svg' %}`;
+    var uncheck_activity = `{% static 'assets/uncheck-activity-icon.svg' %}`;
+    var clasrroms_reviewers_page_link = "{% url 'teacher_classroom_reviewers_page' %}";
+</script>
+
+{% endblock basebodyblock %}

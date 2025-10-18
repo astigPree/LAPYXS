@@ -5,7 +5,8 @@
 {% block baseheadblock %}
 <link rel="stylesheet" href="{% static "actions-components.css" %}">
 <link rel="stylesheet" href="{% static "teacher/classroom_reviewers.css" %}">
-<script src="{% static "teacher/classroom_reviewers.js" %}" defer></script>
+<link rel="stylesheet" href="{% static "teacher/classroom_students.css" %}">
+<script src="{% static "teacher/classroom_students.js" %}" defer></script>
 
 {% endblock baseheadblock %}
 
@@ -16,7 +17,7 @@
 
 
 
-<section class="classroom-section">
+<section class="classroom-section" >
 
     <div class="classroom-title">
         <h1 class="poppins-light">Classroom</h1>
@@ -41,40 +42,37 @@
         </div>
         <hr style="color: black; width: 100%; height: 2px; background-color: black;">
         <div class="classrooms-all-actions">
-            <button style="background-color: #ABFDE8; color: black;" class="poppins-medium" >Materials</button>
+            <button onclick="window.location.href='{% url 'teacher_classroom_reviewers_page' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Materials</button>
             <button onclick="window.location.href='{% url 'teacher_classroom_activities' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Activities</button>
         </div>
         <div class="classrooms-all-actions">
-            <button onclick="window.location.href='{% url 'teacher_classroom_check_students' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Check Students</button>
+            <button  style="background-color: #ABFDE8; color: black;"  class="poppins-medium" >Check Students</button>
             <button onclick="window.location.href='{% url 'teacher_classroom_announcement_page' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Announcement</button>
         </div>
     </div>
-
-    <input type="month" name="" id="month-field" class="poppins-regular notification-date-input" style="align-self: flex-end; margin-right: 8%; width: 125px;">
-    <hr style="color: black; width: 85%; margin-top: 10px; height: 0.5px; background-color: black;">
 
     <div class="materials-collections" id="material_collections">
         <div class="material-empty" style="display: none;">
             <h3 class="poppins-light"> There are no material uploaded this month! </h3>
         </div>
 
-        <div class="material-container" style="display: none;" >
-            <img src="{% static 'assets/delete-materials-icon.svg' %}" alt="" class="collections-delete-button">
-            <h2 class="poppins-regular ellipsis"> Reviewer For Final </h2>
-            <h5 class="poppins-light ellipsis">Date Uploaded : December 12, 2003</h5>
-            <button class="poppins-light collection-visit-button" >
-                Click here to view
-            </button>
+        <div class="student-container" style="display: none;">
 
-            <span class="collection-category poppins-black">
-                Material
-            </span>
+            <div class="student-profile">
+                <img src="{% static 'assets/icon.png' %}" alt="">
+            </div>
+            <div class="student-information">
+                <h4 class="poppins-regular ellipsis">John Catamora</h4>
+                <h5 class="poppins-light ellipsis">johncatamora@gmail.com</h5>
+            </div>
+
+            <button class="poppins-black">
+                Check Student
+            </button>
+             
         </div>
 
     </div>
-
-
-    <img src="{% static 'assets/add-material-button.svg' %}" alt="" class="add-collection-button" id="add_collection_button">
  
 
 </section>
@@ -126,78 +124,11 @@
 </div>
 
 
-<div class="classroom-delete-modal" id="delete_material_modal" style="display: none;">
-
-    <div class="classroom-delete-modal-container">
-        
-        <div class="classroom-add-modal-header">
-            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-semibold">Delete Material</span>
-        </div>
-        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all connected to this materials. </p>
-        
-        <div class="classroom_add_modal_actions">
-            <button class="poppins-extrabold" id="continue_delete_material_button">Continue</button>
-            <button class="poppins-extrabold" id="cancel_delete_material_button" style="background-color: #04497B;">Cancel</button>
-        </div>
-
-    </div>
-
-</div>
-
-
-
-
-
-<div class="classroom-add-modal" id="add_material_modal" style="display: none;">
-    <div class="classroom-add-modal-container" style="margin-top: 20svh;">
-
-        <div class="classroom-add-modal-header">
-            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-semibold">Add Learning Materials</span>
-        </div>
-        
-        <label class="poppins-regular">Material Name</label>
-        <input id="material_name" type="text" placeholder="Enter your Material name" class="poppins-regular input-field">
-        <label class="poppins-regular">Material Descriptions</label>
-        <textarea id="material_description" name="description" placeholder="What this materials is all about?" class="poppins-regular textarea-field"></textarea>
-        <label class="poppins-regular">Material Link</label>
-        <input id="material_link" type="text" placeholder="Optional: Add additional link " class="poppins-regular input-field">
-        <label class="poppins-regular">Material File</label>
-        <input id="material_file_button" type="button" value="Optional: Click Here to upload the file" class="poppins-regular file-field ellipsis">
-        <input type="file" name="" id="material_file" hidden>
-
-
-        <div class="classroom_add_modal_actions">
-            <button class="poppins-extrabold" id="add_matterial_button">Continue</button>
-            <button class="poppins-extrabold" id="cancel_adding_material_button" style="background-color: #04497B;">Cancel</button>
-        </div>
-
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script>
     var clasrroms_pages_link = "{% url 'teacher_classroom_page' %}";
-    var classroom_view_reviewer_link = "{% url 'teacher_classroom_view_reviewer_page' %}"
+    var classroom_view_reviewer_link = "{% url 'teacher_classroom_view_reviewer_page' %}";
+    var classroom_view_student_link = "{% url 'teacher_classroom_view_student' %}";
 </script>
 
 {% endblock basebodyblock %}

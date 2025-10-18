@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+    <link rel="stylesheet" href="{% static "actions-components.css" %}">  
+    <link rel="stylesheet" href="{% static "teacher/messages.css" %}">  
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_message" %}
+
+
+
+<section class="classroom-section open">
+
+    <div class="classroom-title">
+        <h1 class="poppins-light">Messages</h1> 
+    </div>
+    
+
+</section>
+
+
+
+{% endblock basebodyblock %}

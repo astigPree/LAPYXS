@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}"> 
+<link rel="stylesheet" href="{% static "teacher/classroom_reviewers.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_activities.css" %}">
+<script src="{% static "teacher/classroom_activities.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_classroom" %}
+
+
+
+<section class="classroom-section">
+
+    <div class="classroom-title">
+        <h1 class="poppins-light">Classroom</h1>
+        <button onclick="window.location.href='{% url 'teacher_classroom_page' %}'" class="poppins-medium" id="create_classroom_button">
+            Other Classrooms
+        </button>
+    </div>
+    
+    <div class="classroom-info-container">
+        <h2 class="poppins-light ellipsis" id="classroom_name_tag">Google Clasroom</h2>
+        <h3 class="poppins-semibold ellipsis" id="classroom_subject_tag">Food Beverage</h3>
+        <div class="classroom-info-action">
+            <span class="poppins-bold" id="classroom_link_id"> 123FSAHDFJK </span>
+            <button class="poppins-regular" id="copy_link_button">Copy ID</button>
+        </div>
+    </div>
+
+    <div class="classroom-all-actions-container">
+        <div class="classrooms-all-actions">
+            <button style="background-color: #1A8FE3;" class="poppins-light" id="edit_classroom">Edit Classroom</button>
+            <button style="background-color: #FA191C;" class="poppins-light" id="delete_classroom">Delete Classroom</button>
+        </div>
+        <hr style="color: black; width: 100%; height: 2px; background-color: black;">
+        <div class="classrooms-all-actions">
+            <button onclick="window.location.href='{% url 'teacher_classroom_reviewers_page' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Materials</button>
+            <button style="background-color: #ABFDE8; color: black;" class="poppins-medium" >Activities</button>
+        </div>
+        <div class="classrooms-all-actions">
+            <button onclick="window.location.href='{% url 'teacher_classroom_check_students' %}'"  style="background-color: #FFDC47; color: black;" class="poppins-light" >Check Students</button>
+            <button onclick="window.location.href='{% url 'teacher_classroom_announcement_page' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Announcement</button>
+        </div>
+    </div>
+ 
+
+    <input type="month" name="" id="month-field" class="poppins-regular notification-date-input" style="align-self: flex-end; margin-right: 8%; width: 125px;">
+    <hr style="color: black; width: 85%; margin-top: 10px; height: 0.5px; background-color: black;">
+
+    <div class="materials-collections" id="material_collections">
+        
+        <div class="material-empty"  style="display: none;">
+            <h3 class="poppins-light"> There are no activities uploaded this month! </h3>
+        </div>
+
+        <div class="material-container" >
+            <img src="{% static 'assets/delete-materials-icon.svg' %}" alt="" class="collections-delete-button">
+            <h2 class="poppins-regular ellipsis"> Reviewer For Final </h2>
+            <h5 class="poppins-light ellipsis">Date Uploaded : December 12, 2003</h5>
+            <h5 class="poppins-light ellipsis">Date Submission : December 12, 2003</h5>
+            <button class="poppins-light collection-visit-button" >
+                Click here to view
+            </button>
+
+            <span class="collection-category poppins-black">
+                Quiz
+            </span>
+        </div>
+ 
+    </div>
+ 
+    <img src="{% static 'assets/add-material-button.svg' %}" alt="" class="add-collection-button" id="add_collection_button">
+ 
+
+</section>
+
+
+
+<div class="classroom-add-modal" id="classroom_edit_modal" style="display: none;">
+    <div class="classroom-add-modal-container">
+
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Update Your Classroom</span>
+        </div>
+        
+        <label class="poppins-regular">Classroom Name</label>
+        <input id="classroom_name" type="text" placeholder="Enter Your Classroom Name" class="poppins-regular input-field">
+        <label class="poppins-regular">Classroom Descriptions</label>
+        <textarea id="classroom_description" name="description" placeholder="What this classroom is all about?" class="poppins-regular textarea-field"></textarea>
+        <label class="poppins-regular">Classroom Subject</label>
+        <input id="classroom_subject" type="text" placeholder="Enter Your Classroom Subject" class="poppins-regular input-field">
+        
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="update_edit_button">Update</button>
+            <button class="poppins-extrabold" id="cancel_edit_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="classroom-delete-modal" id="classroom_delete_modal" style="display: none;">
+
+    <div class="classroom-delete-modal-container">
+        
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Delete Classroom</span>
+        </div>
+        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all the students, exams and materials uploaded in this classroom</p>
+        
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="continue_delete_button">Continue</button>
+            <button class="poppins-extrabold" id="cancel_delete_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+
+</div>
+ 
+ 
+ 
+<div class="classroom-add-modal" id="classroom_add_activities_modal" style="display: none;">
+    <div class="classroom-activities-wrapper">
+
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Create Activities</span>
+        </div>
+
+
+        
+        
+        <label class="poppins-regular">Activity Name</label>
+        <input id="activity_name" type="text" placeholder="Enter Your Activity Name" class="poppins-regular input-field">
+        <label class="poppins-regular">Activity Descriptions</label>
+        <textarea id="activity_descriptions" name="description" placeholder="What this activity is all about?" class="poppins-regular textarea-field"></textarea>
+        <label class="poppins-regular">Activity Classifications</label> 
+        <select name="" id="activity_classfications" value="Assignment" class="poppins-regular select-field">
+            <option value="Assignment" class="poppins-bold">Assignment</option>
+            <option value="Quiz" class="poppins-bold">Quiz</option>
+            <option value="Assessment" class="poppins-bold">Assessment</option>
+            <option value="Exam" class="poppins-bold">Exam</option>
+        </select>
+        <label class="poppins-regular">Activity Starting Date</label>
+        <input id="activity_starting_date" type="date" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
+        
+        <label class="poppins-regular">Activity Starting Time</label>
+        <input id="activity_starting_time" type="time" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
+         
+        <label class="poppins-regular">Activity Deadline Date</label>
+        <input id="activity_deadline_date" type="date" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
+        
+        <label class="poppins-regular">Activity Deadline Time</label>
+        <input id="activity_deadline_time" type="time" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
+        
+        
+        <label class="poppins-regular">Activity Overall Certificate</label>
+        <input id="activity_overall_certificate" type="button" value="Click here to upload certificate" placeholder="Enter Your Activity Name" class="poppins-regular file-field ellipsis">
+        <input id="activity_overall_certificate_file" type="file" hidden >
+        
+
+        <div class="divider"></div>
+
+        <div class="classroom-activities-list">
+            <div class="classroom-activities-list-container" id="classroom_activities_list_container">
+
+                <div class="classroom-activities-list-selections-container" style="display: none;"> 
+                    <h4 class="poppins-bold">Number 1</h4>
+                    <h5 class="poppins-regular"> Provide the question below in the textbox</h5>
+                    <textarea id="classroom_description" name="description" placeholder="What is the questions" class="poppins-regular textarea-field"></textarea>
+                    
+                    <h5 class="poppins-regular">Provide the selection below and check the box if its the correct answer</h5>
+                    <div class="classroom-activities-list-selections-container-list">
+                        <div>
+                            <input type="radio" name="selections-item-1" id="">
+                            <input type="text" class="input-field poppins-light">
+                        </div>
+                        <div>
+                            <input type="radio" name="selections-item-1" id="">
+                            <input type="text" class="input-field poppins-light">
+                        </div>
+                        <div>
+                            <input type="radio" name="selections-item-1" id="">
+                            <input type="text" class="input-field poppins-light">
+                        </div>
+                    </div>
+
+                    <div class="classroom-activities-actions">
+                        <button class="poppins-semibold">Add Selection</button>
+                        <button style="background-color: #eb3235;"  class="poppins-semibold">Remove Selection</button>
+                        <button style="background-color: #FA191C;" class="poppins-semibold">Delete This Questions</button>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+                <div class="classroom-activities-list-selections-container" style="display: none;"> 
+                    <h4 class="poppins-bold">Number 2</h4>
+                    <h5 class="poppins-regular"> Provide the question below in the textbox</h5>
+                    <textarea id="classroom_description" name="description" placeholder="What is the questions" class="poppins-regular textarea-field"></textarea>
+                    
+                    <h5 class="poppins-regular">Provide the selection below and check the box if its the correct answer</h5>
+                    <div class="classroom-activities-list-selections-container-list">
+                        <div>
+                            <input type="checkbox" name="selections-item-1" id="">
+                            <input type="text" class="input-field poppins-light" >
+                        </div>
+                        <div>
+                            <input type="checkbox" name="selections-item-1" id="">
+                            <input type="text" class="input-field poppins-light">
+                        </div>
+                        <div>
+                            <input type="checkbox" name="selections-item-1" id="">
+                            <input type="text" class="input-field poppins-light">
+                        </div>
+                    </div>
+
+                    <div class="classroom-activities-actions">
+                        <button class="poppins-semibold">Add Selection</button>
+                        <button style="background-color: #eb3235;"  class="poppins-semibold">Remove Selection</button>
+                        <button style="background-color: #FA191C;" class="poppins-semibold">Delete This Questions</button>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+                <div class="classroom-activities-list-selections-container" style="display: none;"> 
+                    <h4 class="poppins-bold">Number 3</h4>
+                    <h5 class="poppins-regular"> Provide the question below in the textbox</h5>
+                    <textarea id="classroom_description" name="description" placeholder="What is the questions" class="poppins-regular textarea-field"></textarea>
+                    
+                    <div class="classroom-activities-actions">
+                        <button style="background-color: #FA191C;" class="poppins-semibold">Delete This Questions</button>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+                <div class="classroom-activities-list-selections-container" style="display: none;"> 
+                    <h4 class="poppins-bold">Number 4</h4>
+                    <h5 class="poppins-regular"> Provide the question below in the textbox for uploading file</h5>
+                    <textarea id="classroom_description" name="description" placeholder="What is the questions" class="poppins-regular textarea-field"></textarea>
+                    
+                    <div class="classroom-activities-actions">
+                        <button style="background-color: #FA191C;" class="poppins-semibold">Delete This Questions</button>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+                <div class="classroom-activities-list-selections-container" style="display: none;"> 
+                    <h4 class="poppins-bold">Number 5</h4>
+                    <h5 class="poppins-regular"> Provide the question below in the textbox for uploading file</h5>
+                    <textarea id="classroom_description" name="description" placeholder="What is the questions" class="poppins-regular textarea-field"></textarea>
+                    <input id="classroom_name" type="button" value="Click here to upload file" placeholder="Enter Your Activity Name" class="poppins-regular file-field">
+                    <input type="file" hidden>
+
+                    <div class="classroom-activities-actions">
+                        <button style="background-color: #FA191C;" class="poppins-semibold">Delete This Questions</button>
+                    </div>
+                    <div class="divider"></div>
+                </div> 
+            </div>
+
+            <div class="classroom-activities-list-actions" id="classroom_activities_list_of_actions">
+                <button class="poppins-light ellipsis" data-action="1">+ Selections items</button> 
+                <button class="poppins-light ellipsis" data-action="2">+ Multiple selections</button> 
+                <button class="poppins-light ellipsis" data-action="3">+ Question for essay </button> 
+                <button class="poppins-light ellipsis" data-action="4">+ Question for file submission</button> 
+                <button class="poppins-light ellipsis" data-action="5">+ Question with file</button> 
+            </div>
+
+        </div>
+
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="continue_activity_button">Continue</button>
+            <button class="poppins-extrabold" id="cancel_activity_button" style="background-color: #04497B;">Cancel</button>
+        </div> 
+    </div>
+
+</div>
+
+
+
+
+<div class="classroom-delete-modal" id="delete_material_modal" style="display: none;">
+
+    <div class="classroom-delete-modal-container">
+        
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Delete Activity</span>
+        </div>
+        <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all connected to this activity. </p>
+        
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="continue_delete_material_button">Continue</button>
+            <button class="poppins-extrabold" id="cancel_delete_material_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<script>
+    var clasrroms_pages_link = "{% url 'teacher_classroom_page' %}";
+    var classroom_view_reviewer_link = "{% url 'teacher_classroom_view_reviewer_page' %}";
+    var classroom_view_announcement_link = "{% url 'teacher_classroom_comments_page' %}";
+    var delete_material_icon = `{% static 'assets/delete-materials-icon.svg' %}`;
+</script>
+
+{% endblock basebodyblock %}

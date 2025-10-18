@@ -179,6 +179,7 @@ def api_get_student_materials_activities(request):
         classroom_material=classroom,
         created_at__month=selected_month
     ).order_by('-created_at')
+    # TODO: Only display the current starting datetime of the activity
     activities = Activity.objects.filter(
         activity_classroom=classroom,
         created_at__month=selected_month
@@ -198,7 +199,7 @@ def api_get_student_materials_activities(request):
     list_of_activities = []
     for activity in activities:
         list_of_activities.append({
-            'type' : 'Activity',
+            'type' : activity.activity_type,
             'name': activity.activity_name,
             'id' : activity.pk,
             'is_joined' : request.user.pk in activity.activity_joined,

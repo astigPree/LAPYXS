@@ -42,16 +42,16 @@
         <hr style="color: black; width: 100%; height: 2px; background-color: black;">
         <div class="classrooms-all-actions">
             <button onclick="window.location.href='{% url 'teacher_classroom_reviewers_page' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Materials</button>
-            <button style="background-color: #FFDC47; color: black;" class="poppins-light" >Activities</button>
+            <button onclick="window.location.href='{% url 'teacher_classroom_activities' %}'" style="background-color: #FFDC47; color: black;" class="poppins-light" >Activities</button>
         </div>
         <div class="classrooms-all-actions">
-            <button style="background-color: #FFDC47; color: black;" class="poppins-light" >Check Students</button>
+            <button onclick="window.location.href='{% url 'teacher_classroom_check_students' %}'"  style="background-color: #FFDC47; color: black;" class="poppins-light" >Check Students</button>
             <button style="background-color: #ABFDE8; color: black;" class="poppins-medium" >Announcement</button>
         </div>
     </div>
 
     <div class="announcement-container">
-        <textarea name="" id="announcement" class="textarea-field" style="height: 80%; width: calc(100% - 45px); margin: 0;" placeholder="What do you want to say to your students . . ."></textarea>
+        <textarea name="" id="announcement" class="textarea-field poppins-regular" style="height: 80%; width: calc(100% - 45px); margin: 0;" placeholder="What do you want to say to your students . . ."></textarea>
         <img src="{% static 'assets/post-classroom-icon.svg' %}" alt="" id="announcement_button">
     </div>
 
@@ -134,7 +134,7 @@
         
         <div class="classroom-add-modal-header">
             <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
-            <span class="poppins-semibold">Delete Material</span>
+            <span class="poppins-semibold">Delete Announcement</span>
         </div>
         <p class="poppins-light">Are you sure do you want to delete? Deleting this is will remove all comment under this post. </p>
         

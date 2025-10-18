@@ -1,0 +1,105 @@
+To save the `starting_date` and `starting_time` into your `DateTimeField`, you’ll need to combine them into a single `datetime` object before passing it to your model. Here's how you can implement that:
+
+### ✅ Step-by-step fix
+
+1. **Import Python’s datetime module**:
+   ```python
+   from datetime import datetime
+   ```
+
+2. **Parse and combine the date and time**:
+   Replace your `# TODO: IMPLEMENT DATETIME` with:
+   ```python
+   starting_date_str = request.POST.get('activity_starting_date', '')  # e.g., '2025-10-01'
+   starting_time_str = request.POST.get('activity_starting_time', '')  # e.g., '22:22'
+
+   activity_starting_datetime = None
+   if starting_date_str and starting_time_str:
+       try:
+           activity_starting_datetime = datetime.strptime(
+               f"{starting_date_str} {starting_time_str}", "%Y-%m-%d %H:%M"
+           )
+       except ValueError:
+           # Handle invalid format gracefully
+           pass
+   ```
+
+3. **Pass it to your model**:
+   Add this to your `Activity.objects.create()` call:
+   ```python
+   activity_starting_date=activity_starting_datetime,
+   ```
+
+### 🧠 Final model creation block
+```python
+activity_obj = Activity.objects.create(
+    activity_name=activity_name,
+    activity_description=activity_description,
+    activity_type=activity_type,
+    activity_owner=request.user,
+    activity_classroom=classroom,
+    activity_content=datas,
+    overall_certificate=activity_overall_certificate_file,
+    activity_starting_date=activity_starting_datetime
+)
+```
+
+Let me know if you also need to handle deadline date/time similarly or want to validate formats with user-friendly error messages.
+
+
+
+
+
+
+
+
+
+
+
+
+
+============================================================================================================
+To filter activities that are "okay to release" based on whether their `activity_starting_date` is **less than or equal to the current local time**, you can use Django’s timezone utilities.
+
+Here’s how to do it:
+
+### ✅ Step-by-step update
+
+1. **Import Django’s timezone-aware `now()`**:
+   ```python
+   from django.utils.timezone import localtime, now
+   ```
+
+2. **Get the current local datetime**:
+   ```python
+   current_local_datetime = localtime(now())
+   ```
+
+3. **Update your queryset to filter based on `activity_starting_date`**:
+   ```python
+   activities = Activity.objects.filter(
+       activity_classroom=classroom,
+       created_at__month=selected_month,
+       activity_starting_date__lte=current_local_datetime
+   ).order_by('-created_at')
+   ```
+
+### 🧠 What this does:
+- `activity_starting_date__lte=current_local_datetime` ensures you're only getting activities whose starting date/time is **now or earlier**.
+- `localtime(now())` respects your server’s timezone settings (or user’s timezone if you’ve configured per-user timezones).
+
+Let me know if you want to make this timezone dynamic per classroom or user, or if you need to handle future activities differently (e.g., for scheduling or countdowns).
+
+
+
+
+
+
+
+
+
+
+
+
+
+

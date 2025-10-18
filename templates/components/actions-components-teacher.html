@@ -50,10 +50,10 @@
                 <img src="{% static "assets/report-icon.svg" %}" alt="report-icon" class="report-icon">
                 <span class="poppins-medium">Report </span>
             </button>
-            {% comment %} <button  style="{% if selected == 'teacher_message' %}display : none;{% endif %}">
+            <button  onclick="window.location.href='{% url 'teacher_messages' %}'" style="{% if selected == 'teacher_message' %}display : none;{% endif %}">
                 <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
                 <span class="poppins-medium">Message</span>
-            </button> {% endcomment %}
+            </button>
         
         {% else %}
             <button onclick="window.location.href='{% url 'student_dashboard_page' %}'" style="{% if selected == 'student_dashboard' %}display : none;{% endif %}">

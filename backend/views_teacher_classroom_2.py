@@ -1,5 +1,6 @@
 from django.http import JsonResponse  
 from backend import my_utils
+import json
 
 from backend.models import *
 
@@ -258,3 +259,243 @@ def api_teacher_delete_replies(request):
 
 
 
+def api_teacher_check_all_students(request):
+       
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classroom_id : str = request.POST.get('classroom_id', None)
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom ID does not exist.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom ID does not exist.'}, status=400)
+    
+    classroom_obj = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom_obj:
+        return JsonResponse({'error' : 'Classroom does not exist'} , status=400)
+    
+    students_objects = CustomUser.objects.filter(id__in=classroom_obj.classroom_students)
+    
+    students = []
+    for student in students_objects:
+        students.append({
+            'id' : student.pk,
+            'name' : student.fullname,
+            'email' : student.email,
+            'image' : student.profile_image.url if student.profile_image else None
+        })
+        
+    return JsonResponse({
+        'students' : students
+    } , status=200)
+    
+    
+def api_teacher_check_student(request):
+     
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classroom_id : str = request.POST.get('classroom_id', None)
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom ID does not exist.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom ID does not exist.'}, status=400)
+    
+    student_id = request.POST.get('student_id', None)
+    if not isinstance(student_id, str):
+        return JsonResponse({'error': 'Student ID does not exist.'}, status=400)
+    if not student_id.isdigit():
+        return JsonResponse({'error': 'Student ID does not exist.'}, status=400)
+    
+    classroom_obj = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom_obj:
+        return JsonResponse({'error' : 'Classroom does not exist'} , status=400) 
+    
+    student_obj = CustomUser.objects.filter(id=int(student_id)).first()
+    if not student_obj:
+        return JsonResponse({'error' : 'Student does not exist'} , status=400)
+    
+    
+    materials = Material.objects.filter(classroom_material = classroom_obj).order_by('-created_at')
+    materials_data = []
+    for material in materials:
+        material_data = {
+            'id' : material.pk,
+            'name' : material.material_name, 
+            'created_at' :  material.created_at,
+            'date' : material.created_at.strftime("%B %d, %Y, %I:%M %p") if material.created_at else None,
+            'submitted' : True if int(student_id) in material.material_joined else False,
+            'type' : 'Material'
+        }
+        materials_data.append(material_data)
+    
+    activities = Activity.objects.filter(activity_classroom = classroom_obj).order_by('-created_at')
+    activities_data = []
+    for activity in activities:
+        activity_data = {
+            'id' : activity.pk,
+            'name' : activity.activity_name,
+            'created_at' :  material.created_at,
+            'date' : activity.created_at.strftime("%B %d, %Y, %I:%M %p") if activity.created_at else None,
+            'submitted' : True if int(student_id) in activity.activity_joined else False,
+            'type' : 'Activity'
+        }
+        activities_data.append(activity_data)
+    
+    student_data = {
+        'name' : student_obj.fullname,
+        'email' : student_obj.email,
+        'profile' : student_obj.profile_image.url if student_obj.profile_image else None,
+        'school_name' : student_obj.school_name,
+        'grade_level' : student_obj.grade_level,
+        'bio' :student_obj.short_bio
+    }
+    #TODO: Merge the activities and sort it by created at
+    return JsonResponse({
+        'student' : student_data,
+        'datas' : materials_data + activities_data
+    }, status = 200)
+    
+
+    
+
+def api_get_teacher_activities(request):
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classroom_id = request.POST.get('classroom_id', None)
+    selected_month = request.POST.get('selected_month', None)
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not selected_month:
+        return JsonResponse({'error': 'Selected month is required.'}, status=400)
+    try:
+        selected_month = int(selected_month.split('-')[1])  # "09" → 9
+    except (AttributeError, ValueError, IndexError):
+        return JsonResponse({'error': 'Invalid month format'}, status=400)
+    
+    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom:
+        return JsonResponse({'error': 'Classroom not found.'}, status=400)
+    
+    activities = Activity.objects.filter(
+        activity_classroom=classroom, 
+        activity_owner=request.user,
+        created_at__month=selected_month
+    ).order_by('-created_at').values()
+    
+    return JsonResponse({'activities': list(activities)}, status=200)
+
+
+
+
+def api_teacher_delete_activity(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    activity_id = request.POST.get('activity_id', None)
+    if not isinstance(activity_id, str):
+        return JsonResponse({'error': 'Activity id is required.'}, status=400)
+    if not activity_id.isdigit():
+        return JsonResponse({'error': 'Activity id is required.'}, status=400)
+    
+    activity = Activity.objects.filter(id=int(activity_id), activity_owner=request.user).first()
+    if not activity:
+        return JsonResponse({'error': 'Activity not found.'}, status=400)
+    
+    activity.delete()
+    
+    return JsonResponse({'success': 'Activity deleted successfully.'}, status=200)
+
+
+
+def api_teacher_add_activity(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    # 'activity_name' : activity_name?.value,
+    # 'activity_description' : activity_descriptions?.value,
+    # 'activity_type' : activity_classfications?.value,
+    # 'activity_starting_date' : activity_starting_date?.value,
+    # 'activity_starting_time' : activity_starting_time?.value,
+    # 'activity_deadline_date' : activity_deadline_date?.value,
+    # 'activity_deadline_time' : activity_deadline_time?.value, 
+    
+    classroom_id = request.POST.get('classroom_id', None) 
+    if not isinstance(classroom_id, str):
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    if not classroom_id.isdigit():
+        return JsonResponse({'error': 'Classroom id is required.'}, status=400)
+    
+    classroom = Classroom.objects.filter(id=int(classroom_id)).first()
+    if not classroom:
+        return JsonResponse({'error': 'Classroom not found.'}, status=400)
+    
+    activity_name = request.POST.get('activity_name', '')
+    activity_description = request.POST.get('activity_description', '')
+    activity_type = request.POST.get('activity_type', '')
+    activity_starting_date = request.POST.get('activity_starting_date', '')
+    activity_starting_time = request.POST.get('activity_deadline_date', '')
+    activity_deadline_time = request.POST.get('activity_deadline_time', '')
+    activity_overall_certificate_file = request.FILES.get('activity_overall_certificate_file', None)
+    datas = json.loads(request.POST.get('datas', '{}')) 
+    
+    # TODO: IMPLEMENT DATETIME
+    
+    activity_obj = Activity.objects.create(
+        activity_name = activity_name,
+        activity_description = activity_description,
+        activity_type = activity_type,
+        activity_owner = request.user,
+        activity_classroom = classroom,
+        activity_content = datas,
+        overall_certificate = activity_overall_certificate_file
+    )
+    
+    for key in datas: 
+        if datas[key].get('type', None) == 'question-file':
+            question_file = request.FILES.get(datas[key].get('fileKey', 'None'), None)
+            if question_file:
+                ActivityFile.objects.create(
+                    activity_file =question_file,
+                    activity_custom_id = datas[key].get('fileKey', None),
+                    activity = activity_obj,
+                    activity_file_classroom = classroom
+                )
+            
+
+
+    return JsonResponse({'success': 'Activity added successfully.'}, status=200)

@@ -110,44 +110,60 @@ class Activity(models.Model):
 	activity_content = models.JSONField(default=dict, blank=True , null=True)
 	"""
 		activity_content = {
-			"1" : {
-				"type" : "checkbox",
-				"question" : "Question 1",
-				"question_image" : "activity_file.activity_custom_id",
-				"correct_answers" : [
-					"1", "2", "3"
-				],
-				"options" : {
-					"1" : "Answer 1",
-					"2" : "Answer 2",
-					"3" : "Answer 3"
-					"4" : "Answer 4"
-				}
-			},
-			"2" : {
-				"type" : "textfield",
-				"question" : "Question 2",
-				"question_image" : "activity_file.activity_custom_id",
-			},
-			"3" : {
-				"type" : "radio",
-				"question" : "Question 3",
-				"question_image" : "activity_file.activity_custom_id",
-				"options" : {
-					"1" : "Answer 1",
-					"2" : "Answer 2",
-					"3" : "Answer 3"
+			"1": {
+				"type": "selection",
+				"question": "fsdfdsf",
+				"selections": {
+					"mguvz7vk04blvd": {
+						"checked": false,
+						"answer": "fsdfd"
+					},
+					"mguvz7vkbdx98g": {
+						"checked": true,
+						"answer": "dfsfd"
+					}
 				},
-				"correct_answer" : "1"
- 			},
-			"4" : {
-				"type" : "file",
-				"question" : "Question 4",
-				"question_image" : "activity_file.activity_custom_id",
+				"answer_id": "mguvz7vkbdx98g"
+			} 
+			"2": {
+				"type": "multiple",
+				"question": "fsfdsf",
+				"selections": {
+					"mguw4eewx204m7": {
+						"checked": true,
+						"answer": "4343"
+					},
+					"mguw4eewx17y04": {
+						"checked": false,
+						"answer": "111"
+					},
+					"mguw4eeweo73d2": {
+						"checked": true,
+						"answer": "5555"
+					}
+				},
+				"answer_ids": [
+					"mguw4eewx204m7",
+					"mguw4eeweo73d2"
+				]
+			}  
+			"3": {
+				"type": "essay",
+				"question": "fsfdsfddsfsd"
+			} 
+			"4": {
+				"type": "file-submission",
+				"question": "fsfdsfddsfsd"
 			}
-		}
+			"5": {
+				"type": "question-file",
+				"question": "fsfdsfddsfsd",
+				"fileKey" : "mguw4eeweo73d3" 
+			}
+		} 
 	"""
 	activity_classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_classroom')
+	overall_certificate = models.FileField(upload_to='overall_certificates/', null=True, blank=True) 
 
 	def __str__(self):
 		return self.activity_name
@@ -156,7 +172,7 @@ class Activity(models.Model):
 
 class ActivityFile(models.Model):
 	activity_file = models.FileField(upload_to='activity_files/', null=True, blank=True) 
-	activity_custom_id = models.CharField(max_length=255, null=True, blank=True)
+	activity_custom_id = models.CharField(max_length=255, null=True, blank=True) # fileKey
 	activity_file_classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_file_classroom')
 	activity = models.ForeignKey(Activity, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_file')
 	created_at = models.DateTimeField(auto_now_add=True)

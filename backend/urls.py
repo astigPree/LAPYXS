@@ -29,6 +29,11 @@ urlpatterns = [
     path('reply_teacher_classroom_post', api_teacher_reply_post , name='api_teacher_reply_post'),
     path('get_teacher_classroom_post_replies', api_teacher_get_replies , name='api_teacher_get_replies'),
     path('delete_teacher_classroom_post_reply', api_teacher_delete_replies , name='api_teacher_delete_replies'),
+    path('teacher_check_students', api_teacher_check_all_students , name='api_teacher_check_all_students'),
+    path('teacher_check_student', api_teacher_check_student , name='api_teacher_check_student'),
+    path('teacher_activities', api_get_teacher_activities , name='api_get_teacher_activities'),
+    path('teacher_delete_activity', api_teacher_delete_activity , name='api_teacher_delete_activity'),
+    path('teacher_add_activity', api_teacher_add_activity , name='api_teacher_add_activity'),
     
     
     # STUDENT ------------------------
