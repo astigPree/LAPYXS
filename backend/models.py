@@ -9,7 +9,9 @@ class CustomUser(AbstractUser):
 	school_name = models.CharField(max_length=255, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	
-	user_type = models.CharField(max_length=255, null=True, blank=True, choices=[('Teacher', 'Teacher'), ('Student', 'Student')])
+	user_type = models.CharField(max_length=255, null=True, blank=True, choices=[
+    	('Teacher', 'Teacher'), ('Student', 'Student')
+    ])
 
 	# teachers --->
 	subject_area = models.CharField(max_length=255, null=True, blank=True)
@@ -92,6 +94,12 @@ class Activity(models.Model):
 			customuser.pk , ...
 		]
 	"""
+	activity_checked = models.JSONField(default=list, blank=True , null=True)
+	"""
+		activity_checked = [
+			customuser.pk , ...
+		]
+	"""
 	activity_description = models.TextField( null=True, blank=True)
 	activity_type = models.CharField(
 		max_length=255, null=True,
@@ -158,13 +166,16 @@ class Activity(models.Model):
 			"5": {
 				"type": "question-file",
 				"question": "fsfdsfddsfsd",
-				"fileKey" : "mguw4eeweo73d3" 
+				"fileKey" : "mguw4eeweo73d3",
+				"filename" : "filename.png"
 			}
 		} 
 	"""
 	activity_classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='activity_classroom')
 	overall_certificate = models.FileField(upload_to='overall_certificates/', null=True, blank=True) 
-
+	overall_certificate_name =  models.CharField(max_length=255, null=True, blank=True , default="No Certificate Uploaded")
+	activity_total_scores = models.IntegerField(default=0, null=True, blank=True)
+ 
 	def __str__(self):
 		return self.activity_name
 
@@ -186,34 +197,45 @@ class StudentActivity(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	activity_answers = models.JSONField(default=dict, blank=True , null=True)
 	"""
-		activity_content = {
-			"1" : {
-				"answer" : "1",
-				"answer_file" : "student_activity_file.student_activity_custom_id",
-				"is_correct" : "true"
-			},
-			"2" : { 
-				"answer" : "1",
-				"answer_file" : "student_activity_file.student_activity_custom_id" 
-				"is_correct" : "true"
-			},
-			"3" : {
-				"answer" : "1",
-				"answer_file" : "student_activity_file.student_activity_custom_id" 
-				"is_correct" : "true"
- 			},
-			"4" : {
-				"answer" : "1",
-				"answer_file" : "student_activity_file.student_activity_custom_id" 
-				"is_correct" : "true"
-			}
-		}
- 
+	{
+    	"1": {
+        	"type": "multiple", 
+         	"answers": ["mgw8kfoprlargz", "mgw8kfops7rrxb"]
+			"result" : false <= This will be putted when it checked,
+			"score" : 0 <= This will be putted when it checked,
+
+        }, 
+        "2": {
+            "type": "essay", 
+            "answer": "ffdsdsdf"
+			"result" : false <= This will be putted when it checked,
+			"score" : 0 <= This will be putted when it checked,
+        }, 
+        "3": {
+            "type": "file-submission", 
+            "filename": "Screenshot 2025-09-01 200727.png", 
+            "fileKey": "mgxdnp8ceuq2ye"
+			"result" : false <= This will be putted when it checked,
+			"score" : 0 <= This will be putted when it checked,
+        }, 
+        "4": {
+            "type": "question-file", 
+            "answer": "fdsfsdd"
+			"result" : false <= This will be putted when it checked,
+			"score" : 0 <= This will be putted when it checked,
+        }
+        "5": {
+            "type": "selection", 
+            "answer": "mgw8kfoprlargz"
+			"result" : false <= This will be putted when it checked,
+			"score" : 0 <= This will be putted when it checked,
+        }
+    } 
 	"""
 	student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True , related_name='student_activity')
 	certificate = models.FileField(upload_to='student_activity_files/', null=True, blank=True)
-	scores = models.IntegerField(null=True, blank=True, default=0)
- 
+	scores = models.IntegerField(null=True, blank=True, default=0) 
+	is_checked = models.BooleanField(default=False)
  
  
 	def __str__(self):

@@ -6,6 +6,7 @@ from backend.views_student_classroom import *
 from backend.views_teacher_overall import *
 from backend.views_teacher_classroom_2 import *
 from backend.views_student_classroom_2 import *
+from backend.views_teacher_classroom_3 import *
     
 
 from django.http import  JsonResponse  

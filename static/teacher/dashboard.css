@@ -9,6 +9,12 @@
     justify-content: flex-start;
     width: 100%;
     height: fit-content;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.dashboard-section.open{
+    opacity: 1;
 }
 
 

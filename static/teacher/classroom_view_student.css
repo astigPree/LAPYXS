@@ -69,6 +69,20 @@
 }
 
 
+.generate-report-button{
+    align-self: flex-start;
+    margin-left: 5%;
+    margin-top: 12px;
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 16px; 
+    color: #ffffff;
+    box-sizing: border-box;
+    border: none;
+    background-color: #428977;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
 
 

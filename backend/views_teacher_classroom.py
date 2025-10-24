@@ -108,6 +108,9 @@ def api_update_teacher_classroom(request):
     classroom.classroom_subject = classroom_subject
     classroom.save()
     
+    # TODO: Notify itself
+    # TODO : Notify all the students
+     
     return JsonResponse({'success': 'Classroom updated successfully.'}, status=200)
 
 
@@ -201,6 +204,9 @@ def api_teacher_delete_classroom(request):
     
     classroom.delete() 
     
+    # TODO: Notify itself
+    # TODO : Notify all the students
+    
     return JsonResponse({'success': 'Classroom deleted successfully.'}, status=200)
 
 
@@ -250,7 +256,9 @@ def api_teacher_add_material(request):
             material_obj.material_file = material_file
         material_obj.save()
         
-        # Notify all classroom students
+        
+        # TODO: Notify itself
+        # TODO : Notify all the students
         students = CustomUser.objects.filter(pk__in=classroom_obj.classroom_students, user_type="Student")
         for student in students:
             Notification.objects.create(
@@ -287,6 +295,9 @@ def api_teacher_delete_material(request):
         return JsonResponse({'error': 'Material not found.'}, status=400)
     
     material.delete()
+    
+    # TODO: Notify itself
+    # TODO : Notify all the students
     
     return JsonResponse({'success': 'Material deleted successfully.'}, status=200)
 
@@ -359,6 +370,9 @@ def api_teacher_update_material(request):
             material.material_file = material_file
             
         material.save()
+        
+    # TODO: Notify itself
+    # TODO : Notify all the students
     except Exception as e:
         return JsonResponse({'err': str(e) , 'error': 'Failed to update material.'}, status=400)
     

@@ -103,10 +103,40 @@ async function sendRequest(url, method, data) {
 
 }
 
+async function downloadFile(url, method, data) {
+    const formData = new FormData();
+    for (const key in data) {
+        formData.append(key, data[key]);
+    }
+
+    try {
+        const response = await fetch(url, {
+            method: method,
+            body: formData,
+            headers: {
+                'X-CSRFToken': csrftoken
+            }
+        });
+
+        const blob = await response.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = "export.xlsx"; // You can make this dynamic
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+        console.log("Download failed:", error);
+    }
+}
 
 
 
-
+// (async()=>{
+//     downloadFile("../api/teacher_get_report", "POST", {});
+// })();
 
 
 

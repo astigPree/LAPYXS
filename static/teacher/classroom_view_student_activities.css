@@ -1,0 +1,35 @@
+
+.activity-score-input{
+    width: 64px;
+    height: 30px;
+    text-align: center;
+    align-self: flex-end;
+    margin-right: 5%;
+    padding: 4px 8px;
+    border-width: 3px;
+}
+
+
+.activity-actions-buttons{
+    width: 90%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly; 
+}
+
+
+.activity-actions-buttons button{
+    width: 40%;
+    font-size: 12px;
+    line-height: 16px; 
+    color: #ffffff; 
+    padding: 6px 8px;
+    border: none;
+    text-align: center;
+    background-color: #1A8FE3;
+    border-radius: 4px;
+    cursor: pointer;
+}
+

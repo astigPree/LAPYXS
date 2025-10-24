@@ -277,8 +277,8 @@ material_collections.addEventListener('click', function (e) {
             selected_activity_id = parseInt(activityId);
         } else if (action === 'view') {
             // Handle view
-            // sessionStorage.setItem('material_id', materialId);
-            // window.location.href = classroom_view_reviewer_link;
+            sessionStorage.setItem('activity_id', activityId);
+            window.location.href = classroom_view_activities;
         }
     }
 });
@@ -600,6 +600,7 @@ const activity_deadline_date = document.getElementById("activity_deadline_date")
 const activity_deadline_time = document.getElementById("activity_deadline_time");
 const activity_overall_certificate = document.getElementById("activity_overall_certificate");
 const activity_overall_certificate_file = document.getElementById("activity_overall_certificate_file");
+const activity_total_scores = document.getElementById("activity_total_scores");
 
 
 activity_overall_certificate.addEventListener('click', ()=>{
@@ -623,7 +624,8 @@ continue_activity_button.addEventListener('click', async()=>{
         'activity_starting_time' : activity_starting_time?.value,
         'activity_deadline_date' : activity_deadline_date?.value,
         'activity_deadline_time' : activity_deadline_time?.value, 
-        'classroom_id' : sessionStorage.getItem('classroom_id')
+        'activity_total_scores' : activity_total_scores.value,
+        'classroom_id' : sessionStorage.getItem('classroom_id') 
     };
 
     for (const key in maindatas){
@@ -637,7 +639,8 @@ continue_activity_button.addEventListener('click', async()=>{
         }
     }
 
-    maindatas['activity_overall_certificate_file'] =  activity_overall_certificate_file?.files[0] || null;
+    maindatas['activity_overall_certificate_file'] =  activity_overall_certificate_file?.files[0] || null; 
+    maindatas['overall_certificate_name'] =  activity_overall_certificate_file?.files[0].name || 'No File Uploaded';
     let datas = {};
     let index = 1;
 
@@ -653,7 +656,7 @@ continue_activity_button.addEventListener('click', async()=>{
             questionaires[key].selections_list.forEach((selection)=>{
                 const selection_id = generateId();
                 datas[index].selections[selection_id] = {
-                    'checked' : selection.radio.checked,
+                    // 'checked' : selection.radio.checked,
                     'answer' : selection.input.value,
                 }
                 if (selection.radio.checked){
@@ -671,7 +674,7 @@ continue_activity_button.addEventListener('click', async()=>{
             questionaires[key].selections_list.forEach((selection)=>{
                 const selection_id = generateId();
                 datas[index].selections[selection_id] = {
-                    'checked' : selection.checkbox.checked,
+                    // 'checked' : selection.checkbox.checked,
                     'answer' : selection.input.value,
                 }
                 if (selection.checkbox.checked){
@@ -693,11 +696,12 @@ continue_activity_button.addEventListener('click', async()=>{
             datas[index] = {
                 'type' : 'question-file',
                 'question' : questionaires[key].question.value,
-                'fileKey' : fileKey
+                'fileKey' : fileKey,
+                'filename' : questionaires[key]?.button?.value
             };
             maindatas[fileKey] = questionaires[key]['base64'];
         } 
-
+        index = index + 1;
     }
 
     maindatas['datas'] = JSON.stringify(datas);
@@ -729,11 +733,28 @@ continue_activity_button.addEventListener('click', async()=>{
     if (response_data){
         showSuccessModal(response_data?.success);
         get_classroom_materials();
-        cancel_activity_button.click();
+        setTimeout(()=>{
+            cancel_activity_button.click();
+        }, 1000); 
         setTimeout(() => { 
+            questionaires = {}
+            classroom_activities_list_container.innerHTML = '';
+
+
+            activity_name.value = '';
+            activity_descriptions.value = '';
+            activity_classfications.value = 'Assignment';
+            activity_starting_date.value = '';
+            activity_starting_time.value = '';
+            activity_deadline_date.value = '';
+            activity_deadline_time.value = ''; 
+            activity_total_scores.value = '';
+            activity_overall_certificate_file.files = null; 
+            activity_overall_certificate_file.value = null;
+            activity_overall_certificate.value = 'Click here to upload certificate';
+
             hideSuccessModal();
             continue_activity_button.disabled = false;
-            
         }, 2000); 
     }
     

@@ -43,6 +43,10 @@
         <h6 class="poppins-light" id="grade_level"> Grade 5 </h6>
     </div> 
 
+    <button class="generate-report-button poppins-regular">
+        Generate Report
+    </button>
+
     <div class="student-collections-title">
         <span></span>
         <h5 class="poppins-bold">List of Uploaded</h5>
@@ -81,6 +85,8 @@
     var check_activity = `{% static 'assets/check-activity-icon.svg' %}`;
     var uncheck_activity = `{% static 'assets/uncheck-activity-icon.svg' %}`;
     var clasrroms_reviewers_page_link = "{% url 'teacher_classroom_reviewers_page' %}";
+    var clasrroms_activity_student_page_link = "{% url 'teacher_view_student_activity' %}";
+    var page_link = "{% url 'teacher_classroom_view_student' %}"
 </script>
 
 {% endblock basebodyblock %}

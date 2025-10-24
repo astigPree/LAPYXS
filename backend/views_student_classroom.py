@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout
 from django.urls import reverse
+from django.utils.timezone import localtime, now
 
 from backend import my_utils
 
@@ -66,6 +67,11 @@ def api_student_join_classroom(request):
     
     classroom_obj.classroom_students.append(request.user.pk)
     classroom_obj.save()
+    
+    
+    # TODO: Notify itself
+    # TODO : Notify all the students
+    # TODO : Notify the teacher
     
     return JsonResponse({'success': 'Classroom joined successfully.'}, status=200)
     
@@ -141,6 +147,9 @@ def api_student_leave_classroom(request):
         )
     
     
+    # TODO: Notify itself
+    # TODO : Notify all the students
+    # TODO : Notify the teacher
     
     return JsonResponse({'success': 'Classroom left successfully.'}, status=200)
 
@@ -180,9 +189,11 @@ def api_get_student_materials_activities(request):
         created_at__month=selected_month
     ).order_by('-created_at')
     # TODO: Only display the current starting datetime of the activity
+    current_local_datetime = localtime(now())
     activities = Activity.objects.filter(
         activity_classroom=classroom,
-        created_at__month=selected_month
+        activity_starting_date__month=selected_month,
+        activity_starting_date__lte=current_local_datetime
     ).order_by('-created_at')
     
     list_of_materials = []
@@ -291,6 +302,9 @@ def api_student_join_material(request):
         )
         
     
+    # TODO: Notify itself
+    # TODO : Notify all the students
+    # TODO : Notify the teacher
     return JsonResponse({'success': 'Material joined successfully.'}, status=200)
 
 

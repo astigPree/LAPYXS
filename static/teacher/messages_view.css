@@ -1,0 +1,100 @@
+
+.classroom-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: fit-content;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    margin-top: 55px;
+}
+
+.classroom-section.open{
+    opacity: 1;
+}
+ 
+.back-button{
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+    column-gap: 8px;
+    padding: 10px 10px;
+    background: transparent;
+    border: none;
+    align-self: flex-start;
+    margin-left: 12px;
+}
+
+.back-button img{
+    width: 20px;
+    height: 20px;
+}
+
+
+.message-person{
+    width: 80%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 12px;
+}
+
+.message-person img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid #111;
+}
+
+.message-person-content{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: fit-content;
+    flex: 1;
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+
+.message-person-content h4{  
+    font-size: 16px;
+    line-height: 21px;  
+    color: #2E2D2D; 
+    width: 100%;
+}
+
+
+.message-person-content h5{  
+    font-size: 12px;
+    line-height: 15px;  
+    color: #2E2D2D; 
+    width: 100%;
+}
+
+.divider{
+    width: 100%;
+    height: 1px;
+    background-color: #6ca9c4;
+    margin-top: 12px;
+    margin-bottom: 12px;
+} 
+
+.messages-main-content{
+    background-color: rebeccapurple;
+    width: 100%; 
+    height: 68svh;
+}
+
+#main-body{
+    padding-bottom: 0px !important;
+}

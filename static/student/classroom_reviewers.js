@@ -104,10 +104,13 @@ material_collections.addEventListener('click', function (e) {
         console.log('View material ID:', materialId + ' Type: ' + materialType);
 
         // You can now trigger a modal, fetch details, or redirect
-        sessionStorage.setItem('material_id', materialId);
         if (materialType == 'Material'){
+            sessionStorage.setItem('material_id', materialId);
             window.location.href = classroom_view_reviewer_link;
-        } 
+        } else {
+            sessionStorage.setItem('activity_id', materialId); 
+            window.location.href = classroom_view_activity_link;
+        }
     }
 });
 

@@ -34,7 +34,14 @@ urlpatterns = [
     path('teacher_activities', api_get_teacher_activities , name='api_get_teacher_activities'),
     path('teacher_delete_activity', api_teacher_delete_activity , name='api_teacher_delete_activity'),
     path('teacher_add_activity', api_teacher_add_activity , name='api_teacher_add_activity'),
-    
+    path('teacher_get_activity', api_teacher_get_activity , name='api_teacher_get_activity'),
+    path('teacher_get_activity_joined', api_teacher_get_activity_joined , name='api_teacher_get_activity_joined'),
+    path('teacher_get_activity_files', api_teacher_get_activity_files , name='api_teacher_get_activity_files'),
+    path('teacher_get_dashboard', api_teacher_get_dashboard , name='api_teacher_get_dashboard'),
+    path('teacher_get_student_activity', api_teacher_get_student_activity , name='api_teacher_get_student_activity'),
+    path('teacher_get_student_activity_files', api_teacher_get_student_activity_files , name='api_teacher_get_student_activity_files'),
+    path('teacher_get_report', api_teacher_get_report , name='api_teacher_get_report'),
+    path('teacher_check_student_activity', api_teacher_check_student_activity , name='api_teacher_check_student_activity'),
     
     # STUDENT ------------------------
     path('join_classroom', api_student_join_classroom , name='api_student_join_classroom'),
@@ -48,5 +55,10 @@ urlpatterns = [
     path('reply_student_classroom_post', api_student_reply_post , name='api_student_reply_post'),
     path('get_student_classroom_selected_post', api_student_get_selected_post , name='api_student_get_selected_post'),
     path('get_student_classroom_post_replies', api_student_get_replies , name='api_student_get_replies'),
+    path('student_get_dashboard', api_student_get_dashboard , name='api_student_get_dashboard'),
+    path('student_get_activity', api_student_get_activity , name='api_student_get_activity'),
+    path('student_get_activity_files', api_student_get_activity_files , name='api_student_get_activity_files'),
+    path('student_submit_activity_files', api_student_submit_activity_files , name='api_student_submit_activity_files'),
     
+    path('student_submit_checking_activity_files', api_student_submit_checking_activity_files , name='api_student_submit_checking_activity_files'),
 ]

@@ -23,22 +23,22 @@
     
     <div class="dashboard-analytics">
         <div class="analytics-container">
-            <h2 class="poppins-medium">30</h2> 
+            <h2 class="poppins-medium" id="total_classroom"></h2> 
             <h3 class="poppins-light">Number of Classroms</h3>
         </div>
         <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
     </div>
     <div class="dashboard-analytics">
         <div class="analytics-container">
-            <h2 class="poppins-medium">30</h2> 
-            <h3 class="poppins-light">Number of Classroms</h3>
+            <h2 class="poppins-medium" id="total_material">0</h2> 
+            <h3 class="poppins-light">Total Participated Materials</h3>
         </div>
         <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
     </div>
     <div class="dashboard-analytics">
         <div class="analytics-container">
-            <h2 class="poppins-medium">30</h2> 
-            <h3 class="poppins-light">Number of Classroms</h3>
+            <h2 class="poppins-medium" id="total_activities">30</h2> 
+            <h3 class="poppins-light">Total Participated Activities</h3>
         </div>
         <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
     </div>
@@ -48,6 +48,11 @@
 </section>
 
 
+
+
+<script>
+    const user_type = "{{ request.user.user_type }}";
+</script>
 
 
 

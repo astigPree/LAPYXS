@@ -169,6 +169,10 @@
         <input id="activity_overall_certificate" type="button" value="Click here to upload certificate" placeholder="Enter Your Activity Name" class="poppins-regular file-field ellipsis">
         <input id="activity_overall_certificate_file" type="file" hidden >
         
+        
+        <label class="poppins-regular">Activity Overall Scores</label>
+        <input id="activity_total_scores" type="number" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
+        
 
         <div class="divider"></div>
 
@@ -305,16 +309,10 @@
 
 </div>
 
+ 
 
-
-
-
-
-
-<script>
-    var clasrroms_pages_link = "{% url 'teacher_classroom_page' %}";
-    var classroom_view_reviewer_link = "{% url 'teacher_classroom_view_reviewer_page' %}";
-    var classroom_view_announcement_link = "{% url 'teacher_classroom_comments_page' %}";
+<script> 
+    var classroom_view_activities = "{% url 'teacher_view_activity' %}";
     var delete_material_icon = `{% static 'assets/delete-materials-icon.svg' %}`;
 </script>
 

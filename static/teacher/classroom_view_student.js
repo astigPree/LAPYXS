@@ -7,6 +7,7 @@ const material_collections = document.getElementById("material_collections");
 
 const classroom_id = sessionStorage.getItem('classroom_id');
 const student = sessionStorage.getItem('student'); 
+sessionStorage.setItem('student_id', student)
 
 const response = await sendRequest("../api/teacher_check_student", "POST", {
     'classroom_id' : classroom_id,
@@ -58,3 +59,19 @@ if (response?.ok){
 
 })();
 
+
+
+
+
+material_collections.addEventListener('click', function(event){
+    const selected = event.target.closest('.collection-visit-button');
+    if (!selected) return;
+    const activity = selected?.dataset?.key;
+    console.log(activity)
+    if (!activity) return; 
+    sessionStorage.setItem('came_from', page_link);
+    sessionStorage.setItem('activity_id', activity);
+    window.location.href = clasrroms_activity_student_page_link;
+
+
+});

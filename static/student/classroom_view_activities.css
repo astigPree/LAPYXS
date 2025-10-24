@@ -1,0 +1,31 @@
+
+.student-activitiy-input-field{
+    height: fit-content !important;
+    padding: 8px 10px !important;
+    background: none !important;
+    border: none !important; 
+    width: calc(100% - 25px); 
+    margin: 0;
+    font-size: 12px;
+    line-height: 18px;  
+    color: #2E2D2D; 
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.submit-activity-button{
+    width: fit-content;
+    height: fit-content; 
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 18px;  
+    color: white; 
+    background: #ac3939;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+
+

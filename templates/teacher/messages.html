@@ -5,6 +5,7 @@
 {% block baseheadblock %}
     <link rel="stylesheet" href="{% static "actions-components.css" %}">  
     <link rel="stylesheet" href="{% static "teacher/messages.css" %}">  
+    <link rel="stylesheet" href="{% static "teacher/classroom_view_reviewers.css" %}"> 
 
 {% endblock baseheadblock %}
 
@@ -19,6 +20,55 @@
 
     <div class="classroom-title">
         <h1 class="poppins-light">Messages</h1> 
+    </div>
+
+    <button class="start_calling_button poppins-bold">
+        Start Video Conferencing        
+    </button>
+
+    <div class="divider"></div>
+
+    <div class="messages-container">
+
+        <div class="no-paticipant" style="display: none;">
+            <h6 class="poppins-light">There is no messages yet.</h6>
+        </div>
+
+        <div class="participant-container" >
+            <img src="" alt="">
+            <div class="participant-info">
+                <h4 class="poppins-bold ellipsis">Jarell Aguilar</h4>
+                <h5 class="poppins-regular ellipsis">New Message Received</h5>
+            </div>
+        </div>
+
+
+        <div class="participant-container" >
+            <img src="" alt="">
+            <div class="participant-info">
+                <h4 class="poppins-light ellipsis">Jarell Aguilar</h4>
+                <h5 class="poppins-light ellipsis">Already read message</h5>
+            </div>
+        </div>
+
+
+        <div class="participant-container" >
+            <img src="" alt="">
+            <div class="participant-info">
+                <h4 class="poppins-light ellipsis">Jarell Aguilar</h4>
+                <h5 class="poppins-light ellipsis">Already read message</h5>
+            </div>
+        </div>
+
+
+        <div class="participant-container" >
+            <img src="" alt="">
+            <div class="participant-info">
+                <h4 class="poppins-light ellipsis">Jarell Aguilar</h4>
+                <h5 class="poppins-light ellipsis">Already read message</h5>
+            </div>
+        </div>
+
     </div>
     
 

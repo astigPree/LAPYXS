@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_reviewers.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_activities.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_activities.css" %}">
+<script src="{% static "teacher/classroom_view_activities.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_classroom" %}
+
+
+<section class="classroom-section" id="classroom_section">
+
+    <button class="back-button" onclick="window.location.href='{% url 'teacher_classroom_activities' %}'">
+        <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
+        <span class="poppins-medium">View Other Activities</span> 
+    </button>
+
+    <h1 class="poppins-regular reviewer-title" id="activity_title">
+        Pre-Final Exam
+    </h1>
+    <p class="poppins-light reviewer-descriptions" id="activity_descriptions">
+        Let me know if you want to make this timezone dynamic per classroom or user, or if you need to handle future activities differently (e.g., for scheduling or countdowns).
+    </p>
+
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Activity Type :</h5>
+        <h6 class="poppins-light ellipsis" id="activity_type">Assessment</h6>
+    </div>
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Release Date :</h5>
+        <h6 class="poppins-light ellipsis" id="activity_release">October 13, 2025 at 9:05 PM</h6>
+    </div>
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Deadline Date :</h5>
+        <h6 class="poppins-light ellipsis" id="activity_due">October 13, 2025 at 9:05 PM</h6>
+    </div>
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Completion Certificate :</h5>
+        <h6 class="poppins-light ellipsis" style="text-decoration: underline; cursor: pointer;"  id="activity_certificate">Click here to check it</h6>
+    </div>
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Total Score:</h5>
+        <h6 class="poppins-light ellipsis"  id="activity_total_score">50</h6>
+    </div> 
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Total Items :</h5>
+        <h6 class="poppins-light ellipsis"  id="activity_total_items">50</h6>
+    </div> 
+ 
+
+    <div class="actions-button">
+        <button class="poppins-light" style="background: #04497B;" id="participant_button">Participants</button>
+        <button class="poppins-light" style="background: #04497B; opacity: 0.6;"  id="activity_button" >Activity</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="activities_participants_container" id="participant_container">
+        <h3 class="poppins-semibold material-participants-title">
+            List of student that participate
+        </h3>
+
+        <div class="material-participants" id="material_participants">
+            <div class="no-paticipant" style="display: none;">
+                <h6 class="poppins-light">There is no participant on this activities.</h6>
+            </div>
+
+            <div class="participant-container" style="display: none;">
+                <img src="" alt="">
+                <div class="participant-info">
+                    <h4 class="poppins-regular ellipsis">Jarell Aguilar</h4>
+                    <h5 class="poppins-light ellipsis">Click to check answer sheet</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+    <div class="activities_participants_container" id="activity_container" style="display: none; margin-bottom: 35px;">
+
+        <h3 class="poppins-semibold material-participants-title" style="margin-bottom: 24px;">
+            Activities Questionaire
+        </h3>
+
+        
+        <button id="editable_opener" class="joined-button poppins-regular" style="display:none; background-color: #04497B; z-index: 5; animation: classroomActivitiesFadeIn 0.3s forwards;">
+            Edit this Activity
+        </button> 
+
+        <div class="classroom-activities-list-selections-container" style="display: none;">   
+            <h5 class="poppins-medium ellipsis">Number 1 (+ Selections items)</h5>
+            <textarea readonly name="description" placeholder="What is the questions" class="poppins-regular textarea-field">Provide the selection below and check the box if its the correct answer</textarea>
+             
+            <div class="classroom-activities-list-selections-container-list">
+                <div>
+                    <input type="radio" name="selections-item-1" checked disabled id="">
+                    <input type="text" class="input-field poppins-light" readonly value="selection below and check the box">
+                </div>
+                <div>
+                    <input type="radio" name="selections-item-1" disabled readonly id="">
+                    <input type="text" class="input-field poppins-light" readonly value="selection below and check the box">
+                </div>
+                <div>
+                    <input type="radio" name="selections-item-1" disabled id="">
+                    <input type="text" class="input-field poppins-light" readonly value="selection below and check the box">
+                </div>
+            </div> 
+        </div>
+
+        <div class="classroom-activities-list-selections-container" style="display: none;">  
+            <h5 class="poppins-regular ellipsis">Number 2 (+ Multiple selections)</h5>
+            <textarea readonly name="description" placeholder="What is the questions" class="poppins-regular textarea-field">Provide the selection below and check the box if its the correct answer</textarea>
+            <div class="classroom-activities-list-selections-container-list">
+                <div>
+                    <input type="checkbox" name="selections-item-1" checked disabled id="">
+                    <input type="text" class="input-field poppins-light" readonly value="selection below and check the box">
+                </div>
+                <div>
+                    <input type="checkbox" name="selections-item-1" disabled id="">
+                    <input type="text" class="input-field poppins-light" readonly value="selection below and check the boxselection below and check the boxselection below and check the boxselection below and check the box">
+                </div>
+                <div>
+                    <input type="checkbox" name="selections-item-1" disabled id="">
+                    <input type="text" class="input-field poppins-light" readonly value="selection below and check the box">
+                </div>
+            </div>  
+        </div>
+
+        <div class="classroom-activities-list-selections-container" style="display: none;">  
+            <h5 class="poppins-regular ellipsis">Number 3 (+ Question for essay)</h5>
+            <textarea readonly name="description" placeholder="What is the questions" class="poppins-regular textarea-field">Provide the selection below and check the box if its the correct answer</textarea>
+        </div>
+        
+        <div class="classroom-activities-list-selections-container" style="display: none;">  
+            <h5 class="poppins-regular ellipsis">Number 4 (+ Question for file submission)</h5>
+            <textarea readonly name="description" placeholder="What is the questions" class="poppins-regular textarea-field">Provide the selection below and check the box if its the correct answer</textarea>
+        </div>
+
+        <div class="classroom-activities-list-selections-container" style="display: none;">  
+            <h5 class="poppins-regular ellipsis">Number 5 (+ Question with file)</h5>
+            <textarea readonly name="description" placeholder="What is the questions" class="poppins-regular textarea-field">Provide the selection below and check the box if its the correct answer</textarea>
+            <input type="button" value="filename.png" class="poppins-regular file-field" style="width: 90%;">
+        </div> 
+
+    </div>
+
+
+</section> 
+ 
+
+
+
+
+
+<script>
+    var clasrroms_reviewers_page_link = "{% url 'teacher_classroom_reviewers_page' %}";
+    var clasrroms_activity_student_page_link = "{% url 'teacher_view_student_activity' %}";
+    var page_link ="{% url 'teacher_view_activity' %}";
+</script>
+
+{% endblock basebodyblock %}

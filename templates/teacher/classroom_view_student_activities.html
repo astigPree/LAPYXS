@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_reviewers.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_activities.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_activities.css" %}">
+<link rel="stylesheet" href="{% static "student/classroom_view_activities.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classroom_view_student_activities.css" %}">
+<script src="{% static "teacher/classroom_view_student_activities.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_classroom" %}
+
+
+<section class="classroom-section" id="classroom_section" >
+
+    <button class="back-button" id="back_button">
+        <img src="{% static "assets/back-icon.svg" %}" alt="back" class="back-icon">
+        <span class="poppins-medium">Go Back</span> 
+    </button>
+
+    <h1 class="poppins-regular reviewer-title" id="activity_title">
+        Pre-Final Exam
+    </h1>
+    <p class="poppins-light reviewer-descriptions" id="activity_descriptions">
+        Let me know if you want to make this timezone dynamic per classroom or user, or if you need to handle future activities differently (e.g., for scheduling or countdowns).
+    </p>
+
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Activity Type :</h5>
+        <h6 class="poppins-light ellipsis" id="activity_type">Assessment</h6>
+    </div> 
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Deadline Date :</h5>
+        <h6 class="poppins-light ellipsis" id="activity_due">October 13, 2025 at 9:05 PM</h6>
+    </div>
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Completion Certificate :</h5>
+        <h6 class="poppins-light ellipsis" style="text-decoration: underline; cursor: pointer;"  id="activity_certificate">Currently not submitted</h6>
+    </div>
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Total Score:</h5>
+        <h6 class="poppins-light ellipsis"  id="activity_total_score">50</h6>
+    </div> 
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Total Items :</h5>
+        <h6 class="poppins-light ellipsis"  id="activity_total_items">50</h6>
+    </div>  
+    <div class="activities_additonal_info">
+        <h5 class="poppins-semibold">Student Score :</h5>
+        <h6 class="poppins-light ellipsis"  id="activity_my_scores">0</h6>
+    </div>  
+    <div class="activities_additonal_info" style="display: none;">
+        <h5 class="poppins-semibold">Passing Certificate :</h5>
+        <h6 class="poppins-light ellipsis" style="text-decoration: underline; cursor: pointer;"  id="additional_certificate">Click here to add certificate</h6>
+    </div>
+
+    
+
+    <div class="divider"></div> 
+    
+    <div class="activities_participants_container" id="activity_container" style="margin-bottom: 35px;">
+
+        <h3 id="student_name_text" class="poppins-semibold material-participants-title" style="margin-bottom: 24px;">
+            
+        </h3>
+        
+        {% comment %} TODO: Create a backend and javascript to display it {% endcomment %}
+
+        <div class="classroom-activities-list-selections-container" style="display:none;"  >   
+            <h5 class="poppins-bold ellipsis">Number 1 (+ Selections items)</h5>
+            <h5 class="poppins-regular">Provide the selection below and check the box if its the correct answer</h5>
+             
+            <div class="classroom-activities-list-selections-container-list">
+                <div>
+                    <input type="radio" name="selections-item-1" checked >
+                    <span class="input-field poppins-light student-activitiy-input-field">selection below and check the box selection below and check the boxselection below and check the boxselection below and check the box</span>
+                </div>
+                <div>
+                    <input type="radio" name="selections-item-1" readonly >
+                    <span class="input-field poppins-light student-activitiy-input-field"> below and check the boxselection below and check the box</span>
+                </div>
+                <div>
+                    <input type="radio" name="selections-item-1" >
+                    <span class="input-field poppins-light student-activitiy-input-field">s  the box</span>
+                </div>
+            </div>
+
+            <input type="number" placeholder="Score" class="poppins-semibold input-field activity-score-input" >
+        </div>
+
+        <div class="classroom-activities-list-selections-container" style="display: none;" >  
+            <h5 class="poppins-bold ellipsis">Number 2 (+ Multiple selections)</h5>
+            <h5 class="poppins-regular">Provide the selection below and check the box if its the correct answer</h5>
+            <div class="classroom-activities-list-selections-container-list">
+                <div>
+                    <input type="checkbox" name="selections-item-1" checked >
+                    <span class="input-field poppins-light student-activitiy-input-field">selection below and check the box selection below and check the boxselection below and check the boxselection below and check the box</span>
+                </div>
+                <div>
+                    <input type="checkbox" name="selections-item-1" >
+                    <span class="input-field poppins-light student-activitiy-input-field">selection below and check the box selection below and check the boxselection below and check the boxselection below and check the box</span>
+                </div>
+                <div>
+                    <input type="checkbox" name="selections-item-1" >
+                    <span class="input-field poppins-light student-activitiy-input-field">selection below and check the box selection below and check the boxselection below and check the boxselection below and check the box</span>
+                </div>
+            </div>  
+            
+            <input type="number" placeholder="Score" class="poppins-semibold input-field activity-score-input" >
+        </div>
+
+        <div class="classroom-activities-list-selections-container" style="display: none;">  
+            <h5 class="poppins-bold ellipsis">Number 3 (+ Question for essay)</h5> 
+            <h5 class="poppins-regular">Provide the selection below and check the box if its the correct answer</h5>
+            <textarea placeholder="Put here your answer" class="poppins-regular textarea-field"></textarea>
+            <input type="number" placeholder="Score" class="poppins-semibold input-field activity-score-input" >
+        </div>
+        
+        <div class="classroom-activities-list-selections-container" style="display:none;" >  
+            <h5 class="poppins-bold ellipsis">Number 4 (+ Question for file submission)</h5>
+            <h5 class="poppins-regular">Provide the selection below and check the box if its the correct answer</h5>
+            <input type="button" value="Click here to upload" class="poppins-regular file-field" style="width: 90%; margin-top: 15px;">
+            <input type="file" name="" hidden>
+            <input type="number" placeholder="Score" class="poppins-semibold input-field activity-score-input" >
+        </div>
+
+        <div class="classroom-activities-list-selections-container" style="display:none;" >  
+            <h5 class="poppins-bold ellipsis">Number 5 (+ Question with file)</h5> 
+            <h5 class="poppins-regular">Provide the selection below and check the box if its the correct answer</h5> 
+            <input type="button" value="filename.png" class="poppins-regular file-field" style="width: 90%;">
+            <textarea placeholder="Put here your answer" class="poppins-regular textarea-field"></textarea> 
+            <input type="number" placeholder="Score" class="poppins-semibold input-field activity-score-input" >
+        </div> 
+
+    </div>
+     
+    <div class="activity-actions-buttons">
+        <button class="poppins-bold" id="submit-opener" style="background-color: #9c2d2d;">Submit Result</button>
+        <button class="poppins-bold" id="calculate_score">Calculate Score</button> <!-- Animate the text to tell that its calculated -->
+    </div>
+
+</section> 
+ 
+
+
+
+
+<div class="classroom-delete-modal" id="delete_material_modal" style="display: none;">
+
+    <div class="classroom-delete-modal-container">
+        
+        <div class="classroom-add-modal-header">
+            <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+            <span class="poppins-semibold">Answer Sheet</span>
+        </div>
+        <p class="poppins-light">Are you sure do you want to submit this? By submitting this you acknowledge that this is your final checking to the answer sheet.</p>
+        
+        <div class="classroom_add_modal_actions">
+            <button class="poppins-extrabold" id="continue_delete_material_button">Proceed</button>
+            <button class="poppins-extrabold" id="cancel_delete_material_button" style="background-color: #04497B;">Cancel</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+    var clasrroms_reviewers_page_link = "{% url 'teacher_classroom_reviewers_page' %}";
+    var student_id = "{{request.user.pk}}";
+</script>
+
+{% endblock basebodyblock %}

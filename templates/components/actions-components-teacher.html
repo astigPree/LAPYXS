@@ -45,11 +45,11 @@
             <button  style="{% if selected == 'teacher_post' %}display : none;{% endif %}">
                 <img src="{% static "assets/post-icon.svg" %}" alt="post-icon" class="post-icon">
                 <span class="poppins-medium">Post</span>
-            </button> {% endcomment %}
+            </button>
             <button  style="{% if selected == 'teacher_reports' %}display : none;{% endif %}">
                 <img src="{% static "assets/report-icon.svg" %}" alt="report-icon" class="report-icon">
                 <span class="poppins-medium">Report </span>
-            </button>
+            </button> {% endcomment %}
             <button  onclick="window.location.href='{% url 'teacher_messages' %}'" style="{% if selected == 'teacher_message' %}display : none;{% endif %}">
                 <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
                 <span class="poppins-medium">Message</span>

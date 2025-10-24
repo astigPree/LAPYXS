@@ -3,6 +3,7 @@ from backend import my_utils
 import json
 
 from backend.models import *
+from datetime import datetime
 
 
 def api_teacher_create_post(request):
@@ -43,6 +44,8 @@ def api_teacher_create_post(request):
         content = content
     )
     
+    
+    # TODO: Notify itself
     # TODO : Notify all the students
     
     return JsonResponse({'success': 'Classroom post created successfully.'}, status=200)
@@ -157,6 +160,8 @@ def api_teacher_reply_post(request):
         classroom=classroom_post.classroom
     )
 
+    
+    # TODO: Notify itself
     # TODO : Notify all the students
     
     return JsonResponse({'success': 'Classroom post reply created successfully.'}, status=200)
@@ -336,7 +341,7 @@ def api_teacher_check_student(request):
             'name' : material.material_name, 
             'created_at' :  material.created_at,
             'date' : material.created_at.strftime("%B %d, %Y, %I:%M %p") if material.created_at else None,
-            'submitted' : True if int(student_id) in material.material_joined else False,
+            'submitted' : True if int(student_id) in material.material_joined else False, 
             'type' : 'Material'
         }
         materials_data.append(material_data)
@@ -347,12 +352,13 @@ def api_teacher_check_student(request):
         activity_data = {
             'id' : activity.pk,
             'name' : activity.activity_name,
-            'created_at' :  material.created_at,
-            'date' : activity.created_at.strftime("%B %d, %Y, %I:%M %p") if activity.created_at else None,
+            'created_at' :  activity.activity_starting_date,
+            'date' : activity.activity_starting_date.strftime("%B %d, %Y, %I:%M %p") if activity.activity_starting_date else None,
             'submitted' : True if int(student_id) in activity.activity_joined else False,
             'type' : 'Activity'
         }
         activities_data.append(activity_data)
+        
     
     student_data = {
         'name' : student_obj.fullname,
@@ -362,10 +368,13 @@ def api_teacher_check_student(request):
         'grade_level' : student_obj.grade_level,
         'bio' :student_obj.short_bio
     }
-    #TODO: Merge the activities and sort it by created at
+    
+    # TODO: Merge the activities and sort it by created at (APPLIED)
+    all_items = materials_data + activities_data
+    all_items.sort(key=lambda x: x['created_at'], reverse=True)
     return JsonResponse({
         'student' : student_data,
-        'datas' : materials_data + activities_data
+        'datas' : all_items
     }, status = 200)
     
 
@@ -432,6 +441,8 @@ def api_teacher_delete_activity(request):
     
     activity.delete()
     
+    # TODO: Notify itself
+    # TODO : Notify all the students
     return JsonResponse({'success': 'Activity deleted successfully.'}, status=200)
 
 
@@ -468,12 +479,23 @@ def api_teacher_add_activity(request):
     activity_description = request.POST.get('activity_description', '')
     activity_type = request.POST.get('activity_type', '')
     activity_starting_date = request.POST.get('activity_starting_date', '')
-    activity_starting_time = request.POST.get('activity_deadline_date', '')
+    activity_starting_time = request.POST.get('activity_deadline_time', '')
+    activity_deadline_date = request.POST.get('activity_deadline_date', '')
     activity_deadline_time = request.POST.get('activity_deadline_time', '')
+    activity_total_scores = request.POST.get('activity_total_scores', '0')
+    activity_overall_certificate_name = request.POST.get('overall_certificate_name', 'No File Uploaded')
     activity_overall_certificate_file = request.FILES.get('activity_overall_certificate_file', None)
     datas = json.loads(request.POST.get('datas', '{}')) 
-    
-    # TODO: IMPLEMENT DATETIME
+     
+    try:
+        activity_starting_datetime = datetime.strptime(
+            f"{activity_starting_date} {activity_starting_time}", "%Y-%m-%d %H:%M"
+        )
+        activity_due_date_datetime = datetime.strptime(
+            f"{activity_deadline_date} {activity_deadline_time}", "%Y-%m-%d %H:%M"
+        )
+    except ValueError: 
+        return JsonResponse({'error': 'Incorrect Date Selected'}, status=400)
     
     activity_obj = Activity.objects.create(
         activity_name = activity_name,
@@ -482,7 +504,11 @@ def api_teacher_add_activity(request):
         activity_owner = request.user,
         activity_classroom = classroom,
         activity_content = datas,
-        overall_certificate = activity_overall_certificate_file
+        overall_certificate = activity_overall_certificate_file,
+        activity_total_scores = int(activity_total_scores),
+        activity_due_date = activity_due_date_datetime,
+        activity_starting_date = activity_starting_datetime,
+        overall_certificate_name = activity_overall_certificate_name
     )
     
     for key in datas: 
@@ -496,6 +522,8 @@ def api_teacher_add_activity(request):
                     activity_file_classroom = classroom
                 )
             
-
+    
+    # TODO: Notify itself
+    # TODO : Notify all the students
 
     return JsonResponse({'success': 'Activity added successfully.'}, status=200)
