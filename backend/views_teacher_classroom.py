@@ -107,9 +107,7 @@ def api_update_teacher_classroom(request):
     classroom.classroom_description = classroom_description
     classroom.classroom_subject = classroom_subject
     classroom.save()
-    
-    # TODO: Notify itself
-    # TODO : Notify all the students
+     
      
     return JsonResponse({'success': 'Classroom updated successfully.'}, status=200)
 
@@ -201,11 +199,18 @@ def api_teacher_delete_classroom(request):
     classroom = Classroom.objects.filter(id=int(classroom_id), classroom_owner=request.user).first()
     if not classroom:
         return JsonResponse({'error': 'Classroom not found.'}, status=400)
+
+   # NOTIFY all the students
+    # students = CustomUser.objects.filter(id__in = classroom.classroom_students)
+    # for student in students:
+    #     Notification.objects.create(
+    #         title = "Classroom Deleted",
+    #         content = f"{classroom.classroom_name} has been deleted!",
+    #         user = student
+    #     ) 
+    
     
     classroom.delete() 
-    
-    # TODO: Notify itself
-    # TODO : Notify all the students
     
     return JsonResponse({'success': 'Classroom deleted successfully.'}, status=200)
 
@@ -256,9 +261,7 @@ def api_teacher_add_material(request):
             material_obj.material_file = material_file
         material_obj.save()
         
-        
-        # TODO: Notify itself
-        # TODO : Notify all the students
+         
         students = CustomUser.objects.filter(pk__in=classroom_obj.classroom_students, user_type="Student")
         for student in students:
             Notification.objects.create(
@@ -294,10 +297,18 @@ def api_teacher_delete_material(request):
     if not material:
         return JsonResponse({'error': 'Material not found.'}, status=400)
     
-    material.delete()
+   # NOTIFY all the students
+    # students = CustomUser.objects.filter(id__in = material.classroom_material.classroom_students)
+    # for student in students:
+    #     Notification.objects.create(
+    #         title = "Material Deleted",
+    #         content = f"{material.material_name} has been delete!",
+    #         user = student
+    #     ) 
     
-    # TODO: Notify itself
-    # TODO : Notify all the students
+    material.delete()
+     
+    
     
     return JsonResponse({'success': 'Material deleted successfully.'}, status=200)
 
@@ -370,9 +381,10 @@ def api_teacher_update_material(request):
             material.material_file = material_file
             
         material.save()
-        
-    # TODO: Notify itself
-    # TODO : Notify all the students
+
+    
+    
+    
     except Exception as e:
         return JsonResponse({'err': str(e) , 'error': 'Failed to update material.'}, status=400)
     

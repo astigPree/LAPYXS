@@ -43,10 +43,17 @@ def api_teacher_create_post(request):
         classroom = classroom,
         content = content
     )
-    
-    
-    # TODO: Notify itself
-    # TODO : Notify all the students
+     
+     
+    # NOTIFY all the students
+    # students = CustomUser.objects.filter(id__in = classroom.classroom_students)
+    # for student in students:
+    #     Notification.objects.create(
+    #         title = "Posting",
+    #         content = f"Has new post in {classroom.classroom_name}!",
+    #         user = student
+    #     ) 
+        
     
     return JsonResponse({'success': 'Classroom post created successfully.'}, status=200)
 
@@ -159,10 +166,7 @@ def api_teacher_reply_post(request):
         post=classroom_post,
         classroom=classroom_post.classroom
     )
-
-    
-    # TODO: Notify itself
-    # TODO : Notify all the students
+   
     
     return JsonResponse({'success': 'Classroom post reply created successfully.'}, status=200)
 
@@ -439,10 +443,17 @@ def api_teacher_delete_activity(request):
     if not activity:
         return JsonResponse({'error': 'Activity not found.'}, status=400)
     
-    activity.delete()
+    # Notify the 
+    teacher = activity.activity_owner 
+    if teacher :
+        Notification.objects.create(
+            title = f"Material participation",
+            content = f"{request.user.fullname} joined your material {activity.activity_name}",
+            user = teacher
+        )
     
-    # TODO: Notify itself
-    # TODO : Notify all the students
+    activity.delete()
+        
     return JsonResponse({'success': 'Activity deleted successfully.'}, status=200)
 
 
@@ -522,8 +533,15 @@ def api_teacher_add_activity(request):
                     activity_file_classroom = classroom
                 )
             
-    
-    # TODO: Notify itself
-    # TODO : Notify all the students
+      
+         
+    # NOTIFY all the students
+    # students = CustomUser.objects.filter(id__in = classroom.classroom_students)
+    # for student in students:
+    #     Notification.objects.create(
+    #         title = "Activity",
+    #         content = f"Has new created activity in {classroom.classroom_name}!",
+    #         user = student
+    #     ) 
 
     return JsonResponse({'success': 'Activity added successfully.'}, status=200)

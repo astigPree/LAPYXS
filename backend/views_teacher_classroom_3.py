@@ -6,10 +6,6 @@ from backend.models import *
 from datetime import datetime
 from django.utils.timezone import localtime, now
 
-import io 
-import pandas as pd 
-from django.http import HttpResponse
-from django.views.decorators.http import require_http_methods
 
 def api_teacher_get_activity(request):
     if request.method != 'POST':
@@ -355,36 +351,15 @@ def api_teacher_check_student_activity(request):
     student_activity.save()
     activity.activity_checked.append(student_obj.pk)
     activity.save()
-        
-    # TODO: Notify itself
-    # TODO : Notify all the students
+         
+    # Notify student
+    # Notification.objects.create(
+    #     title = "Activity Checked",
+    #     content = f"Activity has been checked in {activity.activity_name}",
+    #     user = student_obj
+    # ) 
     return JsonResponse({'success': 'Student successfully checked.'}, status=200)
     
     
-    
-@require_http_methods(["POST"])
-def api_teacher_get_report(request):
-    filter_value = request.POST.get("filter")
-
-    # Use filter_value to customize your queryset
-    data = [
-        {"ID": 1, "Name": "Alice"},
-        {"ID": 2, "Name": "Bob"},
-    ]
-
-    df = pd.DataFrame(data)
-    buffer = io.BytesIO()
-    with pd.ExcelWriter(buffer, engine="xlsxwriter") as writer:
-        df.to_excel(writer, index=False, sheet_name="Sheet1")
-    buffer.seek(0)
-
-    response = HttpResponse(
-        buffer.getvalue(),
-        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    )
-    response["Content-Disposition"] = 'attachment; filename="export.xlsx"'
-    return response
-
-
     
     

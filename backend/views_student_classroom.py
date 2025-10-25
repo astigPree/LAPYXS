@@ -68,10 +68,18 @@ def api_student_join_classroom(request):
     classroom_obj.classroom_students.append(request.user.pk)
     classroom_obj.save()
     
-    
-    # TODO: Notify itself
-    # TODO : Notify all the students
-    # TODO : Notify the teacher
+    # NOTIFY the itself
+    # Notification.objects.create(
+    #     title = "Classroom Joined",
+    #     content = f"You have successfully joined the classroom {classroom_obj.classroom_name}",
+    #     user = request.user
+    # ) 
+    # NOTIFY the teacher
+    # Notification.objects.create(
+    #     title = "Classroom Joined",
+    #     content = f"{request.user.fullname} joined the {classroom_obj.classroom_name}",
+    #     user = classroom_obj.classroom_owner
+    # ) 
     
     return JsonResponse({'success': 'Classroom joined successfully.'}, status=200)
     
@@ -146,10 +154,14 @@ def api_student_leave_classroom(request):
             user = teacher
         )
     
+     
+    # NOTIFY the teacher
+    # Notification.objects.create(
+    #     title = "Classroom Leaved",
+    #     content = f"{request.user.fullname} leave the {classroom_obj.classroom_name}",
+    #     user = teacher
+    # ) 
     
-    # TODO: Notify itself
-    # TODO : Notify all the students
-    # TODO : Notify the teacher
     
     return JsonResponse({'success': 'Classroom left successfully.'}, status=200)
 
@@ -187,8 +199,7 @@ def api_get_student_materials_activities(request):
     materials = Material.objects.filter(
         classroom_material=classroom,
         created_at__month=selected_month
-    ).order_by('-created_at')
-    # TODO: Only display the current starting datetime of the activity
+    ).order_by('-created_at') 
     current_local_datetime = localtime(now())
     activities = Activity.objects.filter(
         activity_classroom=classroom,
@@ -293,18 +304,28 @@ def api_student_join_material(request):
     )
     
     # Notify the teacher that student joined the material
-    teacher = material.material_owner 
-    if teacher :
-        Notification.objects.create(
-            title = f"Material participation",
-            content = f"{request.user.fullname} joined your material {material.material_name}",
-            user = teacher
-        )
+    # teacher = material.material_owner 
+    # if teacher :
+    #     Notification.objects.create(
+    #         title = f"Material participation",
+    #         content = f"{request.user.fullname} joined your material {material.material_name}",
+    #         user = teacher
+    #     )
         
     
-    # TODO: Notify itself
-    # TODO : Notify all the students
-    # TODO : Notify the teacher
+    # NOTIFY the itself
+    # Notification.objects.create(
+    #     title = "Material Participated",
+    #     content = f"You have successfully participated the classroom {material.material_name}",
+    #     user = request.user
+    # ) 
+    # NOTIFY the teacher
+    # Notification.objects.create(
+    #     title = "Material Participated",
+    #     content = f"{request.user.fullname} participated the {material.material_name}",
+        # user = material.material_owner
+    # ) 
+    
     return JsonResponse({'success': 'Material joined successfully.'}, status=200)
 
 

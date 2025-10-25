@@ -76,10 +76,12 @@ def api_student_reply_post(request):
         classroom=classroom_post.classroom
     )
 
-    
-    # TODO: Notify itself
-    # TODO : Notify all the students
-    # TODO : Notify the teacher
+    # NOTIFY the teacher
+    # Notification.objects.create(
+    #     title = "Reply Post",
+    #     content = f"{request.user.fullname} replied to the post.",
+    #     user = classroom_post.classroom.classroom_owner
+    # ) 
     
     return JsonResponse({'success': 'Classroom post reply created successfully.'}, status=200)
 
@@ -356,9 +358,22 @@ def api_student_submit_activity_files(request):
     
     activity.activity_joined.append(request.user.pk)
     activity.save()
+     
+    # NOTIFY the itself
+    # Notification.objects.create(
+    #     title = "Submit Activity",
+    #     content = f"You have successfully submitted the activity on {activity.activity_name}",
+    #     user = request.user
+    # ) 
+    # NOTIFY the teacher
+    # Notification.objects.create(
+    #     title = "Submit Activity",
+    #     content = f"{request.user.fullname} submit its activity on {activity.activity_name}",
+    #     user = activity.activity_owner
+    # ) 
     
-    # TODO: Notify itself 
-    # TODO : Notify the teacher
+    
+    
     return JsonResponse({
         'success': 'Activity submmited successfully.',
         'student_activity' : student_activity.pk

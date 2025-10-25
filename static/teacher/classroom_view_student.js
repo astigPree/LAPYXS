@@ -75,3 +75,22 @@ material_collections.addEventListener('click', function(event){
 
 
 });
+
+
+
+const generate_report_button = document.getElementById("generate-report-button");
+
+generate_report_button.addEventListener('click', async()=>{
+    if (generate_report_button.disabled) return;
+    generate_report_button.disabled = true; 
+    const classroom_id = sessionStorage.getItem('classroom_id');
+    const student = sessionStorage.getItem('student'); 
+    await downloadFile("../api/get_report", "POST", {
+        'student_id' : student,
+        'classroom_id': classroom_id
+    }); 
+    generate_report_button.disabled = false; 
+
+
+});
+

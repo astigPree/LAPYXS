@@ -9,6 +9,7 @@ urlpatterns = [
     
     path('notifications', api_get_notification , name='api_get_notification'),
     path('seen_notification', api_seen_notification , name='api_seen_notification'),
+    path('get_report', api_get_student_report , name='api_get_student_report'),
     
     # TEACHER ------------------------
     path('create_classroom', api_create_classroom , name='api_create_classroom'),
@@ -40,7 +41,7 @@ urlpatterns = [
     path('teacher_get_dashboard', api_teacher_get_dashboard , name='api_teacher_get_dashboard'),
     path('teacher_get_student_activity', api_teacher_get_student_activity , name='api_teacher_get_student_activity'),
     path('teacher_get_student_activity_files', api_teacher_get_student_activity_files , name='api_teacher_get_student_activity_files'),
-    path('teacher_get_report', api_teacher_get_report , name='api_teacher_get_report'),
+
     path('teacher_check_student_activity', api_teacher_check_student_activity , name='api_teacher_check_student_activity'),
     
     # STUDENT ------------------------
