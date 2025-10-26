@@ -51,8 +51,8 @@ def api_register_auth(request):
     
     try:
         
-        User = get_user_model()
-        base_user = User.objects.create_user(
+        
+        base_user = CustomUser.objects.create_user(
             fullname=fullname,
             email=email, 
             school_name=school_name, 
@@ -127,9 +127,8 @@ def api_update_auth(request):
         return JsonResponse({'error': 'Grade level is required.'}, status=400)
     
     try:
-        
-        User = get_user_model()
-        base_user = User.objects.get(email=email)
+         
+        base_user = CustomUser.objects.get(email=email)
         base_user.fullname = fullname
         base_user.email = email
         base_user.school_name = school_name
@@ -177,9 +176,8 @@ def api_login_auth(request):
         return JsonResponse({'error': 'Password is required.'}, status=400)
     
     try:
-        
-        User : CustomUser = get_user_model()
-        user = User.objects.get(email=email)
+         
+        user = CustomUser.objects.get(email=email)
         if user.check_password(password):
             login(request, user)
             return JsonResponse({'success': 'Login successful.' , 'url' : reverse('home_page') }, status=200)
