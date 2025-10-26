@@ -128,7 +128,7 @@ def api_update_auth(request):
     
     try:
         
-        User : CustomUser = get_user_model()
+        User = get_user_model()
         base_user = User.objects.get(email=email)
         base_user.fullname = fullname
         base_user.email = email
