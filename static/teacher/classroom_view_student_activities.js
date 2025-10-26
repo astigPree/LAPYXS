@@ -78,6 +78,13 @@ if (response?.ok){
 
         displayActivities();
     }
+} else {
+    const error_message = await response.json();
+    showErrorModal(error_message?.error || "Student has no record here!");
+    setTimeout(() => {
+        hideErrorModal();
+        window.history.back();
+    }, 2000); 
 }
 
 })();
