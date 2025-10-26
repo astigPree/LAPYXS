@@ -51,7 +51,7 @@ def api_register_auth(request):
     
     try:
         
-        User : CustomUser = get_user_model()
+        User = get_user_model()
         base_user = User.objects.create_user(
             fullname=fullname,
             email=email, 
