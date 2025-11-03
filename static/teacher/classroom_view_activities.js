@@ -25,6 +25,7 @@ const editable_opener = document.getElementById("editable_opener");
 const activity_title = document.getElementById("activity_title");
 const activity_descriptions = document.getElementById("activity_descriptions");
 const activity_type = document.getElementById("activity_type");
+const subject = document.getElementById("subject");
 const activity_release = document.getElementById("activity_release");
 const activity_due = document.getElementById("activity_due");
 const activity_certificate = document.getElementById("activity_certificate");
@@ -50,6 +51,7 @@ if (response?.ok){
         activity_title.textContent = data?.activity_name;
         activity_descriptions.textContent = data?.activity_description;
         activity_type.textContent = data?.activity_type;
+        subject.textContent = data?.subject;
 
         const activity_starting_date = new Date(data.activity_starting_date); 
         const activity_due_date = new Date(data.activity_due_date);

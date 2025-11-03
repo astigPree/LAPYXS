@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+<link rel="stylesheet" href="{% static "actions-components.css" %}">
+<link rel="stylesheet" href="{% static "teacher/classrooms.css" %}"> 
+<script src="{% static "student/classroom_conferencing.js" %}" defer></script>
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_message" %}
+
+
+
+
+<section class="classroom-section">
+
+    <div class="classroom-title">
+        <h1 class="poppins-light">Select Classroom Meeting</h1> 
+        <button class="poppins-medium"  onclick="window.location.href='{% url 'student_messages' %}'">
+            Messages
+        </button>
+    </div>
+    <div class="classrooms-selections" id="classroom_selections">
+ 
+        <div class="classroom-container">
+            <div class="classroom-content">
+                <h2 class="poppins-medium ellipsis">30</h2> 
+                <h3 class="poppins-light ellipsis">Guanzon Classroom</h3>
+            </div>
+            <img src="{% static "assets/classroom-visit-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+        </div>
+ 
+        <div class="classroom-container">
+            <div class="classroom-content">
+                <h2 class="poppins-medium ellipsis">30</h2> 
+                <h3 class="poppins-light ellipsis">Guanzon Classroom</h3>
+            </div>
+            <img src="{% static "assets/classroom-visit-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
+        </div>
+
+
+    </div>
+
+</section>
+ 
+
+
+<script>
+    var link_start_video_conferencing = "{% url 'student_start_conferencing' %}";
+</script>
+
+
+
+
+{% endblock basebodyblock %}

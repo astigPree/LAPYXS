@@ -89,12 +89,159 @@
     margin-bottom: 12px;
 } 
 
-.messages-main-content{
-    background-color: rebeccapurple;
+.messages-main-content{ 
     width: 100%; 
-    height: 68svh;
+    height: 58svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    margin-bottom: 12px;
+    overflow-y: scroll;
+}
+
+.message-content-pointer{
+    width: 100%;
+    height: 2px; 
+    background: transparent;
+    border: none;
 }
 
 #main-body{
+    /* I want to control the main parent in base */
     padding-bottom: 0px !important;
 }
+
+.message-main-scroller{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    row-gap: 16px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+
+.message-content-receiver{
+    width: 75%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    min-height: 50px;
+    align-self: flex-start;
+    background: #cfd5d4;
+    border-radius: 4px;
+    margin-left: 4px;
+    row-gap: 4px;
+}
+
+
+
+.message-content-receiver p{
+    font-size: 14px;
+    line-height: 17px;
+    color: #2E2D2D;
+}
+
+
+.message-content-receiver h6{
+    font-size: 10px;
+    line-height: 15px;
+    color: #2E2D2D;
+
+}
+
+
+
+.message-content-sender{
+    width: 75%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    min-height: 50px;
+    align-self: flex-end;
+    background: #A3E3FF;
+    border-radius: 4px;
+    margin-right: 4px;
+    row-gap: 4px;
+}
+
+
+
+.message-content-sender p{
+    font-size: 14px;
+    line-height: 17px;
+    color: #2E2D2D;
+}
+
+
+.message-content-sender h6{
+    font-size: 10px;
+    line-height: 15px;
+    color: #2E2D2D;
+
+}
+
+.message-chatbox-container{
+    width: 100%;
+    height: 50px; 
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 12px;
+    padding: 0px 8px;
+    border: 1px solid #6ca9c4;
+    border-width: 1px 0px 0px 0px;
+    
+    
+}
+
+
+.message-chatbox-container textarea{
+    flex: 1;
+    height: 90%; 
+    background: #EFF7F6;
+    border: 1px solid #428977;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 15px;
+    color: #2E2D2D;
+    padding-left: 10px; 
+    resize: none;
+    overflow: auto;
+    padding: 10px;
+    outline: none; 
+    margin-left: 12px;
+    box-sizing: border-box;
+}
+
+
+.message-chatbox-container button{
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-right: 18px;
+}
+
+.message-chatbox-container button img{
+    width: 100%;
+    height: 100%;
+}
+
+
+

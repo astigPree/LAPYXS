@@ -36,7 +36,7 @@ def api_get_notification(request):
     notifications = Notification.objects.filter(
         user=request.user, 
         created_at__month=selected_month
-    ).order_by('-created_at').values('title', 'content', 'is_seen')
+    ).order_by('-created_at').values('title', 'content', 'is_seen' , 'link' , 'id' , 'actions')
      
     return JsonResponse({'notifications': list(notifications)}, status=200)
     
@@ -64,7 +64,7 @@ def api_seen_notification(request):
     notifications = Notification.objects.filter(
         user=request.user, 
         created_at__month=selected_month
-    ).order_by('-created_at').values('title', 'content', 'is_seen')
+    ).order_by('-created_at').values('title', 'content', 'is_seen' , 'link' , 'id' , 'actions')
     
     return JsonResponse({'notifications': list(notifications)}, status=200)
 
@@ -128,12 +128,12 @@ def api_get_student_report(request):
     data_dict["[Total Average]"] = f"( {total_score} / {total_activity_points} ) * 100 = {result2}"
     
     
-    for material in materials:
-        custom_id += 1
-        name_dict = f"{material.material_name}"
-        if name_dict in data_dict:
-            name_dict = f"{name_dict} ({custom_id})"
-        data_dict[name_dict] = "Participated" if student_obj.pk in material.material_joined else "Not Participated"
+    # for material in materials:
+    #     custom_id += 1
+    #     name_dict = f"{material.material_name}"
+    #     if name_dict in data_dict:
+    #         name_dict = f"{name_dict} ({custom_id})"
+    #     data_dict[name_dict] = "Participated" if student_obj.pk in material.material_joined else "Not Participated"
 
     data.append(data_dict)
     

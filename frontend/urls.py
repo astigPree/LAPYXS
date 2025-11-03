@@ -18,13 +18,19 @@ urlpatterns = [
     path('teacher_comments/', views.teacher_classroom_comments_page, name='teacher_classroom_comments_page'),
     path('teacher_students/', views.teacher_classroom_check_students , name="teacher_classroom_check_students"),
     path('teacher_view_student/', views.teacher_classroom_view_student , name="teacher_classroom_view_student"),
-    path('teacher_messages/', views.teacher_messages , name="teacher_messages"),
     path('teacher_activities/', views.teacher_classroom_activities , name="teacher_classroom_activities"),
     path('teacher_view_activity/', views.teacher_view_activity , name="teacher_view_activity"),
     path('teacher_view_student_activity/', views.teacher_view_student_activity , name="teacher_view_student_activity"),
 
+    path('teacher_messages/', views.teacher_messages , name="teacher_messages"),
     path('teacher_messages_check/', views.teacher_messages_content , name="teacher_messages_content"),
+     
+    path('teacher_classroom_conferencing/', views.teacher_classroom_conferencing , name="teacher_classroom_conferencing"),
 
+    path('teacher_start_conferencing/', views.teacher_start_conferencing , name="teacher_start_conferencing"),
+    path('teacher_video_conferencing/', views.teacher_video_conferencing , name="teacher_video_conferencing"),
+    
+    
     # STUDENT PAGES ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     path('student_dashboard/', views.student_dashboard_page, name='student_dashboard_page'), 
     path('student_accounts/', views.student_accounts_page, name='student_accounts_page'),
@@ -36,4 +42,11 @@ urlpatterns = [
     path('student_comments/', views.student_classroom_comments_page, name='student_classroom_comments_page'),
     path('student_classroom_view_activity/', views.student_classroom_view_activity, name='student_classroom_view_activity'),
  
+    path('student_messages/', views.student_messages , name="student_messages"),
+    path('student_view_messages/', views.student_view_messages , name="student_view_messages"),
+    path('student_classroom_conferencing/', views.student_classroom_conferencing , name="student_classroom_conferencing"),
+    
+    path('student_start_conferencing/', views.student_start_conferencing , name="student_start_conferencing"),
+    path('student_video_conferencing/', views.student_video_conferencing , name="student_video_conferencing"),
+    
 ]

@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="{% static "actions-components.css" %}">  
     <link rel="stylesheet" href="{% static "teacher/messages.css" %}">  
     <link rel="stylesheet" href="{% static "teacher/classroom_view_reviewers.css" %}"> 
-    <script src="{% static 'teacher/messages.js' %}" defer></script>
+    <script src="{% static 'student/messages.js' %}" defer></script>
 
 {% endblock baseheadblock %}
 
 
 {% block basebodyblock %}
 
-{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_message" %}
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_message" %}
 
 
 
@@ -23,7 +23,7 @@
         <h1 class="poppins-light">Messages</h1> 
     </div>
 
-    <button class="start_calling_button poppins-bold" onclick='window.location.href="{% url "teacher_classroom_conferencing" %}"'>
+    <button class="start_calling_button poppins-bold" onclick="window.location.href='{% url 'student_classroom_conferencing' %}'">
         Start Video Conferencing        
     </button>
 
@@ -77,7 +77,7 @@
 
 
 <script>
-    var link_open_messages = "{% url "teacher_messages_content" %}";
+    var link_open_messages = "{% url "student_view_messages" %}";
 </script>
 
 

@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout
 from django.urls import reverse
 from django.utils.timezone import localtime, now
+from backend.model_utils import *
 
 from backend import my_utils
 
@@ -67,20 +68,15 @@ def api_student_join_classroom(request):
     
     classroom_obj.classroom_students.append(request.user.pk)
     classroom_obj.save()
-    
-    # NOTIFY the itself
-    # Notification.objects.create(
-    #     title = "Classroom Joined",
-    #     content = f"You have successfully joined the classroom {classroom_obj.classroom_name}",
-    #     user = request.user
-    # ) 
-    # NOTIFY the teacher
-    # Notification.objects.create(
-    #     title = "Classroom Joined",
-    #     content = f"{request.user.fullname} joined the {classroom_obj.classroom_name}",
-    #     user = classroom_obj.classroom_owner
-    # ) 
-    
+      
+    createNotification(
+        user=classroom_obj.classroom_owner,
+        title="New Student Joined!",
+        content=f"Student named {request.user.fullname} joined the classroom {classroom_obj.classroom_name}",
+        link="teacher_students",
+        action=f"sessionStorage.setItem('classroom_id',{classroom_obj.pk});"
+    )
+
     return JsonResponse({'success': 'Classroom joined successfully.'}, status=200)
     
 
@@ -154,14 +150,14 @@ def api_student_leave_classroom(request):
             user = teacher
         )
     
-     
-    # NOTIFY the teacher
-    # Notification.objects.create(
-    #     title = "Classroom Leaved",
-    #     content = f"{request.user.fullname} leave the {classroom_obj.classroom_name}",
-    #     user = teacher
-    # ) 
-    
+    createNotification(
+        user=classroom.classroom_owner,
+        title="Student Leave!",
+        content=f"Student named {request.user.fullname} leave the classroom {classroom.classroom_name}",
+        link="teacher_students",
+        action=f"sessionStorage.setItem('classroom_id',{classroom.pk});"
+    )
+
     
     return JsonResponse({'success': 'Classroom left successfully.'}, status=200)
 
@@ -303,28 +299,13 @@ def api_student_join_material(request):
         material=material
     )
     
-    # Notify the teacher that student joined the material
-    # teacher = material.material_owner 
-    # if teacher :
-    #     Notification.objects.create(
-    #         title = f"Material participation",
-    #         content = f"{request.user.fullname} joined your material {material.material_name}",
-    #         user = teacher
-    #     )
-        
-    
-    # NOTIFY the itself
-    # Notification.objects.create(
-    #     title = "Material Participated",
-    #     content = f"You have successfully participated the classroom {material.material_name}",
-    #     user = request.user
-    # ) 
-    # NOTIFY the teacher
-    # Notification.objects.create(
-    #     title = "Material Participated",
-    #     content = f"{request.user.fullname} participated the {material.material_name}",
-        # user = material.material_owner
-    # ) 
+    # createNotification(
+    #     user=classroom_obj.classroom_owner,
+    #     title="New Student Joined!",
+    #     content=f"Student named {request.user.fullname} joined the classroom {classroom_obj.classroom_name}",
+    #     link="teacher_students",
+    #     action=f"sessionStorage.setItem('classroom_id',{classroom_obj.pk});"
+    # )
     
     return JsonResponse({'success': 'Material joined successfully.'}, status=200)
 

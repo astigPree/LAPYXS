@@ -6,8 +6,8 @@
     </div>
 
     <div class="navigation-shortcut-icon">
-        <div class="navigation-notification" id="account-information-button">
-            <img src="{% static "assets/account-icon.svg" %}" alt="shortcut-icon" class="shortcut-icon">
+        <div class="navigation-notification with-profile" id="account-information-button">
+            <img src="{{request.user.profile_image.url}}" alt="shortcut-icon" class="shortcut-icon">
         </div>
         <div class="navigation-notification" id="account-notification-button">
             <span id="notification-red" style="display: none;"></span>
@@ -15,12 +15,21 @@
         </div>
     </div>
 </nav>
+{% if is_not_needed %}
 
-<button class="shortcut-actions-opener" id="teacher-actions-opener">
+<button class="shortcut-actions-opener" id="teacher-actions-opener" style="display: none; position: absolute; top: 9999px right: 999px"  >
     <span class="poppins-light" id="actions-opener-text">Hide Actions</span>
     <img id="actions-opener-icon" src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
 </button>
+ 
+{% else %}
+<button class="shortcut-actions-opener" id="teacher-actions-opener" >
+    <span class="poppins-light" id="actions-opener-text">Hide Actions</span>
+    <img id="actions-opener-icon" src="{% static "assets/action-icon.svg" %}" alt="actions-icon" class="actions-icon">
+</button> 
 
+{% endif %}
+ 
 <div class="shortcut-actions-container" id="teacher-actions-container">
     <h1 class="poppins-bold">Welcome back! </h1>
     <h2 class="poppins-light ellipsis">{{ request.user.fullname }}</h2>
@@ -64,7 +73,7 @@
                 <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
                 <span class="poppins-medium">Classroom</span>
             </button>
-            <button  style="{% if selected == 'student_message' %}display : none;{% endif %}">
+            <button  onclick="window.location.href='{% url 'student_messages' %}'" style="{% if selected == 'student_message' %}display : none;{% endif %}">
                 <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
                 <span class="poppins-medium">Message</span>
             </button>
@@ -117,13 +126,21 @@
 
 
     const account_information_button = document.getElementById("account-information-button");
-    account_information_button.addEventListener("click", function() {
-        if ( "{{ request.user.user_type }}" == "Teacher" ) {
-            window.location.href = "{% url 'teacher_accounts_page' %}";
-        } else {
-            window.location.href = "{% url 'student_accounts_page' %}";
-        }
-    });
+        
+    {% if is_not_needed %}
+
+    
+    {% else %}
+        account_information_button.addEventListener("click", function() {
+            if ( "{{ request.user.user_type }}" == "Teacher" ) {
+                window.location.href = "{% url 'teacher_accounts_page' %}";
+            } else {
+                window.location.href = "{% url 'student_accounts_page' %}";
+            }
+        }); 
+    
+    {% endif %}
+    
 </script>
 
 
@@ -143,9 +160,7 @@
                 <div class="notification-content" style="display: none;">
                     <h4 class="poppins-bold">Notification Title</h4>
                     <h5 class="poppins-regular">Notification Subtitle</h5>
-                </div>
-
-
+                </div> 
             </div>
         </div>
 

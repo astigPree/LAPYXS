@@ -60,6 +60,24 @@
     cursor: pointer;
 }
 
+.navigation-notification.with-profile{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;  
+}
+
+.navigation-notification.with-profile img{ 
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    border: 1px solid #2E2D2D;
+}
+
 .navigation-notification img{
     height: 24px;
     width: auto;
@@ -343,6 +361,7 @@
     padding-right: 12px; 
     padding-left: 12px;
     animation: animateNotificationBox 0.3s ease-in-out forwards;
+    cursor: pointer;
 }
 
 .notification-content h4{

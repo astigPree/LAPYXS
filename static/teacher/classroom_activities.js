@@ -190,6 +190,7 @@ const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-index
 monthField.value = `${year}-${month}`;
 
 let activities = {}
+let total_of_items = 0;
 
 async function get_classroom_materials(){
     const classroom_id = sessionStorage.getItem('classroom_id');
@@ -387,8 +388,7 @@ classroom_activities_list_of_actions.addEventListener('click', function(event){
             'question' : document.getElementById(`textarea_${id}`),
             'selections' : document.getElementById(`selection_${id}`), 
             'selections_list' : [], 
-        }
-        return;
+        } 
     }
 
     if (activity_action == '2'){
@@ -482,6 +482,9 @@ classroom_activities_list_of_actions.addEventListener('click', function(event){
             'base64' : ''
         }
     }
+
+    total_of_items = total_of_items + 1;
+    activity_total_scores.value = total_of_items; 
  
 })
 
@@ -503,6 +506,8 @@ classroom_activities_list_container.addEventListener('click', function(event){
         if ( action == 'delete' ){
             owner_data.holder.remove();
             delete questionaires[owner]; 
+            total_of_items = total_of_items - 1;
+            activity_total_scores.value = total_of_items; 
         } else if (action == "upload"){
             owner_data.file.click()
             if (!owner_data.has_event_listener){
@@ -521,6 +526,8 @@ classroom_activities_list_container.addEventListener('click', function(event){
         if ( action == 'delete' ){
             owner_data.holder.remove();
             delete questionaires[owner]; 
+            total_of_items = total_of_items - 1; 
+            activity_total_scores.value = total_of_items; 
         } 
         return;
     }
@@ -530,6 +537,8 @@ classroom_activities_list_container.addEventListener('click', function(event){
         if ( action == 'delete' ){
             owner_data.holder.remove();
             delete questionaires[owner]; 
+            total_of_items = total_of_items - 1;
+            activity_total_scores.value = total_of_items; 
         } 
         return;
     }
@@ -557,6 +566,8 @@ classroom_activities_list_container.addEventListener('click', function(event){
         } else if ( action == 'delete' ){
             owner_data.holder.remove();
             delete questionaires[owner]; 
+            total_of_items = total_of_items - 1;
+            activity_total_scores.value = total_of_items; 
         } 
         return;
     }
@@ -584,6 +595,8 @@ classroom_activities_list_container.addEventListener('click', function(event){
         } else if ( action == 'delete' ){
             owner_data.holder.remove();
             delete questionaires[owner]; 
+            total_of_items = total_of_items - 1;
+            activity_total_scores.value = total_of_items; 
         } 
         return;
     }
@@ -602,6 +615,27 @@ const activity_overall_certificate = document.getElementById("activity_overall_c
 const activity_overall_certificate_file = document.getElementById("activity_overall_certificate_file");
 const activity_total_scores = document.getElementById("activity_total_scores");
 
+const activity_overall_certificate_text = document.getElementById("activity_overall_certificate_text");
+const activity_subject_text = document.getElementById("activity_subject_text");
+const activity_subject = document.getElementById("activity_subject");
+
+activity_classfications.addEventListener('change', function(event){
+    if(activity_classfications.value == "Major Exam"){
+
+        activity_overall_certificate_text.style.display = "block";
+        activity_overall_certificate.style.display = "block";
+        activity_subject_text.style.display = "block";
+        activity_subject.style.display = "block";
+
+    } else {
+        
+        activity_overall_certificate_text.style.display = "none";
+        activity_overall_certificate.style.display = "none";
+        activity_subject_text.style.display = "none";
+        activity_subject.style.display = "none";
+
+    }
+})
 
 activity_overall_certificate.addEventListener('click', ()=>{
     activity_overall_certificate_file.click();
@@ -617,15 +651,16 @@ continue_activity_button.addEventListener('click', async()=>{
 
     showLoadingModal('Uploading Activities'); 
     let maindatas = { 
-        'activity_name' : activity_name?.value,
+        // 'activity_name' : activity_name?.value, // Remove the activity name and replace with activity type
+        'activity_name' : activity_classfications?.value,
         'activity_description' : activity_descriptions?.value,
         'activity_type' : activity_classfications?.value,
         'activity_starting_date' : activity_starting_date?.value,
         'activity_starting_time' : activity_starting_time?.value,
         'activity_deadline_date' : activity_deadline_date?.value,
         'activity_deadline_time' : activity_deadline_time?.value, 
-        'activity_total_scores' : activity_total_scores.value,
-        'classroom_id' : sessionStorage.getItem('classroom_id') 
+        'activity_total_scores' : activity_total_scores.value, 
+        'classroom_id' : sessionStorage.getItem('classroom_id'),
     };
 
     for (const key in maindatas){
@@ -639,8 +674,9 @@ continue_activity_button.addEventListener('click', async()=>{
         }
     }
 
+    maindatas['subject'] = activity_subject.value;
     maindatas['activity_overall_certificate_file'] =  activity_overall_certificate_file?.files[0] || null; 
-    maindatas['overall_certificate_name'] =  activity_overall_certificate_file?.files[0].name || 'No File Uploaded';
+    maindatas['overall_certificate_name'] =  activity_overall_certificate_file?.files[0]?.name || 'No File Uploaded';
     let datas = {};
     let index = 1;
 

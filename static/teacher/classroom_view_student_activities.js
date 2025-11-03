@@ -13,6 +13,7 @@ const activity_total_score = document.getElementById("activity_total_score");
 const activity_total_items = document.getElementById("activity_total_items"); 
 const activity_my_scores = document.getElementById("activity_my_scores"); 
 const student_name_text = document.getElementById("student_name_text"); 
+const subject = document.getElementById("subject"); 
 let activities = null; // {}
 let activities_files = {}; // {}
 let answer_sheets = {};
@@ -48,6 +49,7 @@ if (response?.ok){
         activity_title.textContent = data?.activity_name;
         activity_descriptions.textContent = data?.activity_description;
         activity_type.textContent = data?.activity_type;
+        subject.textContent = data?.subject;
 
  
         const activity_due_date = new Date(data.activity_due_date);

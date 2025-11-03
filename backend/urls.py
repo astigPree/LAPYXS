@@ -44,6 +44,9 @@ urlpatterns = [
 
     path('teacher_check_student_activity', api_teacher_check_student_activity , name='api_teacher_check_student_activity'),
     
+    path('teacher_get_list_of_message', api_teacher_get_list_of_message , name='api_teacher_get_list_of_message'),
+    
+    
     # STUDENT ------------------------
     path('join_classroom', api_student_join_classroom , name='api_student_join_classroom'),
     path('get_student_classroom', api_get_student_classrooms , name='api_get_student_classroom'),
@@ -62,4 +65,10 @@ urlpatterns = [
     path('student_submit_activity_files', api_student_submit_activity_files , name='api_student_submit_activity_files'),
     
     path('student_submit_checking_activity_files', api_student_submit_checking_activity_files , name='api_student_submit_checking_activity_files'),
+    
+    path('student_get_list_of_message', api_student_get_list_of_message , name='api_student_get_list_of_message'),
+    
+    
+
+
 ]

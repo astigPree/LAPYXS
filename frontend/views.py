@@ -133,8 +133,26 @@ def teacher_messages_content(request):
         return redirect('home_page')
     return render(request, 'teacher/messages_view.html')
 
+def teacher_classroom_conferencing(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Teacher':
+        return redirect('home_page')
+    return render(request, 'teacher/classroom_conferencing.html')
 
+def teacher_start_conferencing(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Teacher':
+        return redirect('home_page')
+    return render(request, 'teacher/start_conferencing.html')
 
+def teacher_video_conferencing(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Teacher':
+        return redirect('home_page')
+    return render(request, 'teacher/video_conferencing.html')
 
 
 # STUDENT PAGES ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -200,4 +218,42 @@ def student_classroom_view_activity(request):
     return render(request, 'student/classroom_view_activities.html')
  
 
+
+def student_messages(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Student':
+        return redirect('home_page')
+    return render(request, 'student/messages.html')
+    
+def student_view_messages(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Student':
+        return redirect('home_page')
+    return render(request, 'student/messages_view.html')
+
+
+
+def student_classroom_conferencing(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Student':
+        return redirect('home_page')
+    return render(request, 'student/classroom_conferencing.html')
+
+def student_start_conferencing(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Student':
+        return redirect('home_page')
+    return render(request, 'student/start_conferencing.html')
+
+
+def student_video_conferencing(request):
+    if not request.user.is_authenticated:
+        return redirect('login_page')
+    if request.user.user_type != 'Student':
+        return redirect('home_page')
+    return render(request, 'student/video_conferencing.html')
 

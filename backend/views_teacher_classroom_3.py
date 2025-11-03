@@ -5,6 +5,7 @@ import json
 from backend.models import *
 from datetime import datetime
 from django.utils.timezone import localtime, now
+from backend.model_utils import createNotification
 
 
 def api_teacher_get_activity(request):
@@ -37,6 +38,7 @@ def api_teacher_get_activity(request):
         'activity_name' : activity.activity_name,
         'activity_description': activity.activity_description,
         'activity_type': activity.activity_type,
+        'subject' : activity.subject if activity.subject else "Not Provided",
         'activity_starting_date': activity.activity_starting_date,
         'activity_due_date': activity.activity_due_date,
         'activity_content': activity.activity_content,
@@ -241,6 +243,7 @@ def api_teacher_get_student_activity(request):
         'activity_total_items': len(activity.activity_content),
         'overall_certificate': certificate_url, 
         'overall_certificate_name' : activity.overall_certificate_name, 
+        'subject' : activity.subject if activity.subject else "Not Provided",
         'total_score' : total_score,
         'student_name' : student_obj.fullname,
         'is_checked' : student_activity.is_checked
@@ -353,12 +356,72 @@ def api_teacher_check_student_activity(request):
     activity.save()
          
     # Notify student
-    # Notification.objects.create(
-    #     title = "Activity Checked",
-    #     content = f"Activity has been checked in {activity.activity_name}",
-    #     user = student_obj
-    # ) 
+    createNotification(
+        user=student_obj,
+        title=f"Checked Student",
+        content=f"Teacher check the {activity.activity_name}! view the result now!",
+        link="student_classroom_view_activity",
+        action=f"sessionStorage.setItem('activity_id',{activity.pk});sessionStorage.setItem('classroom_id',{activity.activity_classroom.pk});"
+    )
     return JsonResponse({'success': 'Student successfully checked.'}, status=200)
+    
+    
+    
+def api_teacher_get_list_of_message(request): 
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Teacher":
+        return JsonResponse({'error': 'You are not a teacher.'}, status=400)
+    
+    classrooms = Classroom.objects.filter(
+        classroom_owner = request.user
+    )
+    
+    students_pks = []
+    for classroom in classrooms:
+        students_pks += classroom.classroom_students
+     
+    students_pks = list(set(students_pks))
+    
+    students = CustomUser.objects.filter(
+        id__in = students_pks,
+        user_type = 'Student'
+    )
+     
+    messages = []
+    for student in students:
+        student_info = {
+            'id' : student.pk,
+            'name' : student.fullname,
+            'last_message' : "There is no message recorded.",
+            'is_read' : True,
+            'image' : student.profile_image.url if student.profile_image else None,
+            'created_at' : None
+        } 
+        last_message = Message.objects.filter(
+            sender = student,
+            receiver = request.user, 
+        ).order_by('-id').first() 
+        if last_message:
+            student_info['last_message'] = last_message.content
+            student_info['is_read'] = last_message.is_seen
+            student_info['created_at'] = last_message.created_at
+        
+        
+        messages.append(student_info)
+        
+    messages.sort(key=lambda x: x['created_at'], reverse=True)
+
+
+    return JsonResponse({
+        "messages" : messages
+    }, status=200)
+    
+    
     
     
     

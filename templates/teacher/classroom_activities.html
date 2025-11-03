@@ -139,19 +139,22 @@
         </div>
 
 
-        
-        
-        <label class="poppins-regular">Activity Name</label>
-        <input id="activity_name" type="text" placeholder="Enter Your Activity Name" class="poppins-regular input-field">
-        <label class="poppins-regular">Activity Descriptions</label>
-        <textarea id="activity_descriptions" name="description" placeholder="What this activity is all about?" class="poppins-regular textarea-field"></textarea>
-        <label class="poppins-regular">Activity Classifications</label> 
+        <label class="poppins-regular">Activity Classifications</label>  
         <select name="" id="activity_classfications" value="Assignment" class="poppins-regular select-field">
             <option value="Assignment" class="poppins-bold">Assignment</option>
             <option value="Quiz" class="poppins-bold">Quiz</option>
             <option value="Assessment" class="poppins-bold">Assessment</option>
-            <option value="Exam" class="poppins-bold">Exam</option>
+            <option value="Major Exam" class="poppins-bold">Major Exam</option>
         </select>
+        <label class="poppins-regular" style="display: none;">Activity Name</label>
+        <input id="activity_name" style="display: none;" type="text" placeholder="Enter Your Activity Name" class="poppins-regular input-field">
+        
+        <label style="display: none;" id="activity_subject_text" class="poppins-regular">Subject</label>
+        <input id="activity_subject" style="display: none;" type="text" placeholder="Enter Your Activity Subject" class="poppins-regular input-field">
+        
+        <label class="poppins-regular">Activity Descriptions</label>
+        <textarea id="activity_descriptions" name="description" placeholder="What this activity is all about?" class="poppins-regular textarea-field"></textarea>
+
         <label class="poppins-regular">Activity Starting Date</label>
         <input id="activity_starting_date" type="date" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
         
@@ -165,13 +168,13 @@
         <input id="activity_deadline_time" type="time" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
         
         
-        <label class="poppins-regular">Activity Overall Certificate</label>
-        <input id="activity_overall_certificate" type="button" value="Click here to upload certificate" placeholder="Enter Your Activity Name" class="poppins-regular file-field ellipsis">
+        <label class="poppins-regular" style="display: none;" id="activity_overall_certificate_text">Activity Overall Certificate</label>
+        <input style="display: none;" id="activity_overall_certificate" type="button" value="Click here to upload certificate" placeholder="Enter Your Activity Name" class="poppins-regular file-field ellipsis">
         <input id="activity_overall_certificate_file" type="file" hidden >
         
         
-        <label class="poppins-regular">Activity Overall Scores</label>
-        <input id="activity_total_scores" type="number" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
+        <label class="poppins-regular">Total of items</label>
+        <input value="0" readonly id="activity_total_scores" type="number" placeholder="Enter Your Activity Name" class="poppins-regular date-field">
         
 
         <div class="divider"></div>

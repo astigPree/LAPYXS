@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+
+    <link rel="stylesheet" href="{% static "actions-components.css" %}">  
+    <link rel="stylesheet" href="{% static "teacher/video_conferencing.css" %}">  
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_message" is_not_needed=True %}
+
+
+<section class="video-conferencing-section">
+
+    <button class="leave-video-conferencing poppins-black">
+        Leave Classroom Call
+    </button>
+
+    <div class="video-teacher-container">
+        <h4 class="poppins-bold ellipsis"> Teacher Makie Mon Nava</h4>
+        <div class="video-holder">
+            <p class="poppins-regular"> Waiting to join !</p>
+            <video src="" id="localVideo" autoplay playsinline muted ></video>
+        </div>
+        <div class="vid-start-actions">
+            <button class="vid-start-actions-small">
+                <img src="{% static 'assets/microphone-whte-icon.svg' %}" alt="">
+            </button>
+            <button class="vid-start-actions-small">
+                <img src="{% static 'assets/camera-white-icon.svg' %}" alt="">
+            </button>
+
+            <button class="vid-start-actions-big poppins-bold">
+                Stop White Board
+            </button>
+        </div>
+    </div>
+    
+    <div class="video-teacher-whiteboard">
+        <h4 class="poppins-bold ellipsis">(White Board)</h4>
+        <div class="video-holder">
+            <video src="" id="localVideo" autoplay playsinline muted ></video>
+        </div>
+    </div>
+
+    <div class="students-list-placeholder">
+
+            
+        <div class="video-teacher-whiteboard">
+            <h4 class="poppins-bold ellipsis">(Student) Josh Ametin</h4>
+            <div class="video-holder">
+                <p class="poppins-regular"> Waiting to join !</p>
+                <button class="video-holder-mute">
+                    <img src="{% static 'assets/microphone-whte-icon.svg' %}" alt="">
+                </button>
+                <video src="" id="localVideo" autoplay playsinline muted ></video>
+            </div>
+        </div>
+
+        <div class="video-teacher-whiteboard">
+            <h4 class="poppins-bold ellipsis">(Student) Josh Ametin</h4>
+            <div class="video-holder">
+                <p class="poppins-regular"> Waiting to join !</p>
+                <video src="" id="localVideo" autoplay playsinline muted ></video>
+                <button class="video-holder-mute">
+                    <img src="{% static 'assets/microphone-whte-icon.svg' %}" alt="">
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="view-messages">
+        <img src="{% static 'assets/chat-black-icon.svg' %}" alt="">
+    </button>
+
+
+    <div class="group-message-container" style="display: none;">
+        <div class="group-message-wrapper">
+
+            <div class="group-message-header">
+                <h5 class="poppins-semibold">Group Message</h5>
+                <button>
+                    <img src="{% static 'assets/back-icon.svg' %}" alt="">
+                </button>
+            </div>
+
+            <div class="group-message-table">
+                <div class="group-message-content">
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-right">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+                    <div class="group-message-right">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+                    <div class="group-message-right">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                    <div class="group-message-left">
+                        <p class="poppins-regular">Hello thank you po sa pag join!</p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="group-message-actions">
+
+                <textarea placeholder="Write a message here . . ." name="" id="" class="poppins-light"></textarea>
+                <button>
+                    <img src="{% static 'assets/message-icon.svg' %}" alt="">
+                </button>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+</section>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", async()=>{
+        const localVideo = document.getElementById("localVideo");
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localVideo.srcObject = stream;
+    })
+</script>
+
+
+{% endblock basebodyblock %}

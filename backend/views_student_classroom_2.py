@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from backend import my_utils
 from django.utils.timezone import localtime, now
 import json
+from backend.model_utils import *
 
 from backend.models import *
  
@@ -75,13 +76,15 @@ def api_student_reply_post(request):
         post=classroom_post,
         classroom=classroom_post.classroom
     )
-
-    # NOTIFY the teacher
-    # Notification.objects.create(
-    #     title = "Reply Post",
-    #     content = f"{request.user.fullname} replied to the post.",
-    #     user = classroom_post.classroom.classroom_owner
-    # ) 
+ 
+    
+    createNotification(
+        user=classroom_post.teacher,
+        title="Student Replied!",
+        content=f"Student named {request.user.fullname} replied in the post!",
+        link="teacher_comments",
+        action=f"sessionStorage.setItem('post_id',{classroom_post.pk});"
+    )
     
     return JsonResponse({'success': 'Classroom post reply created successfully.'}, status=200)
 
@@ -259,6 +262,7 @@ def api_student_get_activity(request):
         'activity_name' : activity.activity_name,
         'activity_description': activity.activity_description,
         'activity_type': activity.activity_type, 
+        'subject' : activity.subject if activity.subject else 'Not Provided' ,
         'activity_due_date': activity.activity_due_date,
         'activity_content': answer_sheets,
         'activity_total_scores': activity.activity_total_scores,
@@ -358,21 +362,14 @@ def api_student_submit_activity_files(request):
     
     activity.activity_joined.append(request.user.pk)
     activity.save()
-     
-    # NOTIFY the itself
-    # Notification.objects.create(
-    #     title = "Submit Activity",
-    #     content = f"You have successfully submitted the activity on {activity.activity_name}",
-    #     user = request.user
-    # ) 
-    # NOTIFY the teacher
-    # Notification.objects.create(
-    #     title = "Submit Activity",
-    #     content = f"{request.user.fullname} submit its activity on {activity.activity_name}",
-    #     user = activity.activity_owner
-    # ) 
-    
-    
+ 
+    createNotification(
+        user=activity.activity_owner,
+        title="Submitted Activity",
+        content=f"Student named {request.user.fullname} submit the {activity.activity_name}",
+        link="teacher_view_student_activity",
+        action=f"sessionStorage.setItem('activity_id',{activity.pk});sessionStorage.setItem('student_id',{request.user.pk});"
+    )
     
     return JsonResponse({
         'success': 'Activity submmited successfully.',
@@ -444,3 +441,72 @@ def api_student_submit_checking_activity_files(request):
          
     return JsonResponse({'success': 'Activity submitted successfully.'}, status=200)
 
+
+
+
+def api_student_get_list_of_message(request):
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.user.user_type != "Student":
+        return JsonResponse({'error': 'You are not a student.'}, status=400)
+    
+    classrooms_ids : list = request.user.classrooms
+    classrooms_objs = Classroom.objects.filter(id__in=classrooms_ids[::-1])
+    
+    teacher_pk = [] 
+    messages = [] 
+    for cls_obj in classrooms_objs:  
+        if cls_obj.classroom_owner.pk in teacher_pk:
+            continue
+        
+        teacher_info = { 
+            'id' : cls_obj.classroom_owner.pk,
+            'name' : cls_obj.classroom_owner.fullname,
+            'last_message' : "There is no message recorded.",
+            'is_read' : True,
+            'image' : cls_obj.classroom_owner.profile_image.url if cls_obj.classroom_owner.profile_image else None,
+            'created_at' : None
+        }
+        
+        last_message = Message.objects.filter(
+            sender = cls_obj.classroom_owner,
+            receiver = request.user, 
+        ).order_by('-id').first()  
+        if last_message:
+            teacher_info['last_message'] = last_message.content
+            teacher_info['is_read'] = last_message.is_seen
+            teacher_info['created_at'] = last_message.created_at
+        
+        messages.append(teacher_info)
+        teacher_pk.append(cls_obj.classroom_owner.pk)
+        
+    
+    messages.sort(key=lambda x: x['created_at'], reverse=True)
+    
+
+    return JsonResponse({
+        "messages" : messages
+    }, status=200)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

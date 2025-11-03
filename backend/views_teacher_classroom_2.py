@@ -4,6 +4,7 @@ import json
 
 from backend.models import *
 from datetime import datetime
+from backend.model_utils import createNotification
 
 
 def api_teacher_create_post(request):
@@ -46,8 +47,15 @@ def api_teacher_create_post(request):
      
      
     # NOTIFY all the students
-    # students = CustomUser.objects.filter(id__in = classroom.classroom_students)
-    # for student in students:
+    students = CustomUser.objects.filter(id__in = classroom.classroom_students)
+    for student in students:
+        createNotification(
+            user=student,
+            title=f"New Post in {classroom.classroom_name}!",
+            content=f"Teacher submit post in {classroom.classroom_name}!",
+            link="student_classroom_announcement",
+            action=f"sessionStorage.setItem('classroom_id',{classroom.pk});"
+        )
     #     Notification.objects.create(
     #         title = "Posting",
     #         content = f"Has new post in {classroom.classroom_name}!",
@@ -166,7 +174,15 @@ def api_teacher_reply_post(request):
         post=classroom_post,
         classroom=classroom_post.classroom
     )
-   
+    students = CustomUser.objects.filter(id__in = classroom_post.classroom.classroom_students)
+    for student in students:
+        createNotification(
+            user=student,
+            title="Replied Post ",
+            content=f"Teacher replied post in {classroom_post.classroom.classroom_name}!",
+            link="student_comments",
+            action=f"sessionStorage.setItem('classroom_id',{classroom_post.classroom.pk});sessionStorage.setItem('post_id',{classroom_post.pk});"
+        )
     
     return JsonResponse({'success': 'Classroom post reply created successfully.'}, status=200)
 
@@ -442,16 +458,16 @@ def api_teacher_delete_activity(request):
     activity = Activity.objects.filter(id=int(activity_id), activity_owner=request.user).first()
     if not activity:
         return JsonResponse({'error': 'Activity not found.'}, status=400)
-    
-    # Notify the 
-    teacher = activity.activity_owner 
-    if teacher :
-        Notification.objects.create(
-            title = f"Material participation",
-            content = f"{request.user.fullname} joined your material {activity.activity_name}",
-            user = teacher
+     
+    students = CustomUser.objects.filter(id__in = activity.activity_classroom.classroom_students)
+    for student in students:
+        createNotification(
+            user=student,
+            title="Activity has been deleted",
+            content=f"Activity has been deleted in the classroom {activity.activity_classroom.classroom_name}",
+            link="student_materials",
+            action=f"sessionStorage.setItem('classroom_id',{activity.activity_classroom.pk});"
         )
-    
     activity.delete()
         
     return JsonResponse({'success': 'Activity deleted successfully.'}, status=200)
@@ -494,6 +510,7 @@ def api_teacher_add_activity(request):
     activity_deadline_date = request.POST.get('activity_deadline_date', '')
     activity_deadline_time = request.POST.get('activity_deadline_time', '')
     activity_total_scores = request.POST.get('activity_total_scores', '0')
+    activity_subject = request.POST.get('subject', None)
     activity_overall_certificate_name = request.POST.get('overall_certificate_name', 'No File Uploaded')
     activity_overall_certificate_file = request.FILES.get('activity_overall_certificate_file', None)
     datas = json.loads(request.POST.get('datas', '{}')) 
@@ -519,7 +536,8 @@ def api_teacher_add_activity(request):
         activity_total_scores = int(activity_total_scores),
         activity_due_date = activity_due_date_datetime,
         activity_starting_date = activity_starting_datetime,
-        overall_certificate_name = activity_overall_certificate_name
+        overall_certificate_name = activity_overall_certificate_name,
+        subject = activity_subject
     )
     
     for key in datas: 
@@ -536,8 +554,15 @@ def api_teacher_add_activity(request):
       
          
     # NOTIFY all the students
-    # students = CustomUser.objects.filter(id__in = classroom.classroom_students)
-    # for student in students:
+    students = CustomUser.objects.filter(id__in = classroom.classroom_students)
+    for student in students:
+        createNotification(
+            user=student,
+            title="Activity has been added",
+            content=f"Activity has been added in the classroom {classroom.classroom_name} and it will be relased in {activity_starting_datetime}",
+            link="student_materials",
+            action=f"sessionStorage.setItem('classroom_id',{classroom.pk});"
+        )
     #     Notification.objects.create(
     #         title = "Activity",
     #         content = f"Has new created activity in {classroom.classroom_name}!",

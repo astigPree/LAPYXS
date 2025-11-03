@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block baseheadblock %}
+    <link rel="stylesheet" href="{% static "actions-components.css" %}">  
+    <link rel="stylesheet" href="{% static 'teacher/messages_view.css' %}">
+    <link rel="stylesheet" href="{% static "teacher/start_conferencing.css" %}">  
+
+{% endblock baseheadblock %}
+
+
+{% block basebodyblock %}
+
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_message" %}
+
+
+
+<section class="classroom-section open" >
+
+    <button class="back-button" onclick='window.location.href="{% url "student_classroom_conferencing" %}"' >
+        <img src="/static/assets/back-icon.svg" alt="back" class="back-icon">
+        <span class="poppins-medium">Other Classroom</span> 
+    </button>
+
+
+    <div class="vid-start-viewer">
+        <video src=""></video>
+    </div>
+
+    <div class="vid-start-actions">
+        <button class="vid-start-actions-small">
+            <img src="{% static 'assets/microphone-whte-icon.svg' %}" alt="">
+        </button>
+        <button class="vid-start-actions-small">
+            <img src="{% static 'assets/camera-white-icon.svg' %}" alt="">
+        </button>
+
+        <button class="vid-start-actions-big poppins-bold">
+            Start Video Call
+        </button>
+    </div>
+ 
+    
+
+</section>
+
+
+<script>
+    var link_open_messages = "{% url "teacher_messages_content" %}";
+</script>
+
+
+
+{% endblock basebodyblock %}

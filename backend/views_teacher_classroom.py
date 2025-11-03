@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, logout
 from django.urls import reverse
+from backend.model_utils import createNotification
 
 from backend import my_utils
 
@@ -37,12 +38,14 @@ def api_create_classroom(request):
         classroom.classroom_link_id = my_utils.generate_obfuscated_id(classroom.id, 10)
         classroom.save()
         
-        
-        Notification.objects.create(
-            title = "Classroom",
-            content = f"Classroom {classroom.classroom_name} has been created",
-            user = request.user
+        createNotification(
+            user=request.user,
+            title="Successfully Created Classrom",
+            content=f"You have successfully created classroom named {classroom.classroom_name}",
+            link="teacher_materials",
+            action=f"sessionStorage.setItem('classroom_id',{classroom.pk});"
         )
+        
         return JsonResponse({'success': 'Classroom created successfully.'}, status=200)
     except Exception as e:
         return JsonResponse({'err': str(e) , "error": "Something went wrong please try again later"}, status=400)
@@ -209,7 +212,16 @@ def api_teacher_delete_classroom(request):
     #         user = student
     #     ) 
     
-    
+    students = CustomUser.objects.filter(id__in = classroom.classroom_students)
+    for student in students:
+        createNotification(
+            user=student,
+            title="Classroom Deleted",
+            content=f"Classroom has been deleted {classroom.classroom_name}",
+            link="student_classroom",
+            action=f"console.log('deleted classroom {classroom.pk}');"
+        )
+        
     classroom.delete() 
     
     return JsonResponse({'success': 'Classroom deleted successfully.'}, status=200)
@@ -264,11 +276,19 @@ def api_teacher_add_material(request):
          
         students = CustomUser.objects.filter(pk__in=classroom_obj.classroom_students, user_type="Student")
         for student in students:
-            Notification.objects.create(
-                title = 'New material added',
-                content = f"{classroom_obj.classroom_name} has added a new material.",
-                user = student
+            createNotification(
+                user=student,
+                title="Material has been added",
+                content=f"Material has been added in the classroom {classroom_obj.classroom_name}",
+                link="student_materials",
+                action=f"sessionStorage.setItem('classroom_id',{classroom_obj.pk});"
             )
+        
+            # Notification.objects.create(
+            #     title = 'New material added',
+            #     content = f"{classroom_obj.classroom_name} has added a new material.",
+            #     user = student
+            # )
         
     except Exception as e:
         return JsonResponse({'err': str(e) , 'error': 'Failed to add material.'}, status=400)
