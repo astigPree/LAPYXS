@@ -45,6 +45,7 @@ $RECYCLE.BIN/
 .venv/
 venv/
 .env
+bash_env
 
 static/raw-characters
 
