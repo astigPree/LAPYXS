@@ -38,6 +38,11 @@ def api_create_classroom(request):
         classroom.classroom_link_id = my_utils.generate_obfuscated_id(classroom.id, 10)
         classroom.save()
         
+        classroom_conferencing = ClassroomConferencing.objects.create(
+            classroom = classroom,
+            room_name = classroom.classroom_link_id
+        )
+        
         createNotification(
             user=request.user,
             title="Successfully Created Classrom",
@@ -68,7 +73,8 @@ def api_get_teacher_classrooms(request):
         classroom_data = {
             'classroom_name': classroom.classroom_name, 
             'id': classroom.pk,
-            'number_of_students': len(classroom.classroom_students) if classroom.classroom_students else 0
+            'number_of_students': len(classroom.classroom_students) if classroom.classroom_students else 0,
+            'classroom_link_id': classroom.classroom_link_id
         }
         
         classrooms_data.append(classroom_data)

@@ -128,7 +128,9 @@
     const account_information_button = document.getElementById("account-information-button");
         
     {% if is_not_needed %}
-
+    if (!teacher_actions_container.classList.contains("toggled")){
+        teacher_actions_container.classList.add("toggled");
+    }
     
     {% else %}
         account_information_button.addEventListener("click", function() {

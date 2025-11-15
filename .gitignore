@@ -72,3 +72,5 @@ test2.py
 
 
 REQUIREMENTS
+uvicorn.crt
+uvicorn.key

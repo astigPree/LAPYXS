@@ -62,6 +62,13 @@ class Classroom(models.Model):
 	def __str__(self):
 		return self.classroom_name
 
+class ClassroomConferencing(models.Model):
+	classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_conferencing')
+	created_at = models.DateTimeField(auto_now_add=True)
+	room_name = models.CharField(max_length=255, null=True, blank=True)
+	currently_joined = models.JSONField(default=list, blank=True , null=True)
+
+
 class Material(models.Model):
 	material_name = models.CharField(max_length=255, null=True, blank=True)
 	material_joined = models.JSONField(default=list, blank=True , null=True)
@@ -298,7 +305,10 @@ class Message(models.Model):
     content = models.TextField( null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     classroom_message = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, blank=True , related_name='classroom_message')
-    is_seen = models.BooleanField(default=False)
-    
+    is_seen = models.BooleanField(default=False) 
+    is_seen_by_receiver = models.BooleanField(default=False)
+
+
+
 
 

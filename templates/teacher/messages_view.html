@@ -13,7 +13,7 @@
 
 {% include "components/actions-components-teacher.html" with action_to_show="teacher" selected="teacher_message" %}
 
-<section class="classroom-section open">
+<section class="classroom-section">
 
     <button class="back-button" onclick='window.location.href="{% url "teacher_messages" %}"' >
         <img src="/static/assets/back-icon.svg" alt="back" class="back-icon">
@@ -21,18 +21,18 @@
     </button>
 
     <div class="message-person">
-        <img src="" alt="">
+        <img src="" alt="" id="messageImg">
         <div class="message-person-content">
-            <h4 class="poppins-semibold ellipsis">Student Mon Nava</h4>
-            <h5 class="poppins-regular ellipsis">makietech@gmail.com</h5>
+            <h4 class="poppins-semibold ellipsis" id="messageName"></h4>
+            <h5 class="poppins-regular ellipsis" id="messageEmail"></h5>
         </div>
     </div>
 
     <div class="divider"></div>
 
     <div class="messages-main-content">
-        <div class="message-main-scroller">
-
+        <div class="message-main-scroller" id="message_main_scroller">
+{% comment %} 
             <div class="message-content-receiver">
                 <p class="poppins-regular">
                     Hello Po sa inyu ako po si makie tech at kilalang batibot
@@ -86,15 +86,15 @@
                 </p>
                 <h6 class="poppins-bold">December 12, 2005</h6>
             </div>
-
+ {% endcomment %}
 
         </div>
-        <button class="message-content-pointer"></button>
+        <button class="message-content-pointer" id="message_pointer"></button>
     </div>
 
     <div class="message-chatbox-container">
-        <textarea name="" id="" placeholder="Send message . . ." class="poppins-light"></textarea>
-        <button>
+        <textarea name="" id="message_box" placeholder="Send message . . ." class="poppins-light"></textarea>
+        <button id="message_send" style="opacity: 0.5;">
             <img src="{% static 'assets/post-classroom-icon.svg' %}" alt="">
         </button>
     </div>
@@ -105,6 +105,11 @@
 
 
 </section>
+
+<script>
+    var user_id = "{{request.user.id}}";
+</script>
+<script src="{% static 'teacher/messages_view.js' %}" defer></script>
 
 {% endblock basebodyblock %}
 

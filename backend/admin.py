@@ -6,6 +6,7 @@ from .models import *
 
 admin.site.register(CustomUser)
 admin.site.register(Classroom)
+admin.site.register(ClassroomConferencing)
 admin.site.register(Material)
 admin.site.register(Post)
 admin.site.register(PostReply)

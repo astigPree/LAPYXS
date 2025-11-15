@@ -15,7 +15,7 @@ import io
 import pandas as pd 
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
-
+from backend.model_utils import createMessage, send_to_websocket
 
 
 def api_get_notification(request):
@@ -39,6 +39,28 @@ def api_get_notification(request):
     ).order_by('-created_at').values('title', 'content', 'is_seen' , 'link' , 'id' , 'actions')
      
     return JsonResponse({'notifications': list(notifications)}, status=200)
+
+def api_has_new_notification(request):
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+    
+    selected_month = request.POST.get('selected_month', None)
+    try:
+        selected_month = int(selected_month.split('-')[1])  # "09" → 9
+    except (AttributeError, ValueError, IndexError):
+        return JsonResponse({'error': 'Invalid month format'}, status=400)
+    notification = Notification.objects.filter(
+        user=request.user, 
+        created_at__month=selected_month,
+        is_seen = False
+    ).first()
+     
+    return JsonResponse({ 'has_notif' : True if notification else False }, status=200)
+    
     
 
 def api_seen_notification(request):
@@ -151,5 +173,138 @@ def api_get_student_report(request):
     return response
 
 
+
+
+def api_get_messages(request):
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+    receiver = request.POST.get('receiver', None)
+    if not receiver:
+        return JsonResponse({'error': 'No Receiver.'}, status=400)
+     
+    
+    receiver_obj = CustomUser.objects.filter(id = int(receiver)).first()
+    if not receiver_obj:
+        return JsonResponse({'error': 'No Receiver.'}, status=400)
+    
+    receiver_msg = Message.objects.filter(
+        sender = receiver_obj,
+        receiver = request.user
+    )
+    receiver_msg.update(
+        is_seen = True,
+        is_seen_by_receiver = True
+    )
+    
+    receiver_msg_val = receiver_msg.values('created_at', 'content' , 'sender')
+    
+    sender_msg = Message.objects.filter(
+        sender = request.user,
+        receiver = receiver_obj
+    ).values('created_at', 'content')
+    # sender_msg.update(is_seen = True)
+    
+    sender_msg_val = sender_msg.values('created_at', 'content', 'sender')
+    
+    messages = list(sender_msg_val) + list(receiver_msg_val)
+
+    messages.sort(key=lambda x: x['created_at'] or now())
+    
+    return JsonResponse({
+        "messages" : messages,
+        "receiver_image" : receiver_obj.profile_image.url if receiver_obj.profile_image else None,
+        "receiver_name" : receiver_obj.fullname,
+        "receiver_email" : receiver_obj.email 
+    }, status = 200)
+    
+
+def api_send_messages(request):
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+    receiver = request.POST.get('receiver', None)
+    if not receiver:
+        return JsonResponse({'error': 'No Receiver.'}, status=400)
+    
+ 
+    receiver_obj = CustomUser.objects.filter(id = int(receiver)).first()
+    if not receiver_obj:
+        return JsonResponse({'error': 'No Receiver.'}, status=400)
+    
+    content = request.POST.get("content" , "")
+    
+    
+    createMessage(
+        sender=request.user,
+        receiver=receiver_obj,
+        content=content    
+    )
+    
+    return JsonResponse({
+        "success": "Send successfully"
+    }, status = 200)
+ 
+ 
+ 
+def api_send_message_to_vc(request):
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+
+    sender = request.POST.get('sender', None)
+    if not sender:
+        return JsonResponse({'error': 'No sender.'}, status=400)
+    
+    classroom_id = request.POST.get('classroom_id', None)
+    if not classroom_id:
+        return JsonResponse({'error': 'No classroom_id.'}, status=400)
+    
+    classroom_obj = Classroom.objects.filter(
+        id = int(classroom_id)
+    ).first()
+    if not classroom_obj:
+        return JsonResponse({'error': 'No classroom.'}, status=400)
+  
+    content = request.POST.get("content" , "")
+    send_to_websocket(
+        data={
+            "type" : "group_message",
+            "content" : content,
+            "sender" : sender,
+            "classroom_id" : classroom_id
+        } ,
+        group_name=f"{settings.WS_GROUPNAME}-{classroom_obj.classroom_owner.pk}",
+        call_name="group_message"
+    )
+    
+    for student_pk in classroom_obj.classroom_students:
+        send_to_websocket(
+            data={
+                "type" : "group_message",
+                "content" : content,
+                "sender" : sender,
+                "classroom_id" : classroom_id
+            } ,
+            group_name=f"{settings.WS_GROUPNAME}-{student_pk}",
+            call_name="group_message"
+        )
+    
+    return JsonResponse({
+        "success": "Send successfully"
+    }, status = 200)
+ 
+ 
  
  

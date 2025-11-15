@@ -8,8 +8,13 @@ urlpatterns = [
     path('update', api_update_auth , name='api_update_auth'),
     
     path('notifications', api_get_notification , name='api_get_notification'),
+    path('api_has_new_notification', api_has_new_notification , name='api_has_new_notification'),
     path('seen_notification', api_seen_notification , name='api_seen_notification'),
     path('get_report', api_get_student_report , name='api_get_student_report'),
+    
+    path('api_get_messages', api_get_messages , name='api_get_messages'),
+    path('api_send_messages', api_send_messages , name='api_send_messages'),
+    path('api_send_message_to_vc', api_send_message_to_vc , name='api_send_message_to_vc'),
     
     # TEACHER ------------------------
     path('create_classroom', api_create_classroom , name='api_create_classroom'),

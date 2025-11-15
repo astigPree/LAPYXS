@@ -3,6 +3,9 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 
+def test_page(request):
+    return render(request, 'test.html')
+
 
 def login_page(request):
     return render(request, 'authen/login_page.html')

@@ -29,7 +29,8 @@ def api_get_student_classrooms(request):
         classroom_data = {
             'classroom_name': cls_obj.classroom_name, 
             'id': cls_obj.pk,
-            'number_of_students': len(cls_obj.classroom_students) if cls_obj.classroom_students else 0
+            'number_of_students': len(cls_obj.classroom_students) if cls_obj.classroom_students else 0,
+            'classroom_link_id': cls_obj.classroom_link_id
         }
          
         classrooms.append(classroom_data)

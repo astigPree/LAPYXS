@@ -400,16 +400,42 @@ def api_teacher_get_list_of_message(request):
             'last_message' : "There is no message recorded.",
             'is_read' : True,
             'image' : student.profile_image.url if student.profile_image else None,
-            'created_at' : None
+            'created_at' : now(),
         } 
-        last_message = Message.objects.filter(
+        last_message_student = Message.objects.filter(
             sender = student,
             receiver = request.user, 
         ).order_by('-id').first() 
-        if last_message:
-            student_info['last_message'] = last_message.content
-            student_info['is_read'] = last_message.is_seen
-            student_info['created_at'] = last_message.created_at
+        last_message_teacher = Message.objects.filter(
+            sender = request.user,
+            receiver = student, 
+        ).order_by('-id').first() 
+        if last_message_student and last_message_teacher:
+            if last_message_student.created_at > last_message_teacher.created_at:
+                student_info['last_message'] = last_message_student.content
+                student_info['is_read'] = last_message_student.is_seen_by_receiver
+                student_info['created_at'] = last_message_student.created_at
+            else:
+                student_info['last_message'] = last_message_teacher.content
+                student_info['is_read'] = last_message_teacher.is_seen
+                student_info['created_at'] = last_message_teacher.created_at
+        elif last_message_student:
+            student_info['last_message'] = last_message_student.content
+            student_info['is_read'] = last_message_student.is_seen_by_receiver
+            student_info['created_at'] = last_message_student.created_at
+        elif last_message_teacher:
+            student_info['last_message'] = last_message_teacher.content
+            student_info['is_read'] = last_message_teacher.is_seen
+            student_info['created_at'] = last_message_teacher.created_at
+        
+        
+        
+            
+                
+        # if last_message:
+        #     student_info['last_message'] = last_message.content
+        #     student_info['is_read'] = last_message.is_seen
+        #     student_info['created_at'] = last_message.created_at
         
         
         messages.append(student_info)

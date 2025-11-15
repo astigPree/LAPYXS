@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-*^0!e6c+3*&wa!lba4820-^-jqxk+(3zb2(+%(#1pg4mjnbgt#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '192.168.1.11',
+    'localhost',
+    '127.0.0.1'
+]
+
+CORS_ORIGIN_ALLOW_ALL = True # For testing
 
 
 # Application definition
@@ -125,6 +131,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -141,4 +148,12 @@ AUTH_USER_MODEL = 'backend.CustomUser'
 
 # WEBSOCKET
 WS_GROUPNAME = "LAPYXS"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
+
+# WhiteNoise
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

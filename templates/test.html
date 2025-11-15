@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% comment %} <script src="{% static 'test.js' %}" defer></script> {% endcomment %}
+    <script src="{% static 'student/video-handler.js' %}" defer></script>
+    <style>
+        video{
+            width :200px;
+            height: 200px;
+            border: 1px solid #111;
+        }
+        .remote-container{
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <!-- index.html -->
+<input type="text" placeholder="Username" value="Makie" id="username_tag">
+<video id="local" autoplay muted></video>
+<button id="local_mic">Mute Call</button>
+<button id="local_vid">Close Video</button>
+<div class="remote-container" id="video_container">
+
+</div>
+<script>
+  
+</script>
+<button id="start_call">Start Call</button>
+
+</body>
+</html>

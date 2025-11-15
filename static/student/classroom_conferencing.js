@@ -1,5 +1,6 @@
 
 const classroom_container = document.getElementById("classroom_selections");
+const classroom_data = {};
 (async()=>{
 
 const response = await sendRequest("../api/get_student_classroom", "POST", {}); 
@@ -12,6 +13,7 @@ if (response?.ok){
     classroom_container.innerHTML = "";
 
     data.classrooms.forEach((classroom) => {
+        classroom_data[classroom.id] = classroom;
         classroom_container.insertAdjacentHTML("beforeend", ` 
             <div class="classroom-container">
                 <div class="classroom-content">
@@ -34,12 +36,11 @@ classroom_container.addEventListener("click", function(event){
     const button = event?.target?.closest("img");
     if (!button) return;
     const key = button?.dataset?.key;
-    if (!key) return;
+    if (!key) return; 
+    console.log(key) 
 
-    console.log(key)
-
-
-    sessionStorage.setItem("classroom_meeting", key);
+    sessionStorage.setItem("room_name", classroom_data[key]?.classroom_link_id ? classroom_data[key]?.classroom_link_id : "clients");
+    sessionStorage.setItem("classroom_id", key);
     window.location.href = link_start_video_conferencing;
 });
 
