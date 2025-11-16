@@ -70,26 +70,45 @@ class CallConsumer(AsyncWebsocketConsumer):
         
         cache.set(f"groups-{self.scope['user'].pk}" , group_names)
         
-
-
+ 
     async def disconnect(self, close_code):
-        # await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+        try:
+            if self.room_name != "clients":
+                group_call = cache.get(self.room_name, {})
+                if str(self.scope["user"].pk) in group_call:
+                    del group_call[str(self.scope["user"].pk)]
+                    cache.set(self.room_name, group_call)
 
-        if self.room_name != "clients":
-            # self.group_call[self.room_name].remove(self.scope["user"].pk)
-            # if len(self.group_call[self.room_name]) == 0:
-            #     del self.group_call[self.room_name]
+            group_names = cache.get(f"groups-{self.scope['user'].pk}", [])
+            for room_name in group_names:
+                try:
+                    await self.channel_layer.group_discard(room_name, self.channel_name)
+                except Exception:
+                    # Ignore if already discarded or transport closed
+                    pass
+        except Exception as e:
+            # Optional: log instead of raising
+            print(f"Disconnect cleanup error: {e}")
+
+
+    # async def disconnect(self, close_code):
+    #     # await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+
+    #     if self.room_name != "clients":
+    #         # self.group_call[self.room_name].remove(self.scope["user"].pk)
+    #         # if len(self.group_call[self.room_name]) == 0:
+    #         #     del self.group_call[self.room_name]
                     
-            group_call = cache.get(self.room_name , {})
-            if str(self.scope["user"].pk) in group_call:
-                del group_call[str(self.scope["user"].pk)]
-                cache.set(self.room_name , group_call)
+    #         group_call = cache.get(self.room_name , {})
+    #         if str(self.scope["user"].pk) in group_call:
+    #             del group_call[str(self.scope["user"].pk)]
+    #             cache.set(self.room_name , group_call)
         
-        # print("Groups room names:", self.groups_room_names)
+    #     # print("Groups room names:", self.groups_room_names)
         
-        group_names = cache.get(f"groups-{self.scope['user'].pk}" , [])
-        for room_name in group_names:
-            await self.channel_layer.group_discard(room_name, self.channel_name)
+    #     group_names = cache.get(f"groups-{self.scope['user'].pk}" , [])
+    #     for room_name in group_names:
+    #         await self.channel_layer.group_discard(room_name, self.channel_name)
         
     async def receive(self, text_data=None, bytes_data=None):
         raw = text_data if text_data is not None else bytes_data
