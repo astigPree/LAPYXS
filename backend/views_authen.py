@@ -7,7 +7,10 @@ from django.urls import reverse
 from backend.models import CustomUser
 
 # Create your views here.
+from django.views.decorators.csrf import csrf_exempt
 
+
+@csrf_exempt
 def api_register_auth(request):
     if request.method != 'POST':
         return JsonResponse({'error': 'Invalid request method.'}, status=400)
