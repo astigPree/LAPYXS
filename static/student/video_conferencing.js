@@ -13,7 +13,7 @@ const messages_close_button = document.getElementById("messages_close_button");
 const group_message_input = document.getElementById("group_message_input");
 const send_group_message = document.getElementById("send_group_message");
 
-const joined_users = {};
+let joined_users = {};
 
 (async()=>{
     const response = await sendRequest("../api/api_get_group_messages_names", "POST", {
