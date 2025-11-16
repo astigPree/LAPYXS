@@ -142,7 +142,8 @@ class VideoHandler{
 
     constructor(localVideo , local_mic , local_vid , ws , username , audio_status = true , video_status = true){
         this.localStream = new MediaStream();
-        this.screenStream = null;
+        this.originalLocalStream = new MediaStream();
+        this.screenStream = new MediaStream();
         this.localVideo = localVideo;
         this.local_mic = local_mic;
         this.local_vid = local_vid;
@@ -154,11 +155,13 @@ class VideoHandler{
 
         this.userMedia = navigator.mediaDevices.getUserMedia(this.constraint).then(stream => {
             this.localStream = stream;
+            this.originalLocalStream = stream;
             this.localVideo.srcObject = this.localStream; 
             this.localVideo.muted = true;
 
             this.audioTrack = this.localStream.getAudioTracks();
             this.videoTrack = this.localStream.getVideoTracks();
+            
 
             this.audioTrack[0].enabled = true;
             this.videoTrack[0].enabled = true;
@@ -204,35 +207,50 @@ class VideoHandler{
         opener.addEventListener("click", async () => {
             if (opener.textContent === "Open White Board") {
                 try {
-                    // Start screen share
-                    const stream = await navigator.mediaDevices.getDisplayMedia({
+                    const screenStream = await navigator.mediaDevices.getDisplayMedia({
                         video: true,
-                        audio: true
+                        audio: true // keep mic from originalLocalStream
                     });
-                    this.screenStream = stream;
-                    this.localVideo.srcObject = this.screenStream;
+
+                    const screenTrack = screenStream.getVideoTracks()[0];
+
+                    // Replace outgoing video track in all peer connections
+                    Object.values(this.mapPeers).forEach(([peer]) => {
+                        const sender = peer.getSenders().find(s => s.track && s.track.kind === 'video');
+                        if (sender) sender.replaceTrack(screenTrack);
+                    });
+
+                    // Show locally
+                    this.localVideo.srcObject = screenStream;
+                    this.localStream = screenStream;
                     opener.textContent = "Close White Board";
 
-                    // When teacher stops sharing manually, revert back
-                    const screenTrack = stream.getVideoTracks()[0];
+                    // When user stops sharing manually
                     screenTrack.onended = () => {
-                        this.localVideo.srcObject = this.localStream;
-                        opener.textContent = "Open White Board";
+                        this.revertToCamera(opener);
                     };
 
                 } catch (err) {
                     console.error("Error starting screen share:", err);
                 }
             } else {
-                // Stop screen share and revert back to camera
-                if (this.screenStream) {
-                    this.screenStream.getTracks().forEach(track => track.stop());
-                    this.screenStream = null;
-                }
-                this.localVideo.srcObject = this.localStream;
-                opener.textContent = "Open White Board";
+                this.revertToCamera(opener);
             }
         });
+    }
+
+    revertToCamera(opener) {
+        // Restore camera stream
+        const camTrack = this.originalLocalStream.getVideoTracks()[0];
+
+        Object.values(this.mapPeers).forEach(([peer]) => {
+            const sender = peer.getSenders().find(s => s.track && s.track.kind === 'video');
+            if (sender) sender.replaceTrack(camTrack);
+        });
+
+        this.localVideo.srcObject = this.originalLocalStream;
+        this.localStream = this.originalLocalStream;
+        opener.textContent = "Open White Board";
     }
 
 

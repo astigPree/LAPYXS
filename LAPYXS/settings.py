@@ -26,14 +26,14 @@ SECRET_KEY = 'django-insecure-*^0!e6c+3*&wa!lba4820-^-jqxk+(3zb2(+%(#1pg4mjnbgt#
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.1.226',
+    '192.168.1.11',
     'localhost',
     '127.0.0.1'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",        # local dev 
-    "https://192.168.1.226:8000",    # your LAN IP 
+    "https://192.168.1.11:8000",    # your LAN IP 
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True # For testing
