@@ -91,6 +91,7 @@ def api_register_auth(request):
     
     
 
+@csrf_exempt
 def api_update_auth(request):
     if request.method != 'POST':
         return JsonResponse({'error': 'Invalid request method.'}, status=400)
@@ -166,6 +167,7 @@ def api_update_auth(request):
 
 
 
+@csrf_exempt
 def api_login_auth(request):
     if request.method != 'POST':
         return JsonResponse({'error': 'Invalid request method.'}, status=400)
@@ -191,6 +193,7 @@ def api_login_auth(request):
     
 
 
+@csrf_exempt
 def api_logout_auth(request):
     
     if not request.user.is_authenticated:
