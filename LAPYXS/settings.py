@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",        # local dev 
-    "http://192.168.1.226:8000",    # your LAN IP 
+    "https://192.168.1.226:8000",    # your LAN IP 
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True # For testing
