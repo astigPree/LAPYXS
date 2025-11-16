@@ -306,5 +306,36 @@ def api_send_message_to_vc(request):
     }, status = 200)
  
  
+
+def api_get_group_messages_names(request):
+    
+    
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not logged in.'}, status=400)
+    
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request method.'}, status=400)
+ 
+    
+    classroom_id = request.POST.get('classroom_id', None)
+    if not classroom_id:
+        return JsonResponse({'error': 'No classroom_id.'}, status=400)
  
  
+    classroom_obj = Classroom.objects.filter(
+        id = int(classroom_id)
+    ).first()
+    if not classroom_obj:
+        return JsonResponse({'error': 'No classroom.'}, status=400)
+    
+    names = {}
+    for student_pk in classroom_obj.classroom_students:
+        student = CustomUser.objects.filter(id = student_pk).first()
+        names[str(student.pk)] = student.fullname
+        
+    names[str(classroom_obj.classroom_owner.pk)] = classroom_obj.classroom_owner.fullname
+    
+    return JsonResponse({
+        "names" : names
+    }, status = 200)
+    

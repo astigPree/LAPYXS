@@ -15,6 +15,7 @@ urlpatterns = [
     path('api_get_messages', api_get_messages , name='api_get_messages'),
     path('api_send_messages', api_send_messages , name='api_send_messages'),
     path('api_send_message_to_vc', api_send_message_to_vc , name='api_send_message_to_vc'),
+    path('api_get_group_messages_names', api_get_group_messages_names , name='api_get_group_messages_names'),
     
     # TEACHER ------------------------
     path('create_classroom', api_create_classroom , name='api_create_classroom'),

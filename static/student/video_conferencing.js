@@ -13,6 +13,22 @@ const messages_close_button = document.getElementById("messages_close_button");
 const group_message_input = document.getElementById("group_message_input");
 const send_group_message = document.getElementById("send_group_message");
 
+const joined_users = {};
+
+(async()=>{
+    const response = await sendRequest("../api/api_get_group_messages_names", "POST", {
+        'classroom_id' : classroom_id, 
+    });
+    if (response?.ok){
+        const data = await response.json();
+        if (data){
+            joined_users = data?.names || {};
+        }
+    }
+})();
+
+
+
 
 view_messages.addEventListener("click", ()=>{
     group_message_container.style.display = "flex";
@@ -30,7 +46,7 @@ send_group_message.addEventListener('click', async()=>{
     group_message_input.value = "";
     messages_table.insertAdjacentHTML('beforeend',`
         <div class="group-message-right">
-            <p class="poppins-regular">${message}</p>
+            <p class="poppins-regular">( <b>You</b> ) : ${message}</p>
         </div>
     `) 
     const response = await sendRequest("../api/api_send_message_to_vc", "POST", {
@@ -66,7 +82,7 @@ function receivedNewMessage(msg){
     } else {
         messages_table.insertAdjacentHTML('beforeend',` 
             <div class="group-message-left">
-                <p class="poppins-regular">${msg?.data?.content}</p>
+                <p class="poppins-regular"> ( <b>${joined_users[msg?.data?.sender] || "Unknown"}</b> ) : ${msg?.data?.content}</p>
             </div>
         `)
     }
