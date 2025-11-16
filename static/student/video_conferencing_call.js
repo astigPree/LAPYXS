@@ -51,9 +51,13 @@ video_handler.additional_create_video = (peerUsername)=>{
             <div class="video-holder">
                 <p class="poppins-regular"> Waiting to join !</p>
                 <video src="" id="${peerUsername}-video" autoplay playsinline ></video>
-                <button class="video-holder-mute" id="raise-hand-${peerUsername}" style="background-color: #04497B;">
-                    <img src="/static/assets/raise-hand.svg" alt="">
-                </button>
+                ${
+                    joined_type_user == "Teacher" ? "" : ` 
+                        <button class="video-holder-mute" id="raise-hand-${peerUsername}" style="background-color: #04497B;">
+                            <img src="/static/assets/raise-hand.svg" alt="">
+                        </button>  
+                    ` 
+                }
             </div>
         </div> 
     `)
