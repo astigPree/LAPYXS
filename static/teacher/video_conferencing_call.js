@@ -44,9 +44,13 @@ video_handler.additional_create_video = (peerUsername)=>{
         old_video.remove(); 
     }
 
+    
+    const joined_type_user = peerUsername == joined_users?.teacher_id ? "Teacher" : "Student";
+    const joine_user_fullname = joined_users[peerUsername] || "Unknown";
+
     group_call_container.insertAdjacentHTML('beforeend',`
         <div class="video-teacher-whiteboard" id="joined-${peerUsername}">
-            <h4 class="poppins-bold ellipsis">(Student) ${peerUsername}</h4>
+            <h4 class="poppins-bold ellipsis">(${joined_type_user}) ${joine_user_fullname}</h4>
             <div class="video-holder">
                 <p class="poppins-regular"> Waiting to join !</p>
                 <video src="" id="${peerUsername}-video" autoplay playsinline></video>

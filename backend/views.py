@@ -334,6 +334,7 @@ def api_get_group_messages_names(request):
         names[str(student.pk)] = student.fullname
         
     names[str(classroom_obj.classroom_owner.pk)] = classroom_obj.classroom_owner.fullname
+    names['teacher_id'] = str(classroom_obj.classroom_owner.pk)
     
     return JsonResponse({
         "names" : names
