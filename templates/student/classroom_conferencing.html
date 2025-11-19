@@ -12,7 +12,7 @@
 
 {% block basebodyblock %}
 
-{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_message" %}
+{% include "components/actions-components-teacher.html" with action_to_show="student" selected="student_video" %}
 
 
 
@@ -21,7 +21,7 @@
 
     <div class="classroom-title">
         <h1 class="poppins-light">Select Classroom Meeting</h1> 
-        <button class="poppins-medium"  onclick="window.location.href='{% url 'student_messages' %}'">
+        <button style="display: none;" class="poppins-medium"  onclick="window.location.href='{% url 'student_messages' %}'">
             Messages
         </button>
     </div>

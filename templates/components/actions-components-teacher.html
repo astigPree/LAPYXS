@@ -31,7 +31,7 @@
 {% endif %}
  
 <div class="shortcut-actions-container" id="teacher-actions-container">
-    <h1 class="poppins-bold">Welcome back! </h1>
+    <h1 class="poppins-bold">Welcome back! {{ request.user.user_type}} </h1>
     <h2 class="poppins-light ellipsis">{{ request.user.fullname }}</h2>
     <div class="shortcut-actions-buttons">
         {% if action_to_show == "teacher" %} 
@@ -42,6 +42,10 @@
             <button  onclick="window.location.href='{% url 'teacher_classroom_page' %}'" style="{% if selected == 'teacher_classroom' %}display : none;{% endif %}">
                 <img src="{% static "assets/classroom-icon.svg" %}" alt="classroom-icon" class="classroom-icon">
                 <span class="poppins-medium">Classroom</span>
+            </button> 
+            <button onclick='window.location.href="{% url "teacher_classroom_conferencing" %}"' style="{% if selected == 'teacher_video' %}display : none;{% endif %}">
+                <img src="{% static "assets/group-call.svg" %}" alt="classroom-icon" class="classroom-icon">
+                <span class="poppins-medium">Meeting</span>
             </button>
             {% comment %} <button  style="{% if selected == 'teacher_materials' %}display : none;{% endif %}">
                 <img src="{% static "assets/material-icon.svg" %}" alt="material-icon" class="material-icon">
@@ -76,6 +80,10 @@
             <button  onclick="window.location.href='{% url 'student_messages' %}'" style="{% if selected == 'student_message' %}display : none;{% endif %}">
                 <img src="{% static "assets/message-icon.svg" %}" alt="message-icon" class="message-icon">
                 <span class="poppins-medium">Message</span>
+            </button> 
+            <button onclick="window.location.href='{% url 'student_classroom_conferencing' %}'" style="{% if selected == 'student_video' %}display : none;{% endif %}">
+                <img src="{% static "assets/group-call.svg" %}" alt="classroom-icon" class="classroom-icon">
+                <span class="poppins-medium">Meeting</span>
             </button>
             {% comment %} <button  style="{% if selected == 'student_post' %}display : none;{% endif %}">
                 <img src="{% static "assets/post-icon.svg" %}" alt="post-icon" class="post-icon">

@@ -46,6 +46,7 @@
     color: aliceblue;
     border-radius: 2px;
     cursor: pointer;
+    display: none;
 }
 
 .messages-container{
