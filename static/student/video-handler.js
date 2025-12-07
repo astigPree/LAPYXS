@@ -122,7 +122,16 @@
 
 
 
-
+rtc_configuration = {
+    iceServers: [
+        { urls: "stun:stun.l.google.com:19302" },
+        {
+            urls: "turn:learn.lapyxs.top:3478",
+            username: "testuser",
+            credential: "testpassword"
+        }
+    ]
+}
 
 
 class VideoHandler{
@@ -313,7 +322,7 @@ class VideoHandler{
     }
 
     createOffer(peerUsername, receiver_channel_name){
-        var peer = new RTCPeerConnection(null);
+        var peer = new RTCPeerConnection(rtc_configuration);
 
         this.addLocalTracks(peer);
 
@@ -369,7 +378,7 @@ class VideoHandler{
 
     
     createAnswer(offer , peerUsername , receiver_channel_name){
-        var peer = new RTCPeerConnection(null);
+        var peer = new RTCPeerConnection(rtc_configuration);
 
         this.addLocalTracks(peer);
     
