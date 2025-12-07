@@ -25,13 +25,9 @@ SECRET_KEY = 'django-insecure-*^0!e6c+3*&wa!lba4820-^-jqxk+(3zb2(+%(#1pg4mjnbgt#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '192.168.1.11',
-    'localhost',
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = [ "*" ]
 
-CSRF_TRUSTED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = [  
     "http://127.0.0.1:8000",        # local dev 
     "https://192.168.1.11:8000",    # your LAN IP 
 ]
@@ -85,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'LAPYXS.wsgi.application'
+WSGI_APPLICATION = 'LAPYXS.wsgi.application'
 ASGI_APPLICATION = 'LAPYXS.asgi.application'
 
 
